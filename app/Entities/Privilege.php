@@ -19,7 +19,6 @@ class Privilege extends Model
     public $table = 'privileges';
 
     protected $fillable = [
-        'uuid',
         'name',
         'description',
     ];

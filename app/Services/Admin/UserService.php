@@ -84,8 +84,6 @@ class UserService
             $data['password'] = Hash::make($request['password']);
         }
 
-        $data['userUuid'] = Uuid::generate(4)->string;
-
         if (!$request->has('active')) {
             $data['active'] = false;
         }

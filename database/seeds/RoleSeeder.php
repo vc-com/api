@@ -3,8 +3,6 @@
 use App\Entities\Privilege;
 use Illuminate\Database\Seeder;
 use App\Entities\Role;
-use Webpatser\Uuid\Uuid;
-
 
 class RoleSeeder extends Seeder
 {
@@ -35,7 +33,6 @@ class RoleSeeder extends Seeder
     private function createRoles($data)
     {
         $role = Role::create([
-            'uuid' => Uuid::generate(4)->string,
             'name' => $data['name'],
             'description' => $data['description'],
             'default' => true
@@ -46,7 +43,6 @@ class RoleSeeder extends Seeder
             $all = Privilege::where('name', Privilege::ALL)->first();
 
             $role->privileges()->create([
-                'uuid' => $all->uuid,
                 'name' => $all->name,
                 'description' => $all->description,
             ]);
@@ -60,7 +56,6 @@ class RoleSeeder extends Seeder
 
 
             $role->privileges()->create([
-                'uuid' => $read->uuid,
                 'name' => $read->name,
                 'description' => $read->description,
             ]);
@@ -68,7 +63,6 @@ class RoleSeeder extends Seeder
             if ($data['name'] !== Role::STAFF_COMMERCIAL) {
 
                 $role->privileges()->create([
-                    'uuid' => $delete->uuid,
                     'name' => $delete->name,
                     'description' => $delete->description,
                 ]);

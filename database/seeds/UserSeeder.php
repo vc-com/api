@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
 
             $role = $user->roles()->create([
                 'name' => $roleFirst->name,
-                'roleUuid' => $roleFirst->uuid,
+                'role_id' => $roleFirst->id,
             ]);
 
             $rolesAll = Role::where('name', $typeRole)->get();
@@ -38,8 +38,7 @@ class UserSeeder extends Seeder
                 foreach ($item->privileges as $privilege) {
 
                     $user->privileges()->create([
-                        'roleId' => $role->id,
-                        'roleUuid' => $roleFirst->uuid,
+                        'role_id' => $role->id,
                         'name' => $privilege->name
                     ]);
 

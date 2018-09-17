@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\Entities\Privilege;
-use Webpatser\Uuid\Uuid;
 
 class PrivilegeSeeder extends Seeder
 {
@@ -18,7 +17,6 @@ class PrivilegeSeeder extends Seeder
         foreach ($this->dataPrivileges() as $data) {
 
             Privilege::create([
-                'uuid' => Uuid::generate(4)->string,
                 'name' => $data['name'],
                 'description' => $data['description'],
             ]);

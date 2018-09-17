@@ -35,8 +35,7 @@ class LogUserObserver
     {
         $this->logUser->create([
             'action' => 'CREATED',
-            'userId' => $user->id,
-            'userUuid' => $user->uuid,
+            'user_id' => $user->id,
             'headers' => $this->requestHeaders(),
         ]);
     }
@@ -47,8 +46,7 @@ class LogUserObserver
 
         $this->logUser->create([
             'action' => 'UPDATED',
-            'userId' => $user->id,
-            'userUuid' => $user->uuid,
+            'user_id' => $user->id,
             'headers' => $this->requestHeaders(),
         ]);
     }
@@ -59,8 +57,7 @@ class LogUserObserver
 
         $this->logUser->create([
             'action' => 'DELETED',
-            'userId' => $user->id,
-            'userUuid' => $user->uuid,
+            'user_id' => $user->id,
             'headers' => $this->requestHeaders(),
         ]);
     }

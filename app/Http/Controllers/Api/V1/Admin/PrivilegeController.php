@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Privilege;
+namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\ApiController;
 use App\Repositories\Privilege\PrivilegeRepositoryInterface;
