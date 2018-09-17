@@ -122,6 +122,7 @@ class UserController extends ApiController
             return $errors->toJson();
         }
 
+
         if (!$result = $this->repository->findById($id)) {
             return $this->errorResponse('user_not_found', 422);
         }

@@ -55,10 +55,7 @@ class UserService
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                Rule::unique('users', '_id')->ignore($id),
-            ],
+            'email' => 'unique:users,email,'.$id.',_id',
             'password' => 'sometimes|required|confirmed|min:6|max:255'
         ]);
 
@@ -77,18 +74,22 @@ class UserService
         $data = $request->all();
 
         if ($request->has('roles')) {
-            $this->role = $request['roles'];
+            unset($data['roles']);
+        }
+
+        if ($request->has('privileges')) {
+            unset($data['privileges']);
         }
 
         if ($request->has('password')) {
             $data['password'] = Hash::make($request['password']);
         }
 
-        if (!$request->has('active')) {
-            $data['active'] = false;
-        }
-
-        unset($data['roles']);
+        $data['active'] = false;
+        if ($request->has('active')) {
+            $data['active'] = true;
+        } 
+      
 
         if (!$created = $this->repository->create($data)) {
             return false;
