@@ -25,7 +25,6 @@ class RoleSeeder extends Seeder
 
     }
 
-
     /**
      * @param $data
      * @throws Exception
@@ -54,22 +53,58 @@ class RoleSeeder extends Seeder
             $edit    = Privilege::where('name', Privilege::EDIT)->first();
             $delete  = Privilege::where('name', Privilege::DELETE)->first();
 
-
             $role->privileges()->create([
                 'name' => $read->name,
                 'description' => $read->description,
             ]);
 
-            if ($data['name'] !== Role::STAFF_COMMERCIAL) {
+            switch ($data['name']) {
 
-                $role->privileges()->create([
-                    'name' => $delete->name,
-                    'description' => $delete->description,
-                ]);
+                case Role::STAFF_AUDIT:
+                case Role::STAFF_SUPPORT:
+                case Role::STAFF_FINANCE:
+                case Role::STAFF_COMMERCIAL:
+                case Role::STAFF_EDITOR:
+                case Role::STAFF_PARTNER:
 
+                    $role->privileges()->create([
+                        'name' => $add->name,
+                        'description' => $add->description,
+                    ]);
+
+                    $role->privileges()->create([
+                        'name' => $edit->name,
+                        'description' => $edit->description,
+                    ]);
+
+                    break;
+
+                default:
+
+                    break;
+            }
+
+            switch ($data['name']) {
+
+                case Role::STAFF_AUDIT:
+                case Role::STAFF_FINANCE:
+                case Role::STAFF_EDITOR:
+                case Role::STAFF_PARTNER:
+
+                    $role->privileges()->create([
+                        'name' => $delete->name,
+                        'description' => $delete->description,
+                    ]);
+
+                    break;
+                
+                default:
+                
+                    break;
             }
 
         }
+
     }
 
     public function dataRoles()
@@ -94,7 +129,19 @@ class RoleSeeder extends Seeder
             [
                 'name' => Role::STAFF_SUPPORT,
                 'description' => 'Departamento de Suporte',
-            ]
+            ],
+            [
+                'name' => Role::STAFF_EDITOR,
+                'description' => 'Editor',
+            ],
+            [
+                'name' => Role::STAFF_EXPEDITION,
+                'description' => 'Expedição',
+            ],
+            [
+                'name' => Role::STAFF_PARTNER,
+                'description' => 'Parceiro',
+            ],
 
         ];
 

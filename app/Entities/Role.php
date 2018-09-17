@@ -15,6 +15,9 @@ class Role extends Model
     const STAFF_SUPPORT    = 'STAFF_SUPPORT';
     const STAFF_FINANCE    = 'STAFF_FINANCE';
     const STAFF_COMMERCIAL = 'STAFF_COMMERCIAL';
+    const STAFF_EDITOR     = 'STAFF_EDITOR';
+    const STAFF_EXPEDITION = 'STAFF_EXPEDITION';
+    const STAFF_PARTNER    = 'STAFF_PARTNER';
 
     public $table = 'roles';
 
