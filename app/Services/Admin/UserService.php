@@ -34,30 +34,23 @@ class UserService
         return $this->repository->all();
     }
 
-    public function validatorCreate(array $data)
+    public function validator(array $data, $id='')
     {
+        if ( isset($id) ) {
+
+            return Validator::make($data, [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                'password' => 'sometimes|required|confirmed|min:6|max:255'
+            ]);
+
+        } 
+
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users|max:255',
             'password' => 'required|string|confirmed|min:6|max:255'
-        ]);
-
-    }
-
-    /**
-     * Get a validator for a User.
-     *
-     * @param array $data
-     * @param int $id
-     * @return mixed
-     */
-    public function validatorUpdate(array $data, $id)
-    {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'unique:users,email,'.$id.',_id',
-            'password' => 'sometimes|required|confirmed|min:6|max:255'
-        ]);
+        ]);      
 
     }
 
@@ -69,27 +62,9 @@ class UserService
      * @throws \Exception
      */
     public function create(Request $request)
-    {
+    {      
 
-        $data = $request->all();
-
-        if ($request->has('roles')) {
-            unset($data['roles']);
-        }
-
-        if ($request->has('privileges')) {
-            unset($data['privileges']);
-        }
-
-        if ($request->has('password')) {
-            $data['password'] = Hash::make($request['password']);
-        }
-
-        $data['active'] = false;
-        if ($request->has('active')) {
-            $data['active'] = true;
-        } 
-      
+        $data = $this->filterRequest($request);
 
         if (!$created = $this->repository->create($data)) {
             return false;
@@ -109,14 +84,36 @@ class UserService
      */
     public function update(Request $request, $id)
     {
+        $data = $this->filterRequest($request);
+        return $this->repository->update($id, $data);
+    }
+
+    private function filterRequest(Request $request)
+    {
 
         $data = $request->all();
+
+        if (!$request->has('active')) {
+            $data['active'] = false;
+        }
+
+        if ($request->has('roles')) {
+            unset($data['roles']);
+        }
+
+        if ($request->has('privileges')) {
+            unset($data['privileges']);
+        }
+
         if ($request->has('password')) {
             $data['password'] = Hash::make($request['password']);
         }
 
-        return $this->repository->update($id, $data);
+        if ($request->has('password')) {
+            $data['password'] = Hash::make($request['password']);
+        }
 
+        return $data;
     }
 
 }

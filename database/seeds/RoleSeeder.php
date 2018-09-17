@@ -65,7 +65,9 @@ class RoleSeeder extends Seeder
                 case Role::STAFF_FINANCE:
                 case Role::STAFF_COMMERCIAL:
                 case Role::STAFF_EDITOR:
+                case Role::STAFF_EXPEDITION:
                 case Role::STAFF_PARTNER:
+            
 
                     $role->privileges()->create([
                         'name' => $add->name,

@@ -59,7 +59,7 @@ class UserController extends ApiController
     public function store(Request $request)
     {
 
-        $validator = $this->service->validatorCreate($request->all());
+        $validator = $this->service->validator($request->all());
 
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -115,7 +115,7 @@ class UserController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = $this->service->validatorUpdate($request->all(), $id);
+        $validator = $this->service->validator($request->all(), $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
