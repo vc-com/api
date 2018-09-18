@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use App\Entities\User;
 
 class Role extends Model
 {
@@ -11,13 +12,9 @@ class Role extends Model
     use SoftDeletes;
 
     const ADMIN            = 'ADMIN';
-    const STAFF_AUDIT      = 'STAFF_AUDIT';
-    const STAFF_SUPPORT    = 'STAFF_SUPPORT';
     const STAFF_FINANCE    = 'STAFF_FINANCE';
-    const STAFF_COMMERCIAL = 'STAFF_COMMERCIAL';
     const STAFF_EDITOR     = 'STAFF_EDITOR';
     const STAFF_EXPEDITION = 'STAFF_EXPEDITION';
-    const STAFF_PARTNER    = 'STAFF_PARTNER';
 
     public $table = 'roles';
 
@@ -35,7 +32,12 @@ class Role extends Model
      */
     public function privileges()
     {
-        return $this->embedsMany(Privilege::class);
+        return $this->belongsToMany(Privilege::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 
 }

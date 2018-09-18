@@ -31,7 +31,7 @@ class UserService
 
     public function all()
     {
-        return $this->repository->all();
+        return $this->repository->all(['roles']);
     }
 
     public function validator(array $data, $id='')

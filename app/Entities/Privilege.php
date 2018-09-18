@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Entities\Role;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
@@ -24,5 +25,11 @@ class Privilege extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 
 }

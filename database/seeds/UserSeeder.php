@@ -7,13 +7,14 @@ use Illuminate\Database\Seeder;
 class UserSeeder extends Seeder
 {
 
+
+//https://github.com/jenssegers/laravel-mongodb/issues/1347
+//https://github.com/jenssegers/laravel-mongodb/issues/1271
+
     public function run()
     {
 
         $this->generateUser(Role::ADMIN);
-        $this->generateUser(Role::STAFF_AUDIT);
-        $this->generateUser(Role::STAFF_COMMERCIAL);
-        $this->generateUser(Role::STAFF_SUPPORT);
         $this->generateUser(Role::STAFF_FINANCE);
     }
 
@@ -24,27 +25,8 @@ class UserSeeder extends Seeder
         
         $users->each(function ($user) use($typeRole) {
 
-            $roleFirst = Role::where('name', $typeRole)->first();
-
-            $role = $user->roles()->create([
-                'name' => $roleFirst->name,
-                'role_id' => $roleFirst->id,
-            ]);
-
-            $rolesAll = Role::where('name', $typeRole)->get();
-
-            foreach ($rolesAll as $item) {
-
-                foreach ($item->privileges as $privilege) {
-
-                    $user->privileges()->create([
-                        'role_id' => $role->id,
-                        'name' => $privilege->name
-                    ]);
-
-                }
-
-            }
+            $role = Role::where('name', $typeRole)->first();
+            $user->roles()->attach($role);
 
         });
 

@@ -40,11 +40,7 @@ class RoleSeeder extends Seeder
         if( $data['name'] === Role::ADMIN ) {
 
             $all = Privilege::where('name', Privilege::ALL)->first();
-
-            $role->privileges()->create([
-                'name' => $all->name,
-                'description' => $all->description,
-            ]);
+            $role->privileges()->attach($all);
 
         } else {
 
@@ -53,31 +49,16 @@ class RoleSeeder extends Seeder
             $edit    = Privilege::where('name', Privilege::EDIT)->first();
             $delete  = Privilege::where('name', Privilege::DELETE)->first();
 
-            $role->privileges()->create([
-                'name' => $read->name,
-                'description' => $read->description,
-            ]);
+            $role->privileges()->attach($read);
 
             switch ($data['name']) {
 
-                case Role::STAFF_AUDIT:
-                case Role::STAFF_SUPPORT:
                 case Role::STAFF_FINANCE:
-                case Role::STAFF_COMMERCIAL:
                 case Role::STAFF_EDITOR:
-                case Role::STAFF_EXPEDITION:
-                case Role::STAFF_PARTNER:
-            
+                case Role::STAFF_EXPEDITION:            
 
-                    $role->privileges()->create([
-                        'name' => $add->name,
-                        'description' => $add->description,
-                    ]);
-
-                    $role->privileges()->create([
-                        'name' => $edit->name,
-                        'description' => $edit->description,
-                    ]);
+                    $role->privileges()->attach($add);
+                    $role->privileges()->attach($edit);
 
                     break;
 
@@ -88,15 +69,10 @@ class RoleSeeder extends Seeder
 
             switch ($data['name']) {
 
-                case Role::STAFF_AUDIT:
                 case Role::STAFF_FINANCE:
                 case Role::STAFF_EDITOR:
-                case Role::STAFF_PARTNER:
 
-                    $role->privileges()->create([
-                        'name' => $delete->name,
-                        'description' => $delete->description,
-                    ]);
+                    $role->privileges()->attach($delete);
 
                     break;
                 
@@ -117,20 +93,8 @@ class RoleSeeder extends Seeder
                 'description' => 'Administrador Geral',
             ],
             [
-                'name' => Role::STAFF_AUDIT,
-                'description' => 'Departamento de Auditoria',
-            ],
-            [
                 'name' => Role::STAFF_FINANCE,
                 'description' => 'Departamento Financeiro',
-            ],
-            [
-                'name' => Role::STAFF_COMMERCIAL,
-                'description' => 'Departamento Comercial',
-            ],
-            [
-                'name' => Role::STAFF_SUPPORT,
-                'description' => 'Departamento de Suporte',
             ],
             [
                 'name' => Role::STAFF_EDITOR,
@@ -139,11 +103,7 @@ class RoleSeeder extends Seeder
             [
                 'name' => Role::STAFF_EXPEDITION,
                 'description' => 'Expedição',
-            ],
-            [
-                'name' => Role::STAFF_PARTNER,
-                'description' => 'Parceiro',
-            ],
+            ]
 
         ];
 
