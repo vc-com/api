@@ -59,6 +59,11 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $dates = ['deleted_at'];
 
+    /**
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
     public function scopeWhereFullText($query, $search)
     {
         $query->getQuery()->projections = [
@@ -71,26 +76,41 @@ class User extends Authenticatable implements JWTSubject
 
     }
 
+    /**
+     * @return bool
+     */
     public function isVerified()
     {
         return $this->verified == User::VERIFIED_USER;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
+    /**
+     * @return string
+     */
     public static function generateVerificationCode()
     {
         return str_random(40);
     }
 
+    /**
+     * @return mixed
+     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
+    /**
+     * @return array
+     */
     public function getJWTCustomClaims()
     {
         return [];
