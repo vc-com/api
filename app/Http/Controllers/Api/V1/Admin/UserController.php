@@ -96,7 +96,7 @@ class UserController extends ApiController
     public function show($id)
     {
 
-        if (!$result = $this->repository->findById($id)) {
+        if (!$result = $this->repository->findById($id, ['roles'])) {
             return $this->errorResponse('user_not_found', 422);
         }
 
