@@ -4,8 +4,11 @@ namespace App\Entities;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
-use App\Entities\User;
 
+/**
+ * Class Role
+ * @package App\Entities
+ */
 class Role extends Model
 {
 
@@ -27,14 +30,15 @@ class Role extends Model
 
     protected $dates = ['deleted_at'];
 
-    /**
-     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
-     */
+
     public function privileges()
     {
-        return $this->belongsToMany(Privilege::class);
+        return $this->embedsMany(Privilege::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function users()
     {
         return $this->belongsToMany(User::class);

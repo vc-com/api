@@ -6,8 +6,6 @@ use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Webpatser\Uuid\Uuid;
 
 /**
  * Class UserService
@@ -29,11 +27,19 @@ class UserService
         $this->repository = $repository;
     }
 
+    /**
+     * @return mixed
+     */
     public function all()
     {
         return $this->repository->all(['roles']);
     }
 
+    /**
+     * @param array $data
+     * @param string $id
+     * @return mixed
+     */
     public function validator(array $data, $id='')
     {
         if ( isset($id) ) {
@@ -88,6 +94,10 @@ class UserService
         return $this->repository->update($id, $data);
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     private function filterRequest(Request $request)
     {
 

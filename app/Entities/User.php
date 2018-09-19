@@ -81,11 +81,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Role::class);
     }
 
-    public function privileges()
-    {
-        return $this->embedsMany(Privilege::class);
-    }
-
     public static function generateVerificationCode()
     {
         return str_random(40);
