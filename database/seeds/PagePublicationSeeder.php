@@ -13,9 +13,11 @@ class PagePublicationSeeder extends Seeder
     public function run()
     {
         foreach ($this->dataPagePositions() as $data) {
+
+
             PagePublication::create([
-                'name' => $data->name,
-                'page_publication' => $data->page_publication,
+                'name' => $data['name'],
+                'page_publication' => $data['page_publication'],
             ]);
         }
     }

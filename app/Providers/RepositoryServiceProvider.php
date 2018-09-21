@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entities\Banner;
 use App\Entities\Privilege;
 use App\Entities\Role;
 use App\Entities\User;
@@ -11,6 +12,8 @@ use App\Repositories\Role\RoleMongodbRepository;
 use App\Repositories\Role\RoleRepositoryInterface;
 use App\Repositories\User\UserMongodbRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Banner\BannerMongodbRepository;
+use App\Repositories\Banner\BannerRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -44,6 +47,10 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(UserRepositoryInterface::class, function () {
             return new UserMongodbRepository(new User());
+        });
+
+        $this->app->bind(BannerRepositoryInterface::class, function () {
+            return new BannerMongodbRepository(new Banner());
         });
     }
 }

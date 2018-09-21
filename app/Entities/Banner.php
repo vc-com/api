@@ -35,14 +35,14 @@ class Banner extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function pagePublication() {
+    public function pages() {
         return $this->belongsToMany(PagePublication::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function positionPublication() {
+    public function positions() {
         return $this->belongsToMany(PositionPublication::class);
     }
 

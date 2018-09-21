@@ -39,6 +39,7 @@ class RouteApiAdminServiceProvider extends ServiceProvider
         $this->mapApiUsersRoutes();
         $this->mapApiRolesRoutes();
         $this->mapApiPrivilegesRoutes();
+        $this->mapApiBannersRoutes();
 
     }
 
@@ -88,6 +89,23 @@ class RouteApiAdminServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/admin/api-privileges.php'));
+    }
+
+
+    /**
+     * Define the "banners" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiBannersRoutes()
+    {
+        $this->prefix('/v1/admin')
+            ->as('admin.')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/admin/api-banners.php'));
     }
 
     /**

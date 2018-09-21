@@ -14,8 +14,8 @@ class PositionPublicationSeeder extends Seeder
     {
         foreach ($this->dataPagePositions() as $data) {
             PositionPublication::create([
-                'name' => $data->name,
-                'position_publication' => $data->position_publication,
+                'name' => $data['name'],
+                'position_publication' => $data['position_publication'],
             ]);
         }
     }

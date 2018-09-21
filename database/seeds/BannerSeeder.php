@@ -15,21 +15,34 @@ class BannerSeeder extends Seeder
     public function run()
     {
 
-        $this->generateBanner(PositionPublication::FULLBANNER, PagePublication::HOME);
+        $this->generateBanner(
+            PositionPublication::FULLBANNER, 
+            PagePublication::HOME
+        );
+
+        $this->generateBanner(
+            PositionPublication::TARJA, 
+            PagePublication::HOME
+        );
+
+        $this->generateBanner(
+            PositionPublication::TARJA, 
+            PagePublication::CATEGORY
+        );
 
     }
 
-    private function generateBanner($localPosition, $pagePosition)
+    private function generateBanner($position, $page)
     {
-        $banners = factory(Banner::class);
+        $banners = factory(Banner::class, 1)->create();
 
-        $banners->each(function ($banner) use ($localPosition, $pagePosition) {
+        $banners->each(function ($banner) use ($position, $page) {
 
-            $position = PositionPublication::where('position_publication', $localPosition)->first();
-            $banner->positionPublication()->attach($position);
+            $attachPosition = PositionPublication::where('position_publication', $position)->first();
+            $banner->positions()->attach($attachPosition);
 
-            $position = PositionPublication::where('page_publication', $pagePosition)->first();
-            $banner->pagePublication()->attach($position);
+            $attachPage = PagePublication::where('page_publication', $page)->first();
+            $banner->pages()->attach($attachPage);
 
         });
 
