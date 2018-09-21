@@ -38,7 +38,6 @@ class CreatePagePublicationsTable extends Migration
         Schema::connection(env('DB_CONNECTION'))
             ->table('page_publications', function (Blueprint $table)
             {
-                $table->dropIndex();
                 $table->drop();
             });
 

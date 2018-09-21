@@ -28,6 +28,6 @@ class PositionPublication extends Model
      */
     protected $fillable = [
         'name',
-        'page_publication',
+        'position_publication',
     ];
 }

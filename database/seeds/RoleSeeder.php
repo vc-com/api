@@ -102,7 +102,7 @@ class RoleSeeder extends Seeder
 
     }
 
-    public function dataRoles()
+    private function dataRoles()
     {
         return [
             [

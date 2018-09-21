@@ -38,7 +38,6 @@ class CreatePositionPublicationsTable extends Migration
         Schema::connection(env('DB_CONNECTION'))
             ->table('position_publications', function (Blueprint $table)
             {
-                $table->dropIndex();
                 $table->drop();
             });
             

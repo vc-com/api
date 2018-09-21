@@ -7,14 +7,13 @@ use Jenssegers\Mongodb\Eloquent\Model;
 class PagePublication extends Model
 {
 
-    const HOME = 'home';
-    const CATEGORY = 'category';
-    const BRAND = 'brand';
-    const BRAND = 'product';
-    const SEARCH = 'search';
-    const CONTENT = 'content';
     const ALL = 'all';
-
+    const BRAND = 'brand';
+    const CATEGORY = 'category';
+    const CONTENT = 'content';
+    const HOME = 'home';
+    const PRODUCT = 'product';
+    const SEARCH = 'search';
 
     /**
      * @var string
@@ -28,6 +27,6 @@ class PagePublication extends Model
      */
     protected $fillable = [
         'name',       
-        'local_publication',
+        'page_publication',
     ];
 }

@@ -44,7 +44,6 @@ class CreateBannersTable extends Migration
         Schema::connection(env('DB_CONNECTION'))
             ->table('banners', function (Blueprint $table)
             {
-                $table->dropIndex();
                 $table->drop();
             });
 

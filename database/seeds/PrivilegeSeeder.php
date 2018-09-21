@@ -25,7 +25,7 @@ class PrivilegeSeeder extends Seeder
 
     }
 
-    public function dataPrivileges()
+    private function dataPrivileges()
     {
         return [
 
