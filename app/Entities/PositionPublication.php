@@ -15,12 +15,6 @@ class PositionPublication extends Model
     const BANNER = 'banner';
     const DEFAULT = 'default';
 
-
-    /**
-     * @var string
-     */
-    // public $table = 'position_publications';
-
     /**
      * The attributes that are mass assignable.
      *

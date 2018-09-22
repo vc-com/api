@@ -16,11 +16,6 @@ class PagePublication extends Model
     const SEARCH = 'search';
 
     /**
-     * @var string
-     */
-    // public $table = 'page_publications';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array

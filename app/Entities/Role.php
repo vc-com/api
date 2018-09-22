@@ -19,8 +19,6 @@ class Role extends Model
     const STAFF_EDITOR     = 'STAFF_EDITOR';
     const STAFF_EXPEDITION = 'STAFF_EXPEDITION';
 
-    // public $table = 'roles';
-
     protected $fillable = [
         'name',
         'description',

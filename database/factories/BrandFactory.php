@@ -14,14 +14,16 @@ $factory->define(App\Entities\Brand::class, function (Faker $faker) {
 	$imageName = end($imagePath);
 
     return [
+
         'name' => $faker->name,
         'active' => rand(0,5) > 0 ? true : false,
-        'title' => $faker->title,
         'description' => $faker->text,
         'slug' => $faker->slug,
-        'target' => array_random(['', '_blank']),
         'image' => $imageName,
+        'meta_title' => $faker->title,
+        'meta_description' => $faker->text,
         'sort_order' => rand(0,5)
+        
     ];
     
 });

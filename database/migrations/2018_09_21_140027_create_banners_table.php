@@ -21,11 +21,15 @@ class CreateBannersTable extends Migration
 
                 $table->string('name');
                 $table->string('active');          
+                $table->string('description');
                 $table->string('local_publication');
                 $table->string('position_publication');
-                $table->string('title');
+                $table->string('slug');
                 $table->string('target');
                 $table->string('image');
+                $table->string('meta_title');
+                $table->string('meta_description');
+                $table->string('meta_keyword');
                 $table->string('sort_order');
                 $table->timestamps();
 

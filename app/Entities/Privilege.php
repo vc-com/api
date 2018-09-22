@@ -20,8 +20,6 @@ class Privilege extends Model
     const EDIT    = 'EDIT';
     const DELETE  = 'DELETE';
 
-    // public $table = 'privileges';
-
     protected $fillable = [
         'name',
         'description',

@@ -7,11 +7,6 @@ use Jenssegers\Mongodb\Eloquent\Model;
 class Brand extends Model
 {
     /**
-     * @var string
-     */
-    // public $table = 'brands';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -19,11 +14,12 @@ class Brand extends Model
     protected $fillable = [
         'name',
         'active',
-        'title',
         'description',
         'slug',
-        'target',
         'image',
+        'meta_title',
+        'meta_description',
         'sort_order',
     ];
+
 }

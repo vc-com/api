@@ -12,24 +12,20 @@ class Banner extends Model
 {
 
     /**
-     * @var string
-     */
-    // public $table = 'banners';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-		'name',
-		'active',          
-		'local_publication',
-		'page_publication',
-		'title',
-		'target',
-		'image',
-		'sort_order'
+        'name',
+        'active',
+        'description',
+        'slug',
+        'target',
+        'image',
+        'meta_title',
+        'meta_description',
+        'sort_order',
     ];
 
     /**
