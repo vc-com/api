@@ -4,9 +4,9 @@ namespace App\Entities;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class Category extends Model
+class CategoryParent extends Model
 {
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -22,13 +22,5 @@ class Category extends Model
         'meta_description',
         'sort_order',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function parents()
-    {
-        return $this->belongsTo(CategoryParent::class);
-    }
     
 }
