@@ -5,10 +5,10 @@ namespace App\Services\Admin;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * Class BannerService
+ * Class BrandService
  * @package App\Services\Admin
  */
-class BannerService
+class BrandService
 {
     /**
      * @param array $data

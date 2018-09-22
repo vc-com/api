@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PagePublicationSeeder::class);
         $this->call(PositionPublicationSeeder::class);
         $this->call(BannerSeeder::class);
+        $this->call(BrandSeeder::class);
 
     }
 }

@@ -40,16 +40,10 @@ class RouteApiAdminServiceProvider extends ServiceProvider
         $this->mapApiRolesRoutes();
         $this->mapApiPrivilegesRoutes();
         $this->mapApiBannersRoutes();
+        $this->mapApiBrandsRoutes();
 
     }
 
-    /**
-     * Define the "adm/users" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
     protected function mapApiUsersRoutes()
     {
         $this->prefix('/v1/admin')
@@ -59,13 +53,7 @@ class RouteApiAdminServiceProvider extends ServiceProvider
              ->group(base_path('routes/admin/api-users.php'));
     }
 
-    /**
-     * Define the "roles" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
+
     protected function mapApiRolesRoutes()
     {
         $this->prefix('/v1/admin')
@@ -75,13 +63,6 @@ class RouteApiAdminServiceProvider extends ServiceProvider
             ->group(base_path('routes/admin/api-roles.php'));
     }
 
-    /**
-     * Define the "privileges" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
     protected function mapApiPrivilegesRoutes()
     {
         $this->prefix('/v1/admin')
@@ -91,14 +72,6 @@ class RouteApiAdminServiceProvider extends ServiceProvider
             ->group(base_path('routes/admin/api-privileges.php'));
     }
 
-
-    /**
-     * Define the "banners" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
     protected function mapApiBannersRoutes()
     {
         $this->prefix('/v1/admin')
@@ -108,13 +81,15 @@ class RouteApiAdminServiceProvider extends ServiceProvider
             ->group(base_path('routes/admin/api-banners.php'));
     }
 
-    /**
-     * Define the "auth" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
+    protected function mapApiBrandsRoutes()
+    {
+        $this->prefix('/v1/admin')
+            ->as('admin.')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/admin/api-brands.php'));
+    }
+
     protected function mapApiAdminAuthRoutes()
     {
         $this->prefix('/v1/auth')
