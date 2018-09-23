@@ -24,11 +24,11 @@ class Category extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function parents()
     {
-        return $this->belongsTo(CategoryParent::class);
+        return $this->belongsToMany(CategoryParent::class);
     }
     
 }

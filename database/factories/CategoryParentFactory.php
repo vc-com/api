@@ -2,9 +2,9 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Entities\Category::class, function (Faker $faker) {
+$factory->define(App\Entities\CategoryParent::class, function (Faker $faker) {
 
-//	  //download das imagens vindo do laravelpix.com
+//    //download das imagens vindo do laravelpix.com
 //    $imagemDownload = $faker->image(storage_path('app/public/img/category'), 400,300);
 //
 //    //criando array do caminho das imagens
@@ -16,6 +16,8 @@ $factory->define(App\Entities\Category::class, function (Faker $faker) {
     $imageName = null;
 
     return [
+        'parent_id' => '',
+        'nleft' => '',
         'name' => $faker->name,
         'active' => rand(0,5) > 0 ? true : false,
         'description' => $faker->text,
@@ -25,6 +27,5 @@ $factory->define(App\Entities\Category::class, function (Faker $faker) {
         'meta_description' => $faker->text,
         'sort_order' => rand(0,5)
     ];
-});
 
-    
+});

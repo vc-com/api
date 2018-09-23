@@ -2,19 +2,39 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use App\Http\Controllers\ApiController;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class CategoryController extends Controller
+class CategoryController extends ApiController
 {
+    /**
+     * @var CategoryRepositoryInterface
+     */
+    private $repository;
+
+    /**
+     * CategoryController constructor.
+     * @param CategoryRepositoryInterface $repository
+     */
+    public function __construct(CategoryRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        if (!$result = $this->repository->all(['parents'])) {
+            return $this->errorResponse('banners_not_found', 422);
+        }
+
+        return $this->showAll($result);
     }
 
     /**

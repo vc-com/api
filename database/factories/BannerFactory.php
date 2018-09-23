@@ -5,14 +5,15 @@ use Faker\Generator as Faker;
 $factory->define(App\Entities\Banner::class, function (Faker $faker) {
 
     //download das imagens vindo do laravelpix.com
-    $imagemDownload = $faker->image(storage_path('app/public/img/banner'), 468,60);
+    // $imagemDownload = $faker->image(storage_path('app/public/img/banner'), 468,60);
 
-    //criando array do caminho das imagens
-    $imagePath = explode('/', $imagemDownload);
+    // //criando array do caminho das imagens
+    // $imagePath = explode('/', $imagemDownload);
 
-    //setando um nome para a imagem
-    $imageName = end($imagePath);
+    // //setando um nome para a imagem
+    // $imageName = end($imagePath);
 
+    $imageName = false;
 
     return [
         'name' => $faker->name,
@@ -25,4 +26,5 @@ $factory->define(App\Entities\Banner::class, function (Faker $faker) {
 		'meta_description' => $faker->text,
 		'sort_order' => rand(0,5)
     ];
+    
 });

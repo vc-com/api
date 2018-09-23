@@ -13,6 +13,8 @@ class CategoryParent extends Model
      * @var array
      */
     protected $fillable = [
+        'parent_id',
+        'nleft',
         'name',
         'active',
         'description',
@@ -22,5 +24,13 @@ class CategoryParent extends Model
         'meta_description',
         'sort_order',
     ];
+
+    /**
+     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
+     */
+    public function parents()
+    {
+        return $this->embedsMany(CategoryParentTree::class);
+    }
     
 }
