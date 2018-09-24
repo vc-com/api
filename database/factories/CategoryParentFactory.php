@@ -14,16 +14,17 @@ $factory->define(App\Entities\CategoryParent::class, function (Faker $faker) {
 //    $imageName = end($imagePath);
 
     $imageName = null;
+    $name = $faker->name;
 
     return [
         'parent_id' => '',
         'nleft' => '',
-        'name' => $faker->name,
+        'name' => $name,
         'active' => rand(0,5) > 0 ? true : false,
         'description' => $faker->text,
         'slug' => $faker->slug,
         'image' => $imageName,
-        'meta_title' => $faker->title,
+        'meta_title' => $name,
         'meta_description' => $faker->text,
         'sort_order' => rand(0,5)
     ];

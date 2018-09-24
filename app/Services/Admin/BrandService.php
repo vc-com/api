@@ -17,7 +17,9 @@ class BrandService
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|unique:brands|max:255',
+            'active' => 'required',
+            'slug' => 'required',
         ]);
     }
 }

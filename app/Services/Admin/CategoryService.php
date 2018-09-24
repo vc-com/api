@@ -5,10 +5,10 @@ namespace App\Services\Admin;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * Class BannerService
+ * Class CategoryService
  * @package App\Services\Admin
  */
-class BannerService
+class CategoryService
 {
     /**
      * @param array $data
@@ -17,9 +17,10 @@ class BannerService
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|unique:categories|max:255',
             'active' => 'required',
             'slug' => 'required',
-        ]);
+         ]);
     }
 }
+

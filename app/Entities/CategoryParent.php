@@ -25,12 +25,4 @@ class CategoryParent extends Model
         'sort_order',
     ];
 
-    /**
-     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
-     */
-    public function parents()
-    {
-        return $this->embedsMany(CategoryParentTree::class);
-    }
-    
 }
