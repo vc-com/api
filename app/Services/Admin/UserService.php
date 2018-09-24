@@ -50,13 +50,13 @@ class UserService
                 'password' => 'sometimes|required|confirmed|min:6|max:255'
             ]);
 
-        } 
+        }
 
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users|max:255',
             'password' => 'required|string|confirmed|min:6|max:255'
-        ]);      
+        ]);
 
     }
 
@@ -68,7 +68,7 @@ class UserService
      * @throws \Exception
      */
     public function create(Request $request)
-    {      
+    {
 
         $data = $this->filterRequest($request);
 

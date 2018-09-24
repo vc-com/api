@@ -10,16 +10,31 @@ use Illuminate\Support\Facades\Validator;
  */
 class BannerService
 {
+
     /**
      * @param array $data
+     * @param string $id
      * @return mixed
      */
-    public function validator(array $data)
+    public function validator(array $data, $id='')
     {
+
+        if ( isset($id) ) {
+
+            return Validator::make($data, [
+                'name' => 'required|string|unique:banners,name,'.$id.',_id',
+                'active' => 'required',
+                'slug' => 'required',
+            ]);
+
+        }
+
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|unique:banners|max:255',
             'active' => 'required',
             'slug' => 'required',
         ]);
+
+
     }
 }
