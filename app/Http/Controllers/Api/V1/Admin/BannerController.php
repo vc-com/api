@@ -127,11 +127,11 @@ class BannerController extends ApiController
      */
     public function destroy($id)
     {
-        if (!$result = $this->repository->findById($id)) {
+        if (!$this->repository->findById($id)) {
             return $this->errorResponse('banner_not_found', 422);
         }
 
-        if (!$result = $this->repository->delete($id)) {
+        if (!$this->repository->delete($id)) {
             return $this->errorResponse('banner_not_removed', 422);
         }
 

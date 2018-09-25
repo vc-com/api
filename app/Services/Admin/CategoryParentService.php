@@ -38,7 +38,8 @@ class CategoryParentService
         if ( isset($id) ) {
 
             return Validator::make($data, [
-                'name' => 'required|string|unique:categories_parents,name,'.$id.',_id',
+                'parent_id' => 'required',
+                'name' => 'required|string|unique:category_parents,name,'.$id.',_id',
                 'active' => 'required',
                 'slug' => 'required',
             ]);
@@ -46,7 +47,8 @@ class CategoryParentService
         }
 
         return Validator::make($data, [
-            'name' => 'required|string|unique:categories_parents|max:255',
+            'parent_id' => 'required',
+            'name' => 'required|string|unique:category_parents|max:255',
             'active' => 'required',
             'slug' => 'required',
         ]);

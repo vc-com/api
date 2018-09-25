@@ -42,6 +42,41 @@ class CategoryParentController extends ApiController
         $this->categoryParentService = $categoryParentService;
     }
 
+    /**
+     * @param $category
+     * @return bool
+     */
+    private function isExistsCategory($category)
+    {
+
+        if ($this->categoryRepository->findById($category)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @param $category
+     * @param $parent
+     * @return bool|mixed
+     */
+    private function isExistsCategoryParent($category, $parent)
+    {
+
+        $data = [
+            'parent_id' => $category,
+            '_id' => $parent
+        ];
+
+        if (!$result = $this->categoryParentRepository->whereFirst($data)) {
+            return false;
+        }
+
+        return $result;
+
+    }
 
     /**
      * Display a listing of the resource.
@@ -64,7 +99,7 @@ class CategoryParentController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -74,10 +109,14 @@ class CategoryParentController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $errors->toJson();   
         }
 
-        if (!$result = $this->categoryParentService->create($request->all())) {
+        if (!$this->isExistsCategory($request->all()['parent_id'])) {
+            return $this->errorResponse('category_not_found', 422);
+        }
+
+        if (!$result = $this->categoryParentRepository->create($request->all())) {
             return $this->errorResponse('category_not_created', 422);
         }
 
@@ -95,12 +134,7 @@ class CategoryParentController extends ApiController
     public function show($category, $parent)
     {
 
-        $data = [
-            'parent_id' => $category,
-            '_id' => $parent
-        ];
-
-        if (!$result = $this->categoryParentRepository->whereFirst($data)) {
+        if (!$result = $this->isExistsCategoryParent($category, $parent)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
@@ -126,8 +160,8 @@ class CategoryParentController extends ApiController
             $errors = $validator->errors();
             return $errors->toJson();
         }
-
-        if (!$result = $this->categoryParentRepository->whereFirst(['parent_id' => $category, '_id' => $parent])) {
+    
+        if (!$this->isExistsCategoryParent($category, $parent)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
@@ -148,16 +182,11 @@ class CategoryParentController extends ApiController
     public function destroy($category, $parent)
     {
 
-        $data = [
-            'parent_id' => $category,
-            '_id' => $parent
-        ];
-
-        if (!$result = $this->categoryParentRepository->whereFirst($data)) {
+        if (!$this->isExistsCategoryParent($category, $parent)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
-        if (!$result = $this->categoryParentRepository->delete($parent)) {
+        if (!$this->categoryParentRepository->delete($parent)) {
             return $this->errorResponse('category_not_removed', 422);
         }
 

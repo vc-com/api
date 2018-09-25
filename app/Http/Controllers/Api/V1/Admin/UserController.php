@@ -148,7 +148,7 @@ class UserController extends ApiController
             return $this->errorResponse('user_not_found', 422);
         }
 
-        if (!$result = $this->repository->delete($id)) {
+        if (!$this->repository->delete($id)) {
             return $this->errorResponse('user_not_removed', 422);
         }
 
