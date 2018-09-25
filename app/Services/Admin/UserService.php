@@ -28,14 +28,6 @@ class UserService
     }
 
     /**
-     * @return mixed
-     */
-    public function all()
-    {
-        return $this->repository->all(['roles']);
-    }
-
-    /**
      * @param array $data
      * @param string $id
      * @return mixed

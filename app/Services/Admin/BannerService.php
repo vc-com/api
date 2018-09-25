@@ -35,6 +35,6 @@ class BannerService
             'slug' => 'required',
         ]);
 
-
     }
+    
 }

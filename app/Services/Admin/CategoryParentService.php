@@ -53,28 +53,4 @@ class CategoryParentService
 
     }
 
-    /**
-     * Get Element
-     *
-     * @param $category
-     * @param $id
-     * @return mixed
-     */
-    public function getById($category, $id)
-    {
-        return $this->repository->whereFirst([
-            'parent_id' =>$category, '_id' => $id
-        ]);
-    }
-
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function delete($id)
-    {
-        return $this->repository->delete($id);
-    }
-
 }

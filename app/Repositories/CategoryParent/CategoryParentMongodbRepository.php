@@ -15,4 +15,12 @@ class CategoryParentMongodbRepository
         parent::__construct($model);
     }
 
+    public function getById($category, $id)
+    {
+        return $this->whereFirst([
+            'parent_id' =>$category, '_id' => $id
+        ]);
+
+    }
+
 }
