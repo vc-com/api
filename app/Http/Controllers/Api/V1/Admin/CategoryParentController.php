@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\ApiController;
 use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Services\Admin\CategoryService;
+use App\Services\Admin\CategoryParentService;
 use Illuminate\Http\Request;
 
 class CategoryParentController extends ApiController
@@ -15,17 +15,18 @@ class CategoryParentController extends ApiController
     private $repository;
 
     /**
-     * @var CategoryService
+     * @var CategoryParentService
      */
     private $service;
+
 
     /**
      * CategoryParentController constructor.
      * @param CategoryRepositoryInterface $repository
-     * @param CategoryService $service
+     * @param CategoryParentService $service
      */
     public function __construct(CategoryRepositoryInterface $repository,
-                                CategoryService $service)
+                                CategoryParentService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -35,11 +36,12 @@ class CategoryParentController extends ApiController
     /**
      * Display a listing of the resource.
      *
+     * @param $category
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index($category)
     {
-        if (!$result = $this->repository->all(['parents'])) {
+        if (!$result = $this->repository->findById($category, ['parents'])) {
             return $this->errorResponse('categories_not_found', 422);
         }
 
@@ -74,13 +76,14 @@ class CategoryParentController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param $category
+     * @param $parent
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($category, $parent)
     {
 
-        if (!$result = $this->repository->findById($id, ['parents'])) {
+        if (!$result = $this->service->getById($category, $parent)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
@@ -98,7 +101,6 @@ class CategoryParentController extends ApiController
      */
     public function update(Request $request, $id)
     {
-
 
         $validator = $this->service->validator($request->all());
 
@@ -122,16 +124,20 @@ class CategoryParentController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param $category
+     * @param $parent
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy($category, $parent)
     {
-        if (!$result = $this->repository->findById($id)) {
+
+
+        if (!$result = $this->service->getById($category, $parent)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
-        if (!$result = $this->repository->delete($id)) {
+
+        if (!$result = $this->service->delete($parent)) {
             return $this->errorResponse('category_not_removed', 422);
         }
 

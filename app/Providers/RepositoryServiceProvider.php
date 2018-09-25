@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Entities\Banner;
 use App\Entities\Brand;
 use App\Entities\Category;
+use App\Entities\CategoryParent;
 use App\Entities\Privilege;
 use App\Entities\Role;
 use App\Entities\User;
@@ -20,6 +21,8 @@ use App\Repositories\Banner\BannerMongodbRepository;
 use App\Repositories\Banner\BannerRepositoryInterface;
 use App\Repositories\Category\CategoryMongodbRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\CategoryParent\CategoryParentMongodbRepository;
+use App\Repositories\CategoryParent\CategoryParentRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -64,6 +67,10 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(CategoryRepositoryInterface::class, function () {
             return new CategoryMongodbRepository(new Category());
+        });
+
+        $this->app->bind(CategoryParentRepositoryInterface::class, function () {
+            return new CategoryParentMongodbRepository(new CategoryParent());
         });
 
     }
