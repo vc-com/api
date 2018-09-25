@@ -6,6 +6,7 @@ use App\Entities\Banner;
 use App\Entities\Brand;
 use App\Entities\Category;
 use App\Entities\CategoryParent;
+use App\Entities\Page;
 use App\Entities\Privilege;
 use App\Entities\Role;
 use App\Entities\User;
@@ -23,6 +24,8 @@ use App\Repositories\Category\CategoryMongodbRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\CategoryParent\CategoryParentMongodbRepository;
 use App\Repositories\CategoryParent\CategoryParentRepositoryInterface;
+use App\Repositories\Page\PageMongodbRepository;
+use App\Repositories\Page\PageRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -71,6 +74,10 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(CategoryParentRepositoryInterface::class, function () {
             return new CategoryParentMongodbRepository(new CategoryParent());
+        });
+
+        $this->app->bind(PageRepositoryInterface::class, function () {
+            return new PageMongodbRepository(new Page());
         });
 
     }

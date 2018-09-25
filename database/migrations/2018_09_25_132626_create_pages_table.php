@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreatePagesTable extends Migration
 {
 
     /**
@@ -16,14 +16,13 @@ class CreateCategoriesTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-        ->table('categories', function (Blueprint $table)
+        ->table('pages', function (Blueprint $table)
         {
 
             $table->string('name');
             $table->string('active');
-            $table->string('description');
+            $table->text('description');
             $table->string('slug');
-            $table->string('image');
             $table->string('meta_title');
             $table->string('meta_description');
             $table->string('sort_order');
@@ -41,7 +40,7 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::connection(env('DB_CONNECTION'))
-        ->table('categories', function (Blueprint $table)
+        ->table('pages', function (Blueprint $table)
         {
             $table->drop();
         });

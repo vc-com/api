@@ -28,6 +28,11 @@ class Banner extends Model
         'sort_order',
     ];
 
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = str_slug($value);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

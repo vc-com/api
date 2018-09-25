@@ -30,5 +30,10 @@ class Category extends Model
     {
         return $this->belongsToMany(CategoryParent::class);
     }
+
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = str_slug($value);
+    }
     
 }

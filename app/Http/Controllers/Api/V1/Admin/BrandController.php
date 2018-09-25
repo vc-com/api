@@ -40,7 +40,7 @@ class BrandController extends ApiController
     {
 
         if (!$result = $this->repository->all()) {
-            return $this->errorResponse('Brands_not_found', 422);
+            return $this->errorResponse('brands_not_found', 422);
         }
 
         return $this->showAll($result);
