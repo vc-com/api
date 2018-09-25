@@ -10,10 +10,10 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Class User
+ * Class Customer
  * @package App
  */
-class User extends Authenticatable implements JWTSubject
+class Customer extends Authenticatable implements JWTSubject
 {
 
     use SoftDeletes, Notifiable;
@@ -32,11 +32,8 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'image',
         'active',
         'verified',
-        'roles',
-        'privileges',
     ];
 
     /**
@@ -56,6 +53,19 @@ class User extends Authenticatable implements JWTSubject
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    /**
+     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
+     */
+    public function address()
+    {
+        return $this->belongsToMany(CustomerAddress::class);
+    }
+
+    public function phones()
+    {
+        return $this->belongsToMany(CustomerPhone::class);
     }
 
     /**
@@ -81,14 +91,6 @@ class User extends Authenticatable implements JWTSubject
     public function isVerified()
     {
         return $this->verified == User::VERIFIED_USER;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
     }
 
     /**

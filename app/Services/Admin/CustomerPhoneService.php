@@ -2,27 +2,27 @@
 
 namespace App\Services\Admin;
 
-use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Customer\CustomerPhoneRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * Class UserService
+ * Class CustomerPhoneService
  * @package App\Services\Admin
  */
-class UserService
+class CustomerPhoneService
 {
     /**
-     * @var UserRepositoryInterface
+     * @var CustomerPhoneRepositoryInterface
      */
     private $repository;
 
     /**
-     * UserService constructor.
-     * @param UserRepositoryInterface $repository
+     * CustomerPhoneService constructor.
+     * @param CustomerPhoneRepositoryInterface $repository
      */
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(CustomerPhoneRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -38,7 +38,7 @@ class UserService
 
             return Validator::make($data, [
                 'name' => 'required|string|max:255',
-                'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                'email' => 'required|string|email|unique:customers,email,'.$id.',_id',
                 'password' => 'sometimes|required|confirmed|min:6|max:255'
             ]);
 
@@ -46,14 +46,14 @@ class UserService
 
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users|max:255',
+            'email' => 'required|string|email|unique:customers|max:255',
             'password' => 'required|string|confirmed|min:6|max:255'
         ]);
 
     }
 
     /**
-     * Create User
+     * Create Customer
      *
      * @param Request $request
      * @return bool
@@ -74,7 +74,7 @@ class UserService
 
 
     /**
-     * Update User
+     * Update Customer
      *
      * @param Request $request
      * @param $id
@@ -82,11 +82,10 @@ class UserService
      */
     public function update(Request $request, $id)
     {
-
+        
         $data = $this->filterRequest($request);
 
         return $this->repository->update($id, $data);
-        
     }
 
     /**
@@ -102,15 +101,8 @@ class UserService
             $data['active'] = false;
         }
 
-        if ($request->has('roles')) {
-            unset($data['roles']);
-        }
-
-        if ($request->has('privileges')) {
-            unset($data['privileges']);
-        }
-
         return $data;
+
     }
 
 }

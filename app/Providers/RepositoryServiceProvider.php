@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Entities\Banner;
 use App\Entities\Brand;
+use App\Entities\Customer;
+use App\Entities\CustomerAddress;
+use App\Entities\CustomerPhone;
 use App\Entities\Category;
 use App\Entities\CategoryParent;
 use App\Entities\Page;
@@ -12,6 +15,12 @@ use App\Entities\Role;
 use App\Entities\User;
 use App\Repositories\Brand\BrandMongodbRepository;
 use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Customer\CustomerMongodbRepository;
+use App\Repositories\Customer\CustomerRepositoryInterface;
+use App\Repositories\CustomerAddress\CustomerAddressMongodbRepository;
+use App\Repositories\CustomerAddress\CustomerAddressRepositoryInterface;
+use App\Repositories\CustomerPhone\CustomerPhoneMongodbRepository;
+use App\Repositories\CustomerPhone\CustomerPhoneRepositoryInterface;
 use App\Repositories\Privilege\PrivilegeMongodbRepository;
 use App\Repositories\Privilege\PrivilegeRepositoryInterface;
 use App\Repositories\Role\RoleMongodbRepository;
@@ -48,6 +57,19 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
 
+
+        $this->app->bind(BannerRepositoryInterface::class, function () {
+            return new BannerMongodbRepository(new Banner());
+        });
+
+        $this->app->bind(BrandRepositoryInterface::class, function () {
+            return new BrandMongodbRepository(new Brand());
+        });
+
+        $this->app->bind(CustomerRepositoryInterface::class, function () {
+            return new CustomerMongodbRepository(new Customer());
+        });
+
         $this->app->bind(PrivilegeRepositoryInterface::class, function () {
             return new PrivilegeMongodbRepository(new Privilege());
         });
@@ -58,14 +80,6 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(UserRepositoryInterface::class, function () {
             return new UserMongodbRepository(new User());
-        });
-
-        $this->app->bind(BannerRepositoryInterface::class, function () {
-            return new BannerMongodbRepository(new Banner());
-        });
-
-        $this->app->bind(BrandRepositoryInterface::class, function () {
-            return new BrandMongodbRepository(new Brand());
         });
 
         $this->app->bind(CategoryRepositoryInterface::class, function () {
