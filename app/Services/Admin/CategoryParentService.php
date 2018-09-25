@@ -2,8 +2,6 @@
 
 namespace App\Services\Admin;
 
-use App\Entities\Category;
-use App\Repositories\CategoryParent\CategoryParentRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -12,20 +10,6 @@ use Illuminate\Support\Facades\Validator;
  */
 class CategoryParentService
 {
-    /**
-     * @var CategoryParentRepositoryInterface
-     */
-    private $repository;
-
-    /**
-     * CategoryParentService constructor.
-     * @param CategoryParentRepositoryInterface $repository
-     */
-    public function __construct(CategoryParentRepositoryInterface $repository)
-    {
-
-        $this->repository = $repository;
-    }
 
     /**
      * @param array $data
