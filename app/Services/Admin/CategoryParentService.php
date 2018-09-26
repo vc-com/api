@@ -41,20 +41,10 @@ class CategoryParentService
      */
     public function validator(array $data, $id='')
     {
-
-        if ( isset($id) ) {
-
-            return Validator::make($data, [
-                'name' => 'required|string|unique:category_parents,name,'.$id.',_id',
-                'active' => 'required',
-                'slug' => 'required',
-            ]);
-
-        }
-
         return Validator::make($data, [
-            'name' => 'required|string|unique:category_parents|max:255',
+            'name' => 'required|string|max:255',
             'active' => 'required',
+            'nleft' => 'required|integer',
             'slug' => 'required',
         ]);
 
@@ -68,19 +58,21 @@ class CategoryParentService
      * @return mixed
      */
     public function create(Request $request, $id)
-    {  
+    {
 
-        if (!$request->has('parent_id')) {
+        $category = $this->category->find($id);
 
-            $data = $request->all();
-            $data['parent_id'] = $id;
-            $parent = $this->categoryParent->create($data);
+        $exists = $category->parents()
+                ->where('name', $request->input('name') )
+                ->exists();
 
-        } else {
-           $parent = $this->categoryParent->create($request->all());
+        if ($exists === true) {
+            return $category->parents()
+                ->where('name', $request->input('name') )
+                ->first();
         }
-        
-        $category = $this->category->find($id); 
+
+        $parent = $this->categoryParent->create($request->all());
         $category->parents()->attach($parent);
 
         return $parent;
