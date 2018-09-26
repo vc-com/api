@@ -43,16 +43,8 @@ class CustomerPhoneService
      */
     public function validator(array $data, $id='')
     {
-        if ( isset($id) ) {
-
-            return Validator::make($data, [
-                'number' => 'required|string|unique:customer_phone,number,'.$id.',_id',
-            ]);
-
-        }
-
         return Validator::make($data, [
-            'number' => 'required|string|unique:customer_phone,number',
+            'number' => 'required|string',
         ]);
 
     }
@@ -68,6 +60,17 @@ class CustomerPhoneService
     {
 
         $customer = $this->customer->find($id);
+
+        $exists = $customer->phones()
+                ->where('number', $request->input('number') )
+                ->exists();
+
+        if ($exists === true) {
+            return $customer->phones()
+                ->where('number', $request->input('number') )
+                ->first();
+        }
+
         $address = $this->customerPhone->create($request->all());
         $customer->address()->attach($address);
 

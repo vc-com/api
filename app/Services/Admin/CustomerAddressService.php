@@ -42,20 +42,10 @@ class CustomerAddressService
      */
     public function validator(array $data, $id='')
     {
-        if ( isset($id) ) {
-
-            return Validator::make($data, [
-                'address' => 'required|string|unique:customer_address,address,'.$id.',_id',
-                'postcode' => 'required|string'
-            ]);
-
-        }
-
         return Validator::make($data, [
-            'address' => 'required|string|unique:customer_address,address',
+            'address' => 'required|string',
             'postcode' => 'required|string'
         ]);
-
     }
 
 
@@ -69,8 +59,8 @@ class CustomerAddressService
     public function create(Request $request, $id)
     {
 
-        $customer = $this->customer->find($id);
         $address = $this->customerAddress->create($request->all());
+        $customer = $this->customer->find($id);
         $customer->address()->attach($address);
 
         return $address;

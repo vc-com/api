@@ -83,8 +83,8 @@ class CustomerService
     {
         
         $data = $this->filterRequest($request);
-
         return $this->repository->update($id, $data);
+        
     }
 
     /**

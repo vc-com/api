@@ -14,4 +14,8 @@ class CustomerPhone extends Model
     protected $fillable = [
         'number',
     ];
+
+    protected $hidden = [
+        'customer_ids',
+    ];
 }

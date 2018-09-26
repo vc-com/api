@@ -16,4 +16,8 @@ class CustomerAddress extends Model
         'postcode',
     ];
 
+    protected $hidden = [
+        'customer_ids',
+    ];
+
 }

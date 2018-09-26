@@ -68,20 +68,19 @@ class CategoryParentService
      * @return mixed
      */
     public function create(Request $request, $id)
-    {
-
-        $category = $this->category->find($id);   
+    {  
 
         if (!$request->has('parent_id')) {
 
             $data = $request->all();
             $data['parent_id'] = $id;
             $parent = $this->categoryParent->create($data);
-            
+
         } else {
            $parent = $this->categoryParent->create($request->all());
         }
         
+        $category = $this->category->find($id); 
         $category->parents()->attach($parent);
 
         return $parent;
