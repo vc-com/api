@@ -71,18 +71,7 @@ class CustomerController extends ApiController
             return $this->errorResponse('customer_not_created', 500);
         }
 
-        $credentials = $request->only('email', 'password');
-
-        if (!$token = JWTAuth::attempt($credentials)) {
-
-            return $this->errorResponse('invalid_credentials', 401);
-
-        }
-
-        //Authorization || HTTP_Authorization
-        return $this->successResponse([
-            'HTTP_Authorization' => $this->tokenBearerGenerate($request)
-        ]);
+        return $this->successResponse($result);
 
     }
 

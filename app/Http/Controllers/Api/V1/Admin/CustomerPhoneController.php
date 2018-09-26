@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Site;
+namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\ApiController;
 
 use App\Repositories\Customer\CustomerRepositoryInterface;
-use App\Services\Site\CustomerService;
+use App\Services\Admin\CustomerService;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
-class CustomerController extends ApiController
+class CustomerPhoneController extends ApiController
 {
 
     /**
@@ -23,7 +22,7 @@ class CustomerController extends ApiController
     private $repository;
 
     /**
-     * CustomerController constructor.
+     * CustomerPhoneController constructor.
      * @param CustomerService $service
      * @param CustomerRepositoryInterface $repository
      */
@@ -42,7 +41,7 @@ class CustomerController extends ApiController
     public function index()
     {
         if (!$result = $this->repository->all(['address', 'phones'])) {
-            return $this->errorResponse('customers_not_found', 422);
+            return $this->errorResponse('customer_phones_not_found', 422);
         }
 
         return $this->showAll($result);
@@ -68,21 +67,8 @@ class CustomerController extends ApiController
 
         if (!$result = $this->service->create($request)) {
 
-            return $this->errorResponse('customer_not_created', 500);
+            return $this->errorResponse('customer_phone_not_created', 500);
         }
-
-        $credentials = $request->only('email', 'password');
-
-        if (!$token = JWTAuth::attempt($credentials)) {
-
-            return $this->errorResponse('invalid_credentials', 401);
-
-        }
-
-        //Authorization || HTTP_Authorization
-        return $this->successResponse([
-            'HTTP_Authorization' => $this->tokenBearerGenerate($request)
-        ]);
 
     }
 
@@ -97,7 +83,7 @@ class CustomerController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id, ['address', 'phones'])) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_phone_not_found', 422);
         }
 
         return $this->showOne($result);
@@ -124,11 +110,11 @@ class CustomerController extends ApiController
 
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_phone_not_found', 422);
         }
 
         if (!$result = $this->service->update($request, $id)) {
-            return $this->errorResponse('customer_not_updated', 422);
+            return $this->errorResponse('customer_phone_not_updated', 422);
         }
 
         return $this->successResponse($result);
@@ -145,14 +131,14 @@ class CustomerController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_phone_not_found', 422);
         }
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('customer_not_removed', 422);
+            return $this->errorResponse('customer_phone_not_removed', 422);
         }
 
-        return $this->successResponse('customer_removed');
+        return $this->successResponse('customer_phone_removed');
 
     }
 }
