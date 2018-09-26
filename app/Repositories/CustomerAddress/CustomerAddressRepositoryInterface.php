@@ -6,5 +6,5 @@ use App\Interfaces\IRepository;
 
 interface CustomerAddressRepositoryInterface extends IRepository
 {
-    public function search($data);
+
 }

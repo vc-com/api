@@ -3,45 +3,72 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\ApiController;
-
 use App\Repositories\Customer\CustomerRepositoryInterface;
-use App\Services\Admin\CustomerService;
+use App\Repositories\CustomerAddress\CustomerAddressRepositoryInterface;
+use App\Services\Admin\CustomerAddressService;
 use Illuminate\Http\Request;
 
 class CustomerAddressController extends ApiController
 {
-
-    /**
-     * @var CustomerService
-     */
-    private $service;
-
     /**
      * @var CustomerRepositoryInterface
      */
-    private $repository;
+    private $customerRepository;
+
+    /**
+     * @var CustomerAddressRepositoryInterface
+     */
+    private $addressRepository;
+
+    /**
+     * @var CustomerAddressService
+     */
+    private $addressService;
+
 
     /**
      * CustomerAddressController constructor.
-     * @param CustomerService $service
-     * @param CustomerRepositoryInterface $repository
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param CustomerAddressRepositoryInterface $addressRepository
+     * @param CustomerAddressService $addressService
      */
-    public function __construct(CustomerService $service,
-                                CustomerRepositoryInterface $repository)
+    public function __construct(CustomerRepositoryInterface $customerRepository,
+                                CustomerAddressRepositoryInterface $addressRepository,
+                                CustomerAddressService $addressService)
     {
-        $this->service = $service;
-        $this->repository = $repository;
+        $this->customerRepository = $customerRepository;
+        $this->addressRepository = $addressRepository;
+        $this->addressService = $addressService;
+    }
+
+    /**
+     * Exists Customer
+     *
+     * @param $customer
+     * @return bool
+     */
+    private function isExistsCustomer($customer)
+    {
+
+
+        if (!$result = $this->customerRepository->findById($customer)) {
+            return false;
+        }
+
+        return true;
+
     }
 
     /**
      * Display a listing of the resource.
      *
+     * @param $customer
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index($customer)
     {
-        if (!$result = $this->repository->all(['address', 'phones'])) {
-            return $this->errorResponse('customer_address_not_found', 422);
+        if (!$result = $this->customerRepository->findById($customer, ['address'])) {
+            return $this->errorResponse('address_not_found', 422);
         }
 
         return $this->showAll($result);
@@ -77,13 +104,18 @@ class CustomerAddressController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param $id
+     * @param $customer
+     * @param $address
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($customer, $address)
     {
 
-        if (!$result = $this->repository->findById($id, ['address', 'phones'])) {
+        if (!$this->isExistsCustomer($customer) ) {
+            return $this->errorResponse('customer_not_found', 422);
+        }
+
+        if (!$result = $this->addressRepository->findById($address)) {
             return $this->errorResponse('customer_address_not_found', 422);
         }
 
@@ -125,17 +157,18 @@ class CustomerAddressController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param $id
+     * @param $customer
+     * @param $address
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy($customer, $address)
     {
 
-        if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('customer_address_not_found', 422);
+        if (!$this->isExistsCustomer($customer) ) {
+            return $this->errorResponse('customer_not_found', 422);
         }
 
-        if (!$this->repository->delete($id)) {
+        if (!$this->addressRepository->delete($address)) {
             return $this->errorResponse('customer_address_not_removed', 422);
         }
 

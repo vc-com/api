@@ -70,6 +70,14 @@ class RepositoryServiceProvider extends ServiceProvider
             return new CustomerMongodbRepository(new Customer());
         });
 
+        $this->app->bind(CustomerAddressRepositoryInterface::class, function () {
+            return new CustomerAddressMongodbRepository(new CustomerAddress());
+        });
+
+        $this->app->bind(CustomerPhoneRepositoryInterface::class, function () {
+            return new CustomerPhoneMongodbRepository(new CustomerPhone());
+        });
+
         $this->app->bind(PrivilegeRepositoryInterface::class, function () {
             return new PrivilegeMongodbRepository(new Privilege());
         });
