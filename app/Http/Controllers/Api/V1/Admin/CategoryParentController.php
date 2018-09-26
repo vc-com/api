@@ -105,7 +105,7 @@ class CategoryParentController extends ApiController
      */
     public function store(Request $request, $categoryId)
     {
-
+        
         $validator = $this->categoryParentService->validator($request->all());
 
         if ($validator->fails()) {
@@ -113,11 +113,11 @@ class CategoryParentController extends ApiController
             return $errors->toJson();   
         }
 
-        if (!$this->isExistsCategory($request->all()['parent_id'])) {
+        if (!$this->isExistsCategory($categoryId)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
-        if (!$result = $this->categoryParentService->create($request->all(), $categoryId)) {
+        if (!$result = $this->categoryParentService->create($request, $categoryId)) {
             return $this->errorResponse('category_not_created', 422);
         }
 

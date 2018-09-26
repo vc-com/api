@@ -24,6 +24,15 @@ class Category extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'category_parent_ids',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function parents()

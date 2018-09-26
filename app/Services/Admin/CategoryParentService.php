@@ -2,6 +2,8 @@
 
 namespace App\Services\Admin;
 
+use App\Entities\Category;
+use App\Entities\CategoryParent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,6 +13,26 @@ use Illuminate\Support\Facades\Validator;
  */
 class CategoryParentService
 {
+    /**
+     * @var Category
+     */
+    private $category;
+
+    /**
+     * @var CategoryParent
+     */
+    private $categoryParent;
+
+    /**
+     * CategoryParentService constructor.
+     * @param Category $category
+     * @param CategoryParent $categoryParent
+     */
+    public function __construct(Category $category, CategoryParent $categoryParent)
+    {
+        $this->category = $category;
+        $this->categoryParent = $categoryParent;
+    }
 
     /**
      * @param array $data
@@ -23,7 +45,6 @@ class CategoryParentService
         if ( isset($id) ) {
 
             return Validator::make($data, [
-                'parent_id' => 'required',
                 'name' => 'required|string|unique:category_parents,name,'.$id.',_id',
                 'active' => 'required',
                 'slug' => 'required',
@@ -32,7 +53,6 @@ class CategoryParentService
         }
 
         return Validator::make($data, [
-            'parent_id' => 'required',
             'name' => 'required|string|unique:category_parents|max:255',
             'active' => 'required',
             'slug' => 'required',
@@ -41,6 +61,8 @@ class CategoryParentService
     }
 
     /**
+     * Create And Attach
+     *
      * @param Request $request
      * @param $id
      * @return mixed
@@ -48,11 +70,21 @@ class CategoryParentService
     public function create(Request $request, $id)
     {
 
-        $customer = $this->customer->find($id);
-        $address = $this->customerAddress->create($request->all());
-        $customer->address()->attach($address);
+        $category = $this->category->find($id);   
 
-        return $address;
+        if (!$request->has('parent_id')) {
+
+            $data = $request->all();
+            $data['parent_id'] = $id;
+            $parent = $this->categoryParent->create($data);
+            
+        } else {
+           $parent = $this->categoryParent->create($request->all());
+        }
+        
+        $category->parents()->attach($parent);
+
+        return $parent;
 
     }
 

@@ -25,6 +25,15 @@ class CategoryParent extends Model
         'sort_order',
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'category_ids',
+    ];
+
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = str_slug($value);
