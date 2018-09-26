@@ -43,13 +43,13 @@ class CategoryParentController extends ApiController
     }
 
     /**
-     * @param $category
+     * @param $categoryId
      * @return bool
      */
-    private function isExistsCategory($category)
+    private function isExistsCategory($categoryId)
     {
 
-        if ($this->categoryRepository->findById($category)) {
+        if ($this->categoryRepository->findById($categoryId)) {
             return true;
         }
 
@@ -58,16 +58,16 @@ class CategoryParentController extends ApiController
     }
 
     /**
-     * @param $category
-     * @param $parent
+     * @param $categoryId
+     * @param $parentId
      * @return bool|mixed
      */
-    private function isExistsCategoryParent($category, $parent)
+    private function isExistsCategoryParent($categoryId, $parentId)
     {
 
         $data = [
-            'parent_id' => $category,
-            '_id' => $parent
+            'parent_id' => $categoryId,
+            '_id' => $parentId
         ];
 
         if (!$result = $this->categoryParentRepository->whereFirst($data)) {
@@ -81,13 +81,13 @@ class CategoryParentController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @param $category
+     * @param $categoryId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index($category)
+    public function index($categoryId)
     {
 
-        if (!$result = $this->categoryRepository->findById($category, ['parents'])) {
+        if (!$result = $this->categoryRepository->findById($categoryId, ['parents'])) {
             return $this->errorResponse('categories_not_found', 422);
         }
 
@@ -100,10 +100,10 @@ class CategoryParentController extends ApiController
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @param $category
+     * @param $categoryId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request, $category)
+    public function store(Request $request, $categoryId)
     {
 
         $validator = $this->categoryParentService->validator($request->all());
@@ -117,7 +117,7 @@ class CategoryParentController extends ApiController
             return $this->errorResponse('category_not_found', 422);
         }
 
-        if (!$result = $this->categoryParentService->create($request->all(), $category)) {
+        if (!$result = $this->categoryParentService->create($request->all(), $categoryId)) {
             return $this->errorResponse('category_not_created', 422);
         }
 
@@ -128,14 +128,14 @@ class CategoryParentController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param $category
-     * @param $parent
+     * @param $categoryId
+     * @param $parentId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($category, $parent)
+    public function show($categoryId, $parentId)
     {
 
-        if (!$result = $this->isExistsCategoryParent($category, $parent)) {
+        if (!$result = $this->isExistsCategoryParent($categoryId, $parentId)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
@@ -148,11 +148,11 @@ class CategoryParentController extends ApiController
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param $category
-     * @param $parent
+     * @param $categoryId
+     * @param $parentId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $category, $parent)
+    public function update(Request $request, $categoryId, $parentId)
     {
 
         $validator = $this->categoryParentService->validator($request->all());
@@ -162,11 +162,11 @@ class CategoryParentController extends ApiController
             return $errors->toJson();
         }
     
-        if (!$this->isExistsCategoryParent($category, $parent)) {
+        if (!$this->isExistsCategoryParent($categoryId, $parentId)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
-        if (!$result = $this->categoryParentRepository->update($parent, $request->all())) {
+        if (!$result = $this->categoryParentRepository->update($parentId, $request->all())) {
             return $this->errorResponse('category_not_updated', 422);
         }
 
@@ -176,18 +176,18 @@ class CategoryParentController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param $category
-     * @param $parent
+     * @param $categoryId
+     * @param $parentId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($category, $parent)
+    public function destroy($categoryId, $parentId)
     {
 
-        if (!$this->isExistsCategoryParent($category, $parent)) {
+        if (!$this->isExistsCategoryParent($categoryId, $parentId)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
-        if (!$this->categoryParentRepository->delete($parent)) {
+        if (!$this->categoryParentRepository->delete($parentId)) {
             return $this->errorResponse('category_not_removed', 422);
         }
 
