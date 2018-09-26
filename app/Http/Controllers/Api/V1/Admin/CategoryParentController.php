@@ -100,9 +100,10 @@ class CategoryParentController extends ApiController
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param $category
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, $category)
     {
 
         $validator = $this->categoryParentService->validator($request->all());
@@ -116,7 +117,7 @@ class CategoryParentController extends ApiController
             return $this->errorResponse('category_not_found', 422);
         }
 
-        if (!$result = $this->categoryParentRepository->create($request->all())) {
+        if (!$result = $this->categoryParentService->create($request->all(), $category)) {
             return $this->errorResponse('category_not_created', 422);
         }
 

@@ -2,9 +2,9 @@
 
 namespace App\Services\Admin;
 
-use App\Repositories\CustomerPhone\CustomerPhoneRepositoryInterface;
+use App\Entities\Customer;
+use App\Entities\CustomerPhone;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -13,19 +13,28 @@ use Illuminate\Support\Facades\Validator;
  */
 class CustomerPhoneService
 {
+
     /**
-     * @var CustomerPhoneRepositoryInterface
+     * @var Customer
      */
-    private $repository;
+    private $customer;
+
+    /**
+     * @var CustomerPhone
+     */
+    private $customerPhone;
 
     /**
      * CustomerPhoneService constructor.
-     * @param CustomerPhoneRepositoryInterface $repository
+     * @param Customer $customer
+     * @param CustomerPhone $customerPhone
      */
-    public function __construct(CustomerPhoneRepositoryInterface $repository)
+    public function __construct(Customer $customer, CustomerPhone $customerPhone)
     {
-        $this->repository = $repository;
+        $this->customer = $customer;
+        $this->customerPhone = $customerPhone;
     }
+
 
     /**
      * @param array $data
@@ -37,71 +46,32 @@ class CustomerPhoneService
         if ( isset($id) ) {
 
             return Validator::make($data, [
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|unique:customers,email,'.$id.',_id',
-                'password' => 'sometimes|required|confirmed|min:6|max:255'
+                'number' => 'required|string|unique:customer_phone,number,'.$id.',_id',
             ]);
 
         }
 
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:customers|max:255',
-            'password' => 'required|string|confirmed|min:6|max:255'
+            'number' => 'required|string|unique:customer_phone,number',
         ]);
 
     }
 
     /**
-     * Create Customer
-     *
-     * @param Request $request
-     * @return bool
-     * @throws \Exception
-     */
-    public function create(Request $request)
-    {
-
-        $data = $this->filterRequest($request);
-
-        if (!$created = $this->repository->create($data)) {
-            return false;
-        }
-
-        return $created;
-
-    }
-
-
-    /**
-     * Update Customer
+     * Create and Attach
      *
      * @param Request $request
      * @param $id
-     * @return bool
+     * @return mixed
      */
-    public function update(Request $request, $id)
-    {
-        
-        $data = $this->filterRequest($request);
-
-        return $this->repository->update($id, $data);
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     */
-    private function filterRequest(Request $request)
+    public function create(Request $request, $id)
     {
 
-        $data = $request->all();
+        $customer = $this->customer->find($id);
+        $address = $this->customerPhone->create($request->all());
+        $customer->address()->attach($address);
 
-        if (!$request->has('active')) {
-            $data['active'] = false;
-        }
-
-        return $data;
+        return $address;
 
     }
 

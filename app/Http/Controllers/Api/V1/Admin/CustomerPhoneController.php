@@ -3,72 +3,98 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\ApiController;
-
 use App\Repositories\Customer\CustomerRepositoryInterface;
-use App\Services\Admin\CustomerService;
+use App\Repositories\CustomerPhone\CustomerPhoneRepositoryInterface;
+use App\Services\Admin\CustomerPhoneService;
 use Illuminate\Http\Request;
 
 class CustomerPhoneController extends ApiController
 {
-
-    /**
-     * @var CustomerService
-     */
-    private $service;
-
     /**
      * @var CustomerRepositoryInterface
      */
-    private $repository;
+    private $customerRepository;
+
+    /**
+     * @var CustomerPhoneRepositoryInterface
+     */
+    private $phoneRepository;
+
+    /**
+     * @var CustomerPhoneService
+     */
+    private $phoneService;
+
 
     /**
      * CustomerPhoneController constructor.
-     * @param CustomerService $service
-     * @param CustomerRepositoryInterface $repository
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param CustomerPhoneRepositoryInterface $phoneRepository
+     * @param CustomerPhoneService $phoneService
      */
-    public function __construct(CustomerService $service,
-                                CustomerRepositoryInterface $repository)
+    public function __construct(CustomerRepositoryInterface $customerRepository,
+                                CustomerPhoneRepositoryInterface $phoneRepository,
+                                CustomerPhoneService $phoneService)
     {
-        $this->service = $service;
-        $this->repository = $repository;
+        $this->customerRepository = $customerRepository;
+        $this->phoneRepository = $phoneRepository;
+        $this->phoneService = $phoneService;
+    }
+
+    /**
+     * Exists Customer
+     *
+     * @param $customerId
+     * @return bool
+     */
+    private function isExistsCustomer($customerId)
+    {
+
+        if (!$result = $this->customerRepository->findById($customerId)) {
+            return false;
+        }
+
+        return true;
+
     }
 
     /**
      * Display a listing of the resource.
      *
+     * @param $customerId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index($customerId)
     {
-        if (!$result = $this->repository->all(['address', 'phones'])) {
-            return $this->errorResponse('customer_phones_not_found', 422);
+        if (!$result = $this->customerRepository->findById($customerId, ['phones'])) {
+            return $this->errorResponse('phone_not_found', 422);
         }
 
         return $this->showAll($result);
     }
 
     /**
-     *
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param $customerId
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      */
-    public function store(Request $request)
+    public function store(Request $request, $customerId)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->phoneService->validator($request->all());
 
         if ($validator->fails()) {
             $errors = $validator->errors();
             return $errors->toJson();
         }
 
-        if (!$result = $this->service->create($request)) {
-
+        if (!$result = $this->phoneService->create($request, $customerId)) {
             return $this->errorResponse('customer_phone_not_created', 500);
         }
+
+        return $this->successResponse($result);
 
     }
 
@@ -76,13 +102,18 @@ class CustomerPhoneController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param $id
+     * @param $customerId
+     * @param $phoneId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($customerId, $phoneId)
     {
 
-        if (!$result = $this->repository->findById($id, ['address', 'phones'])) {
+        if (!$this->isExistsCustomer($customerId) ) {
+            return $this->errorResponse('customer_not_found', 422);
+        }
+
+        if (!$result = $this->phoneRepository->findById($phoneId)) {
             return $this->errorResponse('customer_phone_not_found', 422);
         }
 
@@ -95,25 +126,30 @@ class CustomerPhoneController extends ApiController
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param $id
+     * @param $customerId
+     * @param $phoneId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $customerId, $phoneId)
     {
 
-        $validator = $this->service->validator($request->all(), $id);
+        $validator = $this->phoneService->validator($request->all(), $phoneId);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
             return $errors->toJson();
         }
 
+        if (!$this->isExistsCustomer($customerId) ) {
+            return $this->errorResponse('customer_not_found', 422);
+        }
 
-        if (!$result = $this->repository->findById($id)) {
+
+        if (!$result = $this->phoneRepository->findById($phoneId)) {
             return $this->errorResponse('customer_phone_not_found', 422);
         }
 
-        if (!$result = $this->service->update($request, $id)) {
+        if (!$result = $this->phoneRepository->update($phoneId, $request->all())) {
             return $this->errorResponse('customer_phone_not_updated', 422);
         }
 
@@ -124,21 +160,23 @@ class CustomerPhoneController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param $id
+     * @param $customerId
+     * @param $phoneId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy($customerId, $phoneId)
     {
 
-        if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('customer_phone_not_found', 422);
+        if (!$this->isExistsCustomer($customerId) ) {
+            return $this->errorResponse('customer_not_found', 422);
         }
 
-        if (!$this->repository->delete($id)) {
+        if (!$this->phoneRepository->delete($phoneId)) {
             return $this->errorResponse('customer_phone_not_removed', 422);
         }
 
         return $this->successResponse('customer_phone_removed');
 
     }
+
 }

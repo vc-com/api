@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -36,6 +37,22 @@ class CategoryParentService
             'active' => 'required',
             'slug' => 'required',
         ]);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
+    public function create(Request $request, $id)
+    {
+
+        $customer = $this->customer->find($id);
+        $address = $this->customerAddress->create($request->all());
+        $customer->address()->attach($address);
+
+        return $address;
 
     }
 

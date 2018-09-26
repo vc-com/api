@@ -15,11 +15,11 @@ class CustomerSeeder extends Seeder
         $customers= factory(Customer::class,20)->create();
         $customers->each(function ($customer) {
 
-            $phones = factory(CustomerPhone::class, rand(1,2))->create();
-            $customer->phones()->attach($phones);
-            
             $address = factory(CustomerAddress::class, rand(1,2))->create();
             $customer->address()->attach($address);
+
+            $phones = factory(CustomerPhone::class, rand(1,2))->create();
+            $customer->phones()->attach($phones);
 
         });
 

@@ -2,9 +2,9 @@
 
 namespace App\Services\Admin;
 
-use App\Repositories\CustomerAddress\CustomerAddressRepositoryInterface;
+use App\Entities\Customer;
+use App\Entities\CustomerAddress;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -13,18 +13,26 @@ use Illuminate\Support\Facades\Validator;
  */
 class CustomerAddressService
 {
+
     /**
-     * @var CustomerAddressRepositoryInterface
+     * @var Customer
      */
-    private $repository;
+    private $customer;
+
+    /**
+     * @var CustomerAddress
+     */
+    private $customerAddress;
 
     /**
      * CustomerAddressService constructor.
-     * @param CustomerAddressRepositoryInterface $repository
+     * @param Customer $customer
+     * @param CustomerAddress $customerAddress
      */
-    public function __construct(CustomerAddressRepositoryInterface $repository)
+    public function __construct(Customer $customer, CustomerAddress $customerAddress)
     {
-        $this->repository = $repository;
+        $this->customer = $customer;
+        $this->customerAddress = $customerAddress;
     }
 
     /**
@@ -37,71 +45,35 @@ class CustomerAddressService
         if ( isset($id) ) {
 
             return Validator::make($data, [
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|unique:customers,email,'.$id.',_id',
-                'password' => 'sometimes|required|confirmed|min:6|max:255'
+                'address' => 'required|string|unique:customer_address,address,'.$id.',_id',
+                'postcode' => 'required|string'
             ]);
 
         }
 
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:customers|max:255',
-            'password' => 'required|string|confirmed|min:6|max:255'
+            'address' => 'required|string|unique:customer_address,address',
+            'postcode' => 'required|string'
         ]);
 
     }
 
-    /**
-     * Create Customer
-     *
-     * @param Request $request
-     * @return bool
-     * @throws \Exception
-     */
-    public function create(Request $request)
-    {
-
-        $data = $this->filterRequest($request);
-
-        if (!$created = $this->repository->create($data)) {
-            return false;
-        }
-
-        return $created;
-
-    }
-
 
     /**
-     * Update Customer
+     * Create and Attach
      *
      * @param Request $request
      * @param $id
-     * @return bool
+     * @return mixed
      */
-    public function update(Request $request, $id)
-    {
-        
-        $data = $this->filterRequest($request);
-
-        return $this->repository->update($id, $data);
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     */
-    private function filterRequest(Request $request)
+    public function create(Request $request, $id)
     {
 
-        $data = $request->all();
+        $customer = $this->customer->find($id);
+        $address = $this->customerAddress->create($request->all());
+        $customer->address()->attach($address);
 
-        if (!$request->has('active')) {
-            $data['active'] = false;
-        }
-
-        return $data;
+        return $address;
 
     }
 
