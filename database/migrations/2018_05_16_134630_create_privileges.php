@@ -18,12 +18,8 @@ class CreatePrivileges extends Migration
         Schema::connection(env('DB_CONNECTION'))
         ->table('privileges', function (Blueprint $table)
         {
-
-            $table->string('name');
-            $table->string('description');
             $table->timestamps();
             $table->softDeletes();
-
         });
 
     }
@@ -38,7 +34,6 @@ class CreatePrivileges extends Migration
         Schema::connection(env('DB_CONNECTION'))
         ->table('privileges', function (Blueprint $table)
         {
-            $table->dropIndex();
             $table->drop();
         });
     }

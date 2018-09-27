@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use App\Entities\CouponHistory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
-class MarketingController extends ApiController
+class CouponHistoryController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class MarketingController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Entities\CouponHistory  $couponHistory
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CouponHistory $couponHistory)
     {
         //
     }
@@ -52,10 +53,10 @@ class MarketingController extends ApiController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Entities\CouponHistory  $couponHistory
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CouponHistory $couponHistory)
     {
         //
     }
@@ -64,10 +65,10 @@ class MarketingController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Entities\CouponHistory  $couponHistory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, CouponHistory $couponHistory)
     {
         //
     }
@@ -75,10 +76,10 @@ class MarketingController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Entities\CouponHistory  $couponHistory
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CouponHistory $couponHistory)
     {
         //
     }

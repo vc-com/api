@@ -4,9 +4,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBannersTable extends Migration
+class CreateCouponsTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -16,27 +15,18 @@ class CreateBannersTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-            ->table('banners', function (Blueprint $table)
-            {
-                $table->timestamps();
-            });
-
+        ->table('coupons', function (Blueprint $table)
+        {
+            $table->timestamps();
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-
         Schema::connection(env('DB_CONNECTION'))
-        ->table('banners', function (Blueprint $table)
+        ->table('coupons', function (Blueprint $table)
         {
             $table->drop();
         });
-
     }
-
 }

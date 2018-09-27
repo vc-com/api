@@ -62,12 +62,12 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function address()
     {
-        return $this->belongsToMany(CustomerAddress::class);
+        return $this->embedsMany(CustomerAddress::class);
     }
 
     public function phones()
     {
-        return $this->belongsToMany(CustomerPhone::class);
+        return $this->embedsMany(CustomerPhone::class);
     }
 
     /**

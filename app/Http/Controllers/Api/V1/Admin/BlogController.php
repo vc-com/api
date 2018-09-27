@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class BlogController extends Controller
+class BlogController extends ApiController
 {
     /**
      * Display a listing of the resource.

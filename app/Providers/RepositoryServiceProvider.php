@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use App\Entities\Banner;
 use App\Entities\Brand;
+use App\Entities\Coupon;
+use App\Entities\CouponCategory;
+use App\Entities\CouponHistory;
+use App\Entities\CouponProduct;
 use App\Entities\Customer;
 use App\Entities\CustomerAddress;
 use App\Entities\CustomerPhone;
@@ -15,6 +19,14 @@ use App\Entities\Role;
 use App\Entities\User;
 use App\Repositories\Brand\BrandMongodbRepository;
 use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Coupon\CouponMongodbRepository;
+use App\Repositories\Coupon\CouponRepositoryInterface;
+use App\Repositories\CouponCategory\CouponCategoryMongodbRepository;
+use App\Repositories\CouponCategory\CouponCategoryRepositoryInterface;
+use App\Repositories\CouponHistory\CouponHistoryMongodbRepository;
+use App\Repositories\CouponHistory\CouponHistoryRepositoryInterface;
+use App\Repositories\CouponProduct\CouponProductMongodbRepository;
+use App\Repositories\CouponProduct\CouponProductRepositoryInterface;
 use App\Repositories\Customer\CustomerMongodbRepository;
 use App\Repositories\Customer\CustomerRepositoryInterface;
 use App\Repositories\CustomerAddress\CustomerAddressMongodbRepository;
@@ -100,6 +112,22 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(PageRepositoryInterface::class, function () {
             return new PageMongodbRepository(new Page());
+        });
+
+        $this->app->bind(CouponRepositoryInterface::class, function () {
+            return new CouponMongodbRepository(new Coupon());
+        });
+
+        $this->app->bind(CouponCategoryRepositoryInterface::class, function () {
+            return new CouponCategoryMongodbRepository(new CouponCategory());
+        });
+
+        $this->app->bind(CouponHistoryRepositoryInterface::class, function () {
+            return new CouponHistoryMongodbRepository(new CouponHistory());
+        });
+
+        $this->app->bind(CouponProductRepositoryInterface::class, function () {
+            return new CouponProductMongodbRepository(new CouponProduct());
         });
 
     }

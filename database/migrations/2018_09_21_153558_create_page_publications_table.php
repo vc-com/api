@@ -16,14 +16,10 @@ class CreatePagePublicationsTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-            ->table('page_publications', function (Blueprint $table)
-            {
-
-                $table->string('name');     
-                $table->string('page_publication');
-                $table->timestamps();
-
-            });
+        ->table('page_publications', function (Blueprint $table)
+        {
+            $table->timestamps();
+        });
 
     }
 
@@ -36,10 +32,10 @@ class CreatePagePublicationsTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-            ->table('page_publications', function (Blueprint $table)
-            {
-                $table->drop();
-            });
+        ->table('page_publications', function (Blueprint $table)
+        {
+            $table->drop();
+        });
 
     }
 

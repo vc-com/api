@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use App\Entities\CouponProduct;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class CuponController extends Controller
+class CouponProductController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class CuponController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Entities\CouponProduct  $couponProduct
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CouponProduct $couponProduct)
     {
         //
     }
@@ -52,10 +53,10 @@ class CuponController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Entities\CouponProduct  $couponProduct
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(CouponProduct $couponProduct)
     {
         //
     }
@@ -64,10 +65,10 @@ class CuponController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Entities\CouponProduct  $couponProduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, CouponProduct $couponProduct)
     {
         //
     }
@@ -75,10 +76,10 @@ class CuponController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Entities\CouponProduct  $couponProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CouponProduct $couponProduct)
     {
         //
     }

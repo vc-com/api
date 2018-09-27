@@ -16,20 +16,10 @@ class CreateBrandsTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-            ->table('brands', function (Blueprint $table)
-            {
-
-                $table->string('name');
-                $table->string('active');          
-                $table->string('description');
-                $table->string('slug');
-                $table->string('image');
-                $table->string('meta_title');
-                $table->string('meta_description');
-                $table->string('sort_order');
-                $table->timestamps();
-
-            });
+        ->table('brands', function (Blueprint $table)
+        {
+            $table->timestamps();
+        });
 
     }
 
@@ -43,10 +33,10 @@ class CreateBrandsTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-            ->table('brands', function (Blueprint $table)
-            {
-                $table->drop();
-            });
+        ->table('brands', function (Blueprint $table)
+        {
+            $table->drop();
+        });
 
     }
 

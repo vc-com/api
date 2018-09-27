@@ -18,11 +18,7 @@ class CreatePositionPublicationsTable extends Migration
         Schema::connection(env('DB_CONNECTION'))
             ->table('position_publications', function (Blueprint $table)
             {
-
-                $table->string('name');     
-                $table->string('position_publication');
                 $table->timestamps();
-
             });
 
     }
@@ -36,10 +32,10 @@ class CreatePositionPublicationsTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-            ->table('position_publications', function (Blueprint $table)
-            {
-                $table->drop();
-            });
+        ->table('position_publications', function (Blueprint $table)
+        {
+            $table->drop();
+        });
             
     }
 

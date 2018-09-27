@@ -18,9 +18,6 @@ class CreateRoles extends Migration
         Schema::connection(env('DB_CONNECTION'))
         ->table('roles', function (Blueprint $table)
         {
-
-            $table->string('name');
-            $table->string('description');
             $table->timestamps();
             $table->softDeletes();
 
@@ -38,7 +35,6 @@ class CreateRoles extends Migration
         Schema::connection(env('DB_CONNECTION'))
         ->table('roles', function (Blueprint $table)
         {
-            $table->dropIndex();
             $table->drop();
         });
     }

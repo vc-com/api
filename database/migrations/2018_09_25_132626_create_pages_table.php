@@ -18,16 +18,7 @@ class CreatePagesTable extends Migration
         Schema::connection(env('DB_CONNECTION'))
         ->table('pages', function (Blueprint $table)
         {
-
-            $table->string('name');
-            $table->string('active');
-            $table->text('description');
-            $table->string('slug');
-            $table->string('meta_title');
-            $table->string('meta_description');
-            $table->string('sort_order');
             $table->timestamps();
-
         });
 
     }
