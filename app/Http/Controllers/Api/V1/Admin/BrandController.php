@@ -46,7 +46,6 @@ class BrandController extends ApiController
         return $this->showAll($result);
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -88,7 +87,6 @@ class BrandController extends ApiController
 
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -98,7 +96,6 @@ class BrandController extends ApiController
      */
     public function update(Request $request, $id)
     {
-
 
         $validator = $this->service->validator($request->all());
 

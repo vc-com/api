@@ -75,7 +75,6 @@ class CustomerController extends ApiController
 
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -93,7 +92,6 @@ class CustomerController extends ApiController
 
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -110,7 +108,6 @@ class CustomerController extends ApiController
             $errors = $validator->errors();
             return $errors->toJson();
         }
-
 
         if (!$result = $this->repository->findById($id)) {
             return $this->errorResponse('customer_not_found', 422);
@@ -144,4 +141,5 @@ class CustomerController extends ApiController
         return $this->successResponse('customer_removed');
 
     }
+    
 }

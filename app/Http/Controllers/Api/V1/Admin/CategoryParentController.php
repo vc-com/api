@@ -95,7 +95,6 @@ class CategoryParentController extends ApiController
 
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -142,7 +141,6 @@ class CategoryParentController extends ApiController
         return $this->showOne($result);
 
     }
-
 
     /**
      * Update the specified resource in storage.

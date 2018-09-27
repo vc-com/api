@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class BannerController extends ApiController
 {
+
     /**
      * @var BannerRepositoryInterface
      */
@@ -87,7 +88,6 @@ class BannerController extends ApiController
         return $this->showOne($result);
 
     }
-
 
     /**
      * Update the specified resource in storage.

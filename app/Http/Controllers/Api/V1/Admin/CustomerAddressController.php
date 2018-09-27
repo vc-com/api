@@ -100,7 +100,6 @@ class CustomerAddressController extends ApiController
 
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -122,7 +121,6 @@ class CustomerAddressController extends ApiController
         return $this->showOne($result);
 
     }
-
 
     /**
      * Update the specified resource in storage.

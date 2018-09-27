@@ -42,7 +42,6 @@ class UserRoleController extends ApiController
         return $this->showOne($result);
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -87,4 +86,5 @@ class UserRoleController extends ApiController
     {
         //
     }
+    
 }

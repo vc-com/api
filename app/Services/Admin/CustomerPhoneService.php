@@ -35,7 +35,6 @@ class CustomerPhoneService
         $this->customerPhone = $customerPhone;
     }
 
-
     /**
      * @param array $data
      * @param string $id

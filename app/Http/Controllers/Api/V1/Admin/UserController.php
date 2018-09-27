@@ -155,4 +155,5 @@ class UserController extends ApiController
         return $this->successResponse('user_removed');
 
     }
+    
 }
