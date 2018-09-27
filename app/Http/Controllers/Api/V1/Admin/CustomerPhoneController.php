@@ -69,12 +69,15 @@ class CustomerPhoneController extends ApiController
     {
 
         if (!$result = $this->customerRepository->findById($customerId)) {
-            return $this->errorResponse('phone_not_found', 422);
+            return $this->errorResponse('customer_not_found', 422);
+        }       
+
+        if (!$phones = $result->phones()->all()) {
+            return $this->errorResponse('customer_phones_not_found', 422);
         }
 
-        $phones = $result->phones()->all();
+        return $this->showAll($phones);
 
-        return $this->showAll($phones );
     }
 
     /**
@@ -113,21 +116,15 @@ class CustomerPhoneController extends ApiController
     public function show($customerId, $phoneId)
     {
 
-
-
-        //$customer = Customer::find($customerId);
-
-        //$result= $customer->address()->find('5bad2712a2a0930019181ffe');
-
-        if (!$this->isExistsCustomer($customerId) ) {
+        if (!$result = $this->customerRepository->findById($customerId)) {
             return $this->errorResponse('customer_not_found', 422);
-        }
+        }       
 
-        if (!$result = $this->phoneRepository->findById($phoneId)) {
+        if (!$phone = $result->phones()->find($phoneId)) {
             return $this->errorResponse('customer_phone_not_found', 422);
         }
 
-        return $this->showOne($result);
+        return $this->showOne($phone);
 
     }
 
