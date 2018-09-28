@@ -4,58 +4,23 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\ApiController;
 use App\Repositories\Customer\CustomerRepositoryInterface;
-use App\Repositories\CustomerAddress\CustomerAddressRepositoryInterface;
-use App\Services\Admin\CustomerAddressService;
 use Illuminate\Http\Request;
 
 class CustomerAddressController extends ApiController
 {
+    
     /**
      * @var CustomerRepositoryInterface
      */
-    private $customerRepository;
-
-    /**
-     * @var CustomerAddressRepositoryInterface
-     */
-    private $addressRepository;
-
-    /**
-     * @var CustomerAddressService
-     */
-    private $addressService;
-
+    private $repository;
 
     /**
      * CustomerAddressController constructor.
-     * @param CustomerRepositoryInterface $customerRepository
-     * @param CustomerAddressRepositoryInterface $addressRepository
-     * @param CustomerAddressService $addressService
+     * @param CustomerRepositoryInterface $repository
      */
-    public function __construct(CustomerRepositoryInterface $customerRepository,
-                                CustomerAddressRepositoryInterface $addressRepository,
-                                CustomerAddressService $addressService)
+    public function __construct(CustomerRepositoryInterface $repository)
     {
-        $this->customerRepository = $customerRepository;
-        $this->addressRepository = $addressRepository;
-        $this->addressService = $addressService;
-    }
-
-    /**
-     * Exists Customer
-     *
-     * @param $customerId
-     * @return bool
-     */
-    private function isExistsCustomer($customerId)
-    {
-
-        if (!$result = $this->customerRepository->findById($customerId)) {
-            return false;
-        }
-
-        return true;
-
+        $this->repository = $repository;
     }
 
     /**
@@ -67,12 +32,16 @@ class CustomerAddressController extends ApiController
     public function index($customerId)
     {
 
-        if (!$result = $this->customerRepository->findById($customerId, ['address'])) {
-            return $this->errorResponse('address_not_found', 422);
+        if (!$result = $this->repository->findById($customerId)) {
+            return $this->errorResponse('customer_not_found', 422);
+        }       
+
+        if (!$address = $result->address()->all()) {
+            return $this->errorResponse('customer_address_not_found', 422);
         }
 
-        return $this->showAll($result);
-        
+        return $this->showAll($address);
+
     }
 
     /**
@@ -85,20 +54,27 @@ class CustomerAddressController extends ApiController
     public function store(Request $request, $customerId)
     {
 
-        $validator = $this->addressService->validator($request->all());
+        if (!$result = $this->repository->findById($customerId)) {
+            return $this->errorResponse('customer_not_found', 422);
+        } 
 
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            return $errors->toJson();
+        $total = $result->address()
+                    ->where('address', $request->all()['address'])
+                    ->where('postcode', $request->all()['postcode'])
+                    ->count();
+
+        if ($total !== 0 ) {
+            return $this->successResponse('customer_address_is_exists');
         }
 
-        if (!$result = $this->addressService->create($request, $customerId)) {
+        if (!$result = $result->address()->create($request->all())) {
             return $this->errorResponse('customer_address_not_created', 500);
         }
 
         return $this->successResponse($result);
 
     }
+
 
     /**
      * Display the specified resource.
@@ -110,17 +86,18 @@ class CustomerAddressController extends ApiController
     public function show($customerId, $addressId)
     {
 
-        if (!$this->isExistsCustomer($customerId) ) {
+        if (!$result = $this->repository->findById($customerId)) {
             return $this->errorResponse('customer_not_found', 422);
-        }
+        }       
 
-        if (!$result = $this->addressRepository->findById($addressId)) {
+        if (!$phone = $result->address()->find($addressId)) {
             return $this->errorResponse('customer_address_not_found', 422);
         }
 
-        return $this->showOne($result);
+        return $this->showOne($phone);
 
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -132,24 +109,22 @@ class CustomerAddressController extends ApiController
      */
     public function update(Request $request, $customerId, $addressId)
     {
-
-        $validator = $this->addressService->validator($request->all(), $addressId);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            return $errors->toJson();
-        }
-
-        if (!$this->isExistsCustomer($customerId) ) {
+  
+        if (!$result = $this->repository->findById($customerId)) {
             return $this->errorResponse('customer_not_found', 422);
+        }  
+
+        $total = $result->address()
+                        ->where('_id', '!=', $addressId)
+                        ->where('address', $request->all()['address'])
+                        ->where('postcode', $request->all()['postcode'])
+                        ->count();
+
+        if ($total !== 0 ) {
+            return $this->successResponse('customer_address_is_exists');
         }
 
-
-        if (!$result = $this->addressRepository->findById($addressId)) {
-            return $this->errorResponse('customer_address_not_found', 422);
-        }
-
-        if (!$result = $this->addressRepository->update($addressId, $request->all())) {
+        if (!$result = $result->address()->find($addressId)->update($request->all())) {
             return $this->errorResponse('customer_address_not_updated', 422);
         }
 
@@ -167,11 +142,11 @@ class CustomerAddressController extends ApiController
     public function destroy($customerId, $addressId)
     {
 
-        if (!$this->isExistsCustomer($customerId) ) {
+        if (!$result = $this->repository->findById($customerId)) {
             return $this->errorResponse('customer_not_found', 422);
-        }
+        }       
 
-        if (!$this->addressRepository->delete($addressId)) {
+        if (!$phone = $result->address()->destroy($addressId)) {
             return $this->errorResponse('customer_address_not_removed', 422);
         }
 

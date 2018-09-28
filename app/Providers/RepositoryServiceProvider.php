@@ -9,8 +9,6 @@ use App\Entities\CouponCategory;
 use App\Entities\CouponHistory;
 use App\Entities\CouponProduct;
 use App\Entities\Customer;
-use App\Entities\CustomerAddress;
-use App\Entities\CustomerPhone;
 use App\Entities\Category;
 use App\Entities\CategoryParent;
 use App\Entities\Page;
@@ -29,10 +27,6 @@ use App\Repositories\CouponProduct\CouponProductMongodbRepository;
 use App\Repositories\CouponProduct\CouponProductRepositoryInterface;
 use App\Repositories\Customer\CustomerMongodbRepository;
 use App\Repositories\Customer\CustomerRepositoryInterface;
-use App\Repositories\CustomerAddress\CustomerAddressMongodbRepository;
-use App\Repositories\CustomerAddress\CustomerAddressRepositoryInterface;
-use App\Repositories\CustomerPhone\CustomerPhoneMongodbRepository;
-use App\Repositories\CustomerPhone\CustomerPhoneRepositoryInterface;
 use App\Repositories\Privilege\PrivilegeMongodbRepository;
 use App\Repositories\Privilege\PrivilegeRepositoryInterface;
 use App\Repositories\Role\RoleMongodbRepository;
@@ -69,7 +63,6 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
 
-
         $this->app->bind(BannerRepositoryInterface::class, function () {
             return new BannerMongodbRepository(new Banner());
         });
@@ -80,15 +73,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(CustomerRepositoryInterface::class, function () {
             return new CustomerMongodbRepository(new Customer());
-        });
-
-        $this->app->bind(CustomerAddressRepositoryInterface::class, function () {
-            return new CustomerAddressMongodbRepository(new CustomerAddress());
-        });
-
-        $this->app->bind(CustomerPhoneRepositoryInterface::class, function () {
-            return new CustomerPhoneMongodbRepository(new CustomerPhone());
-        });
+        });    
 
         $this->app->bind(PrivilegeRepositoryInterface::class, function () {
             return new PrivilegeMongodbRepository(new Privilege());

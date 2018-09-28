@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\ApiController;
 use App\Repositories\Customer\CustomerRepositoryInterface;
-use App\Repositories\CustomerPhone\CustomerPhoneRepositoryInterface;
-use App\Services\Admin\CustomerPhoneService;
 use Illuminate\Http\Request;
 
 class CustomerPhoneController extends ApiController
@@ -14,49 +12,15 @@ class CustomerPhoneController extends ApiController
     /**
      * @var CustomerRepositoryInterface
      */
-    private $customerRepository;
-
-    /**
-     * @var CustomerPhoneRepositoryInterface
-     */
-    private $phoneRepository;
-
-    /**
-     * @var CustomerPhoneService
-     */
-    private $phoneService;
-
+    private $repository;
 
     /**
      * CustomerPhoneController constructor.
-     * @param CustomerRepositoryInterface $customerRepository
-     * @param CustomerPhoneRepositoryInterface $phoneRepository
-     * @param CustomerPhoneService $phoneService
+     * @param CustomerRepositoryInterface $repository
      */
-    public function __construct(CustomerRepositoryInterface $customerRepository,
-                                CustomerPhoneRepositoryInterface $phoneRepository,
-                                CustomerPhoneService $phoneService)
+    public function __construct(CustomerRepositoryInterface $repository)
     {
-        $this->customerRepository = $customerRepository;
-        $this->phoneRepository = $phoneRepository;
-        $this->phoneService = $phoneService;
-    }
-
-    /**
-     * Exists Customer
-     *
-     * @param $customerId
-     * @return bool
-     */
-    private function isExistsCustomer($customerId)
-    {
-
-        if (!$result = $this->customerRepository->findById($customerId)) {
-            return false;
-        }
-
-        return true;
-
+        $this->repository = $repository;
     }
 
     /**
@@ -68,7 +32,7 @@ class CustomerPhoneController extends ApiController
     public function index($customerId)
     {
 
-        if (!$result = $this->customerRepository->findById($customerId)) {
+        if (!$result = $this->repository->findById($customerId)) {
             return $this->errorResponse('customer_not_found', 422);
         }       
 
@@ -90,14 +54,19 @@ class CustomerPhoneController extends ApiController
     public function store(Request $request, $customerId)
     {
 
-        $validator = $this->phoneService->validator($request->all());
+        if (!$result = $this->repository->findById($customerId)) {
+            return $this->errorResponse('customer_not_found', 422);
+        } 
 
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            return $errors->toJson();
+        $total = $result->phones()
+                    ->where('number', $request->all()['number'])
+                    ->count();
+
+        if ($total !== 0 ) {
+            return $this->successResponse('customer_phone_is_exists');
         }
 
-        if (!$result = $this->phoneService->create($request, $customerId)) {
+        if (!$result = $result->phones()->create($request->all())) {
             return $this->errorResponse('customer_phone_not_created', 500);
         }
 
@@ -116,7 +85,7 @@ class CustomerPhoneController extends ApiController
     public function show($customerId, $phoneId)
     {
 
-        if (!$result = $this->customerRepository->findById($customerId)) {
+        if (!$result = $this->repository->findById($customerId)) {
             return $this->errorResponse('customer_not_found', 422);
         }       
 
@@ -139,24 +108,21 @@ class CustomerPhoneController extends ApiController
      */
     public function update(Request $request, $customerId, $phoneId)
     {
-
-        $validator = $this->phoneService->validator($request->all(), $phoneId);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors();
-            return $errors->toJson();
-        }
-
-        if (!$this->isExistsCustomer($customerId) ) {
+  
+        if (!$result = $this->repository->findById($customerId)) {
             return $this->errorResponse('customer_not_found', 422);
+        }  
+
+        $total = $result->phones()
+                        ->where('_id', '!=', $phoneId)
+                        ->where('number', $request->all()['number'])
+                        ->count();
+
+        if ($total !== 0 ) {
+            return $this->successResponse('customer_phone_is_exists');
         }
 
-
-        if (!$result = $this->phoneRepository->findById($phoneId)) {
-            return $this->errorResponse('customer_phone_not_found', 422);
-        }
-
-        if (!$result = $this->phoneRepository->update($phoneId, $request->all())) {
+        if (!$result = $result->phones()->find($phoneId)->update($request->all())) {
             return $this->errorResponse('customer_phone_not_updated', 422);
         }
 
@@ -174,11 +140,11 @@ class CustomerPhoneController extends ApiController
     public function destroy($customerId, $phoneId)
     {
 
-        if (!$this->isExistsCustomer($customerId) ) {
+        if (!$result = $this->repository->findById($customerId)) {
             return $this->errorResponse('customer_not_found', 422);
-        }
+        }       
 
-        if (!$this->phoneRepository->delete($phoneId)) {
+        if (!$phone = $result->phones()->destroy($phoneId)) {
             return $this->errorResponse('customer_phone_not_removed', 422);
         }
 
