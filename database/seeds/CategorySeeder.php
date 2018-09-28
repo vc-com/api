@@ -7,6 +7,8 @@ use Faker\Generator as Faker;
 
 class CategorySeeder extends Seeder
 {
+
+    private $parent_id = null;
     /**
      * Run the database seeds.
      *
@@ -15,13 +17,27 @@ class CategorySeeder extends Seeder
     public function run(Faker $faker)
     {
 
-        $categories= factory(Category::class,20)->create();
-        $categories->each(function ($customer) use ($faker) {
+        $categories = factory(Category::class,20)->create();
+        $categories->each(function ($category) use ($faker) {
 
-            $total = rand(2,10);
+            $total = rand(1,10);
             for ($i=0; $i < $total ; $i++) {
-                $parents = new CategoryParent( $this->parents( $faker, $i ) );
-                $customer->parents()->save($parents);
+                $parent = new CategoryParent( $this->parents( $faker, $i ) );
+
+                $result = $category->parents()->save($parent);
+
+                if($result->nleft == 0) {
+                    $this->parent_id = $result->id;
+                }
+
+                if($result->nleft > 0) {
+
+                    $array = [];
+                    $array['parent_id'] = $this->parent_id;
+                    $category->parents()->find($result->id)->update( $array );
+                    
+                }
+        
             }       
 
         });
@@ -30,8 +46,12 @@ class CategorySeeder extends Seeder
 
     private function parents(Faker $faker, $i=0)
     {
+
+        $nleft = $i >= 2 ? rand(0,1) : 0;
+
         return [
-            'nleft' => $i,
+
+            'nleft' => $nleft,
             'name' => $faker->name,
             'active' => rand(0,5) > 0 ? true : false,
             'description' => $faker->text,
@@ -40,6 +60,7 @@ class CategorySeeder extends Seeder
             'meta_title' => $faker->name,
             'meta_description' => $faker->text,
             'sort_order' => rand(0,5)
+
         ];
     }
 
