@@ -20,7 +20,7 @@ class CategorySeeder extends Seeder
         $categories = factory(Category::class,20)->create();
         $categories->each(function ($category) use ($faker) {
 
-            $total = rand(1,10);
+            $total = rand(2,10);
             for ($i=0; $i < $total ; $i++) {
                 $parent = new CategoryParent( $this->parents( $faker, $i ) );
 
@@ -47,7 +47,8 @@ class CategorySeeder extends Seeder
     private function parents(Faker $faker, $i=0)
     {
 
-        $nleft = $i >= 2 ? rand(0,1) : 0;
+        $nleft = $i > 1 ? rand(0,5) : 0;
+        $nleft = $nleft <= 0 ? 0 : 1;
 
         return [
 
