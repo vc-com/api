@@ -13,7 +13,6 @@ class CategoryParent extends Model
      * @var array
      */
     protected $fillable = [
-        'parent_id',
         'nleft',
         'name',
         'active',

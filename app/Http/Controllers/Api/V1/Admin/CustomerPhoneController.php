@@ -144,7 +144,7 @@ class CustomerPhoneController extends ApiController
             return $this->errorResponse('customer_not_found', 422);
         }       
 
-        if (!$phone = $result->phones()->destroy($phoneId)) {
+        if (!$result->phones()->destroy($phoneId)) {
             return $this->errorResponse('customer_phone_not_removed', 422);
         }
 

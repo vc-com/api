@@ -37,7 +37,7 @@ class Category extends Model
      */
     public function parents()
     {
-        return $this->belongsToMany(CategoryParent::class);
+        return $this->embedsMany(CategoryParent::class);
     }
 
     public function setSlugAttribute($value)

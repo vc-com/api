@@ -10,7 +10,6 @@ use App\Entities\CouponHistory;
 use App\Entities\CouponProduct;
 use App\Entities\Customer;
 use App\Entities\Category;
-use App\Entities\CategoryParent;
 use App\Entities\Page;
 use App\Entities\Privilege;
 use App\Entities\Role;
@@ -37,8 +36,6 @@ use App\Repositories\Banner\BannerMongodbRepository;
 use App\Repositories\Banner\BannerRepositoryInterface;
 use App\Repositories\Category\CategoryMongodbRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Repositories\CategoryParent\CategoryParentMongodbRepository;
-use App\Repositories\CategoryParent\CategoryParentRepositoryInterface;
 use App\Repositories\Page\PageMongodbRepository;
 use App\Repositories\Page\PageRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -89,10 +86,6 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(CategoryRepositoryInterface::class, function () {
             return new CategoryMongodbRepository(new Category());
-        });
-
-        $this->app->bind(CategoryParentRepositoryInterface::class, function () {
-            return new CategoryParentMongodbRepository(new CategoryParent());
         });
 
         $this->app->bind(PageRepositoryInterface::class, function () {

@@ -146,7 +146,7 @@ class CustomerAddressController extends ApiController
             return $this->errorResponse('customer_not_found', 422);
         }       
 
-        if (!$phone = $result->address()->destroy($addressId)) {
+        if (!$result->address()->destroy($addressId)) {
             return $this->errorResponse('customer_address_not_removed', 422);
         }
 
