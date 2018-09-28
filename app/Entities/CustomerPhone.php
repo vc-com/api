@@ -16,6 +16,7 @@ class CustomerPhone extends Model
     ];
 
     protected $hidden = [
-        'customer_ids',
+
     ];
+    
 }

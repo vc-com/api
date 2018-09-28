@@ -30,7 +30,7 @@ class CategoryParent extends Model
      * @var array
      */
     protected $hidden = [
-        'category_ids',
+        
     ];
 
     public function setSlugAttribute($value)

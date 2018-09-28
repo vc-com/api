@@ -29,7 +29,7 @@ class Category extends Model
      * @var array
      */
     protected $hidden = [
-        'category_parent_ids',
+        
     ];
 
     /**

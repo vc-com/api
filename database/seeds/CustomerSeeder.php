@@ -40,7 +40,6 @@ class CustomerSeeder extends Seeder
         ];
     }
 
-
     private function phones(Faker $faker)
     {
         return [

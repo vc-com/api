@@ -17,7 +17,7 @@ class CustomerAddress extends Model
     ];
 
     protected $hidden = [
-        'customer_ids',
+
     ];
 
 }
