@@ -6,13 +6,34 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Coupon extends Model
 {
+
+    const FREE_SHIPPING = "free_shipping";
+    const PERCENTAGE = "percentage";
+    const FIXED = "fixed";
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-
+        'active',
+        'name',
+        'code',
+        'description',
+        'type',
+        'discount',
+        'uses_total',
+        'uses_customer',
+        'value',
+        'minimum_value',
+        'quantities',
+        'apply_to_total',
+        'cumulative',
+        'quantity_by_customer',
+        'used_total',
+        'date_start',
+        'date_end',
     ];
 
     /**

@@ -24,7 +24,6 @@ class CouponService
             return Validator::make($data, [
                 'name' => 'required|string|unique:coupons,name,'.$id.',_id',
                 'active' => 'required',
-                'slug' => 'required',
             ]);
 
         }
@@ -32,7 +31,6 @@ class CouponService
         return Validator::make($data, [
             'name' => 'required|string|unique:coupons|max:255',
             'active' => 'required',
-            'slug' => 'required',
         ]);
 
     }

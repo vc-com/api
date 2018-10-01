@@ -12,7 +12,9 @@ class CouponHistory extends Model
      * @var array
      */
     protected $fillable = [
-
+        'order_id',
+        'customer_id',
+        'amount',
     ];
 
     /**
