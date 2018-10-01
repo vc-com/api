@@ -44,5 +44,30 @@ class Coupon extends Model
     protected $hidden = [
 
     ];
+
+    /**
+     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
+     */
+    public function categories()
+    {
+        return $this->embedsMany(CouponCategory::class);
+    }
+
+    /**
+     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
+     */
+    public function histories()
+    {
+        return $this->embedsMany(CouponHistory::class);
+    }
+
+    /**
+     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
+     */
+    public function products()
+    {
+        return $this->embedsMany(CouponProduct::class);
+    }
+
     
 }

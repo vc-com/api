@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Entities\Coupon;
+use App\Entities\CouponHistory;
+use App\Entities\CouponCategory;
+use App\Entities\CouponProduct;
+use Faker\Generator as Faker;
 
 class CouponSeeder extends Seeder
 {
@@ -9,8 +14,61 @@ class CouponSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
-        factory(App\Entities\Coupon::class, 20)->create();
+        
+        $coupons = factory(Coupon::class, 20)->create();
+
+        $coupons->each(function ($coupon) use ($faker) {
+
+            $total = rand(2,10);
+            for ($i=0; $i < $total ; $i++) {
+                $category = new CouponCategory( $this->categories( $faker ) );
+                $coupon->categories()->save($category);
+            }        
+
+            $total = rand(2,10);
+            for ($i=0; $i < $total ; $i++) {
+                $history = new CouponHistory( $this->histories( $faker ) );
+                $coupon->histories()->save($history);
+            }
+
+            $total = rand(2,10);
+            for ($i=0; $i < $total ; $i++) {
+                $product = new CouponProduct( $this->products( $faker ) );
+                $coupon->products()->save($product);
+            }    
+       
+
+        });
+
+
     }
+
+
+    private function categories(Faker $faker)
+    {
+        return [
+            'category_id' => str_random(20),
+        ];
+    }
+
+    private function histories(Faker $faker)
+    {
+        return [
+            'order_id' => str_random(20),
+            'customer_id' => str_random(20),
+            'amount' => rand(100,500),
+        ];
+
+    }
+
+    private function products(Faker $faker)
+    {
+        return [
+            'product_id' => str_random(20),
+        ];
+
+    }
+
 }

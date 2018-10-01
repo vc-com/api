@@ -2,85 +2,156 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use App\Entities\CouponHistory;
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Repositories\Coupon\CouponRepositoryInterface;
+use Illuminate\Http\Request;
 
 class CouponHistoryController extends ApiController
 {
+    
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var CouponRepositoryInterface
      */
-    public function index()
+    private $repository;
+
+    /**
+     * CouponHistoryController constructor.
+     * @param CouponRepositoryInterface $repository
+     */
+    public function __construct(CouponRepositoryInterface $repository)
     {
-        //
+        $this->repository = $repository;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $couponId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function index($couponId)
     {
-        //
+
+        if (!$result = $this->repository->findById($couponId)) {
+            return $this->errorResponse('coupon_not_found', 422);
+        }       
+
+        if (!$histories = $result->histories()->all()) {
+            return $this->errorResponse('coupon_histories_not_found', 422);
+        }
+
+        return $this->showAll($histories);
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $couponId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, $couponId)
     {
-        //
+
+        if (!$result = $this->repository->findById($couponId)) {
+            return $this->errorResponse('coupon_not_found', 422);
+        } 
+
+        $total = $result->histories()
+                    ->where('order_id', $request->all()['order_id'])
+                    ->where('customer_id', $request->all()['customer_id'])
+                    ->count();
+
+        if ($total !== 0 ) {
+            return $this->successResponse('coupon_history_is_exists');
+        }
+
+        if (!$result = $result->histories()->create($request->all())) {
+            return $this->errorResponse('coupon_history_not_created', 500);
+        }
+
+        return $this->successResponse($result);
+
     }
+
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Entities\CouponHistory  $couponHistory
-     * @return \Illuminate\Http\Response
+     * @param $couponId
+     * @param $historyId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(CouponHistory $couponHistory)
+    public function show($couponId, $historyId)
     {
-        //
+
+        if (!$result = $this->repository->findById($couponId)) {
+            return $this->errorResponse('coupon_not_found', 422);
+        }       
+
+        if (!$phone = $result->histories()->find($historyId)) {
+            return $this->errorResponse('coupon_history_not_found', 422);
+        }
+
+        return $this->showOne($phone);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Entities\CouponHistory  $couponHistory
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CouponHistory $couponHistory)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Entities\CouponHistory  $couponHistory
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $couponId
+     * @param $historyId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, CouponHistory $couponHistory)
+    public function update(Request $request, $couponId, $historyId)
     {
-        //
+  
+        if (!$result = $this->repository->findById($couponId)) {
+            return $this->errorResponse('coupon_not_found', 422);
+        }  
+
+        $total = $result->histories()
+                        ->where('_id', '!=', $historyId)
+                        ->where('order_id', $request->all()['order_id'])
+                        ->where('customer_id', $request->all()['customer_id'])
+                        ->count();
+
+        if ($total !== 0 ) {
+            return $this->successResponse('coupon_history_is_exists');
+        }
+
+        if (!$result = $result->histories()->find($historyId)->update($request->all())) {
+            return $this->errorResponse('coupon_history_not_updated', 422);
+        }
+
+        return $this->successResponse($result);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Entities\CouponHistory  $couponHistory
-     * @return \Illuminate\Http\Response
+     * @param $couponId
+     * @param $historyId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(CouponHistory $couponHistory)
+    public function destroy($couponId, $historyId)
     {
-        //
+
+        if (!$result = $this->repository->findById($couponId)) {
+            return $this->errorResponse('coupon_not_found', 422);
+        }       
+
+        if (!$result->histories()->destroy($historyId)) {
+            return $this->errorResponse('coupon_history_not_removed', 422);
+        }
+
+        return $this->successResponse('coupon_history_removed');
+
     }
+
 }

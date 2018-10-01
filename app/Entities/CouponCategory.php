@@ -12,7 +12,7 @@ class CouponCategory extends Model
      * @var array
      */
     protected $fillable = [
-
+        'category_id'
     ];
 
     /**
