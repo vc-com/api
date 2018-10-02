@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entities\Attribute;
 use App\Entities\Banner;
 use App\Entities\Brand;
 use App\Entities\Coupon;
@@ -11,6 +12,8 @@ use App\Entities\Page;
 use App\Entities\Privilege;
 use App\Entities\Role;
 use App\Entities\User;
+use App\Repositories\Attribute\AttributeMongodbRepository;
+use App\Repositories\Attribute\AttributeRepositoryInterface;
 use App\Repositories\Brand\BrandMongodbRepository;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Coupon\CouponMongodbRepository;
@@ -50,6 +53,10 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+        $this->app->bind(AttributeRepositoryInterface::class, function () {
+            return new AttributeMongodbRepository(new Attribute());
+        });
 
         $this->app->bind(BannerRepositoryInterface::class, function () {
             return new BannerMongodbRepository(new Banner());

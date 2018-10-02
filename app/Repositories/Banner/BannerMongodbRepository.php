@@ -15,7 +15,7 @@ class BannerMongodbRepository
 {
 
     /**
-     * BannerMongodbRepository constructor.
+     * CouponMongodbRepository constructor.
      * @param Model $model
      * @throws \Exception
      */
