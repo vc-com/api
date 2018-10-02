@@ -60,7 +60,7 @@ class AttributeVariationController extends ApiController
 
         $total = $result->variations()
                     ->where('name', $request->all()['name'])
-                    ->orWhere('hex', $request->all()['hex'])
+                    ->orWhere('color', $request->all()['color'])
                     ->count();
 
         if ($total !== 0 ) {
@@ -117,6 +117,7 @@ class AttributeVariationController extends ApiController
         $total = $result->variations()
                         ->where('_id', '!=', $variationId)
                         ->where('name', $request->all()['name'])
+                        ->orWhere('color', $request->all()['color'])
                         ->count();
 
         if ($total !== 0 ) {

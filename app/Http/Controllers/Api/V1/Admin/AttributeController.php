@@ -39,7 +39,7 @@ class AttributeController extends ApiController
     public function index()
     {
 
-        if (!$result = $this->repository->getFieldsAll()) {
+        if (!$result = $this->repository->all()) {
             return $this->errorResponse('attributes_not_found', 422);
         }
 
