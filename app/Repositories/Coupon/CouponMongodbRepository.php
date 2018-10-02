@@ -5,12 +5,19 @@ namespace App\Repositories\Coupon;
 use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
+/**
+ * Class CouponMongodbRepository
+ * @package App\Repositories\Coupon
+ */
 class CouponMongodbRepository
     extends BaseMongodbAbstractRepository
     implements CouponRepositoryInterface
 {
 
-	protected $fields = [
+    /**
+     * @var array
+     */
+    protected $fields = [
 		'active',
 		'name',
 		'code',
@@ -30,13 +37,21 @@ class CouponMongodbRepository
 		'date_end'
 	];
 
-
+    /**
+     * CouponMongodbRepository constructor.
+     * @param Model $model
+     * @throws \Exception
+     */
     public function __construct(Model $model)
     {
         parent::__construct($model);
     }
 
-    public function listAll($limit = 15)
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getFieldsAll($limit=15)
     {
     	$result = $this->model->select($this->fields);
 		return $result->paginate($limit);

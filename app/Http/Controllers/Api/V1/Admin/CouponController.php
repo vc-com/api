@@ -39,7 +39,7 @@ class CouponController extends ApiController
     public function index()
     {
 
-        if (!$result = $this->repository->listAll()) {
+        if (!$result = $this->repository->getFieldsAll()) {
             return $this->errorResponse('coupons_not_found', 422);
         }
 

@@ -4,9 +4,17 @@ namespace App\Repositories\Coupon;
 
 use App\Interfaces\IRepository;
 
+/**
+ * Interface CouponRepositoryInterface
+ * @package App\Repositories\Coupon
+ */
 interface CouponRepositoryInterface extends IRepository
 {
 
-	public function listAll($limit = 15);
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getFieldsAll($limit=15);
 
 }
