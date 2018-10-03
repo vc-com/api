@@ -6,6 +6,12 @@
 // });
 
 
+$this->resource('groups/attributes', 'Api\V1\Admin\AttributeGroupController')->only([
+    'index'
+])->names([
+    'index' => 'groups.attributes'
+]);
+
 $this->resource('attributes', 'Api\V1\Admin\AttributeController')->except([
     'create', 'edit'
 ]);
@@ -13,3 +19,6 @@ $this->resource('attributes', 'Api\V1\Admin\AttributeController')->except([
 $this->resource('attributes.variations', 'Api\V1\Admin\AttributeVariationController')->except([
     'create', 'edit'
 ]);
+
+
+
