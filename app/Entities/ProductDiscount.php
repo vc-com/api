@@ -4,12 +4,8 @@ namespace App\Entities;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class AttributeGroup extends Model
+class ProductDiscount extends Model
 {
-    
-    const GENRE = 'Gênero';
-    const COLOR = 'Cor';
-    const SIZE = 'Tamanho';
 
     /**
      * The attributes that are mass assignable.
@@ -17,6 +13,13 @@ class AttributeGroup extends Model
      * @var array
      */
     protected $fillable = [
+
+		'customer_group_id',
+		'quantity',
+		'priority',
+		'price',
+		'date_start',
+		'date_end',
 
     ];
 

@@ -10,6 +10,7 @@ use App\Entities\Customer;
 use App\Entities\Category;
 use App\Entities\Page;
 use App\Entities\Privilege;
+use App\Entities\Product;
 use App\Entities\Role;
 use App\Entities\User;
 use App\Repositories\Attribute\AttributeMongodbRepository;
@@ -22,6 +23,8 @@ use App\Repositories\Customer\CustomerMongodbRepository;
 use App\Repositories\Customer\CustomerRepositoryInterface;
 use App\Repositories\Privilege\PrivilegeMongodbRepository;
 use App\Repositories\Privilege\PrivilegeRepositoryInterface;
+use App\Repositories\Product\ProductMongodbRepository;
+use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Role\RoleMongodbRepository;
 use App\Repositories\Role\RoleRepositoryInterface;
 use App\Repositories\User\UserMongodbRepository;
@@ -92,6 +95,10 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(CouponRepositoryInterface::class, function () {
             return new CouponMongodbRepository(new Coupon());
+        });
+
+        $this->app->bind(ProductRepositoryInterface::class, function () {
+            return new ProductMongodbRepository(new Product());
         });
 
     }

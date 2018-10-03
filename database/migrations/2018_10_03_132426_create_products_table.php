@@ -1,11 +1,10 @@
 <?php
 
-use App\Entities\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateProductsTable extends Migration
 {
 
     /**
@@ -17,27 +16,29 @@ class CreateUsersTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-        ->table('users', function (Blueprint $table)
+        ->table('products', function (Blueprint $table)
         {
 
-            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            $table->unique('email');
+            $table->unique('name');
+            $table->unique('slug');
 
             $table->index(
                 [
                     "name" => "text",
-                    "email" => "text"
+                    "description" => "text",
+                    "tag" => "text"
                 ],
-                'users_full_text',
+                'products_full_text',
                 null,
                 [
                     "weights" => [
                         "name" => 32,
-                        "email" => 16,
+                        "tag" => 16,
+                        "description" => 8,
                     ],
-                    'name' => 'users_full_text'
+                    'name' => 'products_full_text'
                 ]
             );
 
@@ -54,7 +55,7 @@ class CreateUsersTable extends Migration
     {
 
         Schema::connection(env('DB_CONNECTION'))
-        ->table('users', function (Blueprint $table)
+        ->table('products', function (Blueprint $table)
         {
 
             $table->dropIndex();
