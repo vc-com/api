@@ -23,14 +23,14 @@ class AttributeService
 
             return Validator::make($data, [
                 'name' => 'required|string|unique:attributes,name,'.$id.',_id',
-                'active' => 'required',
+                'type' => 'required',
             ]);
 
         }
 
         return Validator::make($data, [
             'name' => 'required|string|unique:attributes|max:255',
-            'active' => 'required',
+            'type' => 'required',
         ]);
 
     }

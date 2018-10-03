@@ -60,12 +60,11 @@ class AttributeVariationController extends ApiController
 
         $total = $result->variations()
                     ->where('name', $request->all()['name'])
-                    ->orWhere('color', $request->all()['color'])
                     ->count();
 
-        if ($total !== 0 ) {
+        if (isset($total) && $total > 0) {
             return $this->successResponse('attribute_variation_is_exists');
-        }
+        } 
 
         if (!$result = $result->variations()->create($request->all())) {
             return $this->errorResponse('attribute_variation_not_created', 500);
@@ -117,12 +116,12 @@ class AttributeVariationController extends ApiController
         $total = $result->variations()
                         ->where('_id', '!=', $variationId)
                         ->where('name', $request->all()['name'])
-                        ->orWhere('color', $request->all()['color'])
                         ->count();
+     
 
-        if ($total !== 0 ) {
+        if (isset($total) && $total > 0) {
             return $this->successResponse('attribute_variation_is_exists');
-        }
+        } 
 
         if (!$result = $result->variations()->find($variationId)->update($request->all())) {
             return $this->errorResponse('attribute_variation_not_updated', 422);
