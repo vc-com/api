@@ -15,16 +15,14 @@ $factory->define(App\Entities\Banner::class, function (Faker $faker) {
 
     $imageName = false;
 
-    $name = $faker->name;
-
     return [
-        'name' => $name,
+        'name' => $faker->sentence,
 		'active' => rand(0,5) > 0 ? true : false,
 		'description' => $faker->text,
         'slug' => $faker->slug,
 		'target' => array_random(['', '_blank']),
 		'image' => $imageName,
-		'meta_title' => $name,
+		'meta_title' => $faker->sentence,
 		'meta_description' => $faker->text,
 		'sort_order' => rand(0,5)
     ];
