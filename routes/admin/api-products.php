@@ -10,6 +10,10 @@ $this->resource('products', 'Api\V1\Admin\ProductController')->except([
     'create', 'edit'
 ]);
 
+$this->resource('products.variations', 'Api\V1\Admin\ProductVariationController')->except([
+    'create', 'edit'
+]);
+
 $this->resource('products.attachments', 'Api\V1\Admin\ProductAttachmentController')->except([
     'create', 'edit'
 ]);

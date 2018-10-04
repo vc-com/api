@@ -23,15 +23,21 @@ class Product extends Model
 
         'type',
         'active',
+        'name',
         'featured', //Destacar
+        'used',
+        'slug',
 		'sku',
+        'gtin',    
+        'mpn',    
         'ncm',
-		'name',
-        'description',
-		'slug',
+
+        'description',	
 		'tag',
 		'meta_title',
-		'meta_description',
+        'meta_description',
+		'meta_keywords',
+
         'url_video_youtube',
         'brand',
 
