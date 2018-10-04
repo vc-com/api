@@ -6,6 +6,7 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Category extends Model
 {
+    //https://www.sitepoint.com/community/t/php-recursive-multidimensional-array-to-html-nested-code/256533
 
     /**
      * The attributes that are mass assignable.
@@ -13,6 +14,7 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
+        'parent_id',
         'name',
         'active',
         'description',
@@ -32,13 +34,13 @@ class Category extends Model
         
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function parents()
-    {
-        return $this->embedsMany(CategoryParent::class);
-    }
+    // /**
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    //  */
+    // public function parents()
+    // {
+    //     return $this->belongsTo(CategoryParent::class);
+    // }
 
     public function setSlugAttribute($value)
     {

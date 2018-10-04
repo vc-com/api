@@ -14,5 +14,5 @@ $this->resource('categories', 'Api\V1\Admin\CategoryController')->except([
 ]);
 
 $this->resource('categories.parents', 'Api\V1\Admin\CategoryParentController')->except([
-    'create', 'edit'
+    'index', 'create', 'edit'
 ]);

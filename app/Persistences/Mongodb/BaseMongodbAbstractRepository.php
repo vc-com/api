@@ -100,12 +100,17 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
     }
 
     /**
+     * Verify is Exists Data
      * @param array $data
      * @return mixed
      */
     public function whereExists(array $data)
     {
-        return $this->model->where($data)->exists();
+
+        if ($this->model->where($data)->count() > 0)
+            return true;
+        return false;
+
     }
 
 }
