@@ -179,6 +179,7 @@ return [
         App\Providers\RouteApiAdminServiceProvider::class,
         App\Providers\RouteApiSiteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\ObserverServiceProvider::class,
 
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
