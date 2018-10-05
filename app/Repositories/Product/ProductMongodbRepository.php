@@ -18,9 +18,7 @@ class ProductMongodbRepository
      * @var array
      */
     protected $fields = [
-        'name',
-        'active',
-        'type',
+        '*',
     ];
 
     /**
@@ -39,7 +37,7 @@ class ProductMongodbRepository
      */
     public function getFieldsAll($limit=15)
     {
-        $result = $this->model->select($this->fields);
+        $result = $this->model->select($this->fields)->where('parent_id', 0);
         return $result->paginate($limit);
     }
 

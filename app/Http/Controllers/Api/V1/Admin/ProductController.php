@@ -40,7 +40,7 @@ class ProductController extends ApiController
     public function index()
     {
 
-        if (!$result = $this->repository->all()) {
+        if (!$result = $this->repository->getFieldsAll()) {
             return $this->errorResponse('products_not_found', 422);
         }
 

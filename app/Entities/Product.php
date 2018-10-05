@@ -21,6 +21,7 @@ class Product extends Model
      */
     protected $fillable = [
 
+        'parent_id',
         'type',
         'active',
         'name',
@@ -39,45 +40,15 @@ class Product extends Model
 		'meta_keywords',
 
         'url_video_youtube',
-        'brand',
+        'brand', 
 
+        'weight', // peso
+        'length', // comprimento
+        'width', // largura
+        'height', // altura
 
-
-//   'quantity',
-
-
-//   'preco_sob_consulta' enum('True') DEFAULT NULL,
-//   'preco_custo' double(10,2) DEFAULT NULL,
-//   'preco_cheio' double(10,2) DEFAULT NULL,
-//   'preco_promocional' double(10,2) DEFAULT NULL,
-//   'peso' decimal(10,3) DEFAULT NULL,
-//   'altura' int(11) DEFAULT NULL,
-//   'largura' int(11) DEFAULT NULL,
-//   'comprimento' int(11) DEFAULT NULL,
-//   'gerenciado' enum('False','True') DEFAULT 'False',
-//   'situacao_em_estoque' int(11) DEFAULT NULL,
-//   'quantidade' int(11) DEFAULT NULL,
-//   'reservado' int(11) DEFAULT '0',
-//   'total_vendido' int(11) DEFAULT '0',
-//   'situacao_sem_estoque' int(11) DEFAULT NULL,
-
-
-
-		// 'stock_status_id',
-		// 'image',
-		// 'manufacturer_id',
-		// 'shipping',
-		// 'price',
-		// 'points',
-		// 'date_available',
-		// 'weight',
-		// 'length',
-		// 'width',
-		// 'height',
-		// 'minimum',
-		// 'sort_order',
-		// 'status',
-		// 'viewed',
+        'total_sold', // total_vendido
+        'visualized'
 
     ];
 
@@ -116,6 +87,21 @@ class Product extends Model
     public function questions()
     {
         return $this->embedsMany(ProductQuestion::class);
+    }
+
+    public function attributes()
+    {
+        return $this->embedsMany(ProductAttribute::class);
+    }
+
+    public function stocks()
+    {
+        return $this->embedsMany(ProductStock::class);
+    }
+
+    public function prices()
+    {
+        return $this->embedsMany(ProductPrice::class);
     }
     
 }
