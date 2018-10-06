@@ -100,7 +100,7 @@ class BannerController extends ApiController
     {
 
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request->all(), $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();

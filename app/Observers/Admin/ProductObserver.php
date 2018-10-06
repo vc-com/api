@@ -28,14 +28,6 @@ class ProductObserver
     {
 
 
-
-        
-
-        // ProductHistory::create([
-        //     'data' => json_encode( Product::find( $product->id ) ) 
-        // ]);
-
-
     }
 
     public function updated(Product $product)

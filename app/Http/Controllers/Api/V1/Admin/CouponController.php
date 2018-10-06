@@ -97,7 +97,7 @@ class CouponController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request->all(), $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
