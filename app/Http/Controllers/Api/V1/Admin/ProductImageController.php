@@ -2,84 +2,154 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Repositories\Product\ProductRepositoryInterface;
+use Illuminate\Http\Request;
 
 class ProductImageController extends ApiController
 {
+    
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var ProductRepositoryInterface
      */
-    public function index()
+    private $repository;
+
+    /**
+     * ProductImageController constructor.
+     * @param ProductRepositoryInterface $repository
+     */
+    public function __construct(ProductRepositoryInterface $repository)
     {
-        //
+        $this->repository = $repository;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $productId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function index($productId)
     {
-        //
+
+        if (!$result = $this->repository->findById($productId)) {
+            return $this->errorResponse('product_not_found', 422);
+        }       
+
+        if (!$images = $result->images()->all()) {
+            return $this->errorResponse('product_images_not_found', 422);
+        }
+
+        return $this->showAll($images);
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $productId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, $productId)
     {
-        //
+
+        if (!$result = $this->repository->findById($productId)) {
+            return $this->errorResponse('product_not_found', 422);
+        } 
+
+        $total = $result->images()
+                    ->where('image', $request->all()['image'])
+                    ->count();
+
+        if ($total !== 0 ) {
+            return $this->successResponse('product_image_is_exists');
+        }
+
+        if (!$result = $result->images()->create($request->all())) {
+            return $this->errorResponse('product_image_not_created', 500);
+        }
+
+        return $this->successResponse($result);
+
     }
+
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $productId
+     * @param $imageId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($productId, $imageId)
     {
-        //
+
+        if (!$result = $this->repository->findById($productId)) {
+            return $this->errorResponse('product_not_found', 422);
+        }       
+
+        if (!$image = $result->images()->find($imageId)) {
+            return $this->errorResponse('product_image_not_found', 422);
+        }
+
+        return $this->showOne($image);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $productId
+     * @param $imageId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $productId, $imageId)
     {
-        //
+  
+        if (!$result = $this->repository->findById($productId)) {
+            return $this->errorResponse('product_not_found', 422);
+        }  
+
+        $total = $result->images()
+                        ->where('_id', '!=', $imageId)
+                        ->where('image', $request->all()['image'])
+                        ->count();
+
+        if ($total !== 0 ) {
+            return $this->successResponse('product_image_is_exists');
+        }
+
+        if (!$result = $result->images()->find($imageId)->update($request->all())) {
+            return $this->errorResponse('product_image_not_updated', 422);
+        }
+
+        return $this->successResponse($result);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $productId
+     * @param $imageId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy($productId, $imageId)
     {
-        //
+
+        if (!$result = $this->repository->findById($productId)) {
+            return $this->errorResponse('product_not_found', 422);
+        }       
+
+        if (!$result->images()->destroy($imageId)) {
+            return $this->errorResponse('product_image_not_removed', 422);
+        }
+
+        return $this->successResponse('product_image_removed');
+
     }
+
 }
