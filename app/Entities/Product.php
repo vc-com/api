@@ -95,14 +95,14 @@ class Product extends Model
         return $this->embedsMany(ProductRelated::class);
     }
 
-    public function questions()
-    {
-        return $this->embedsMany(ProductQuestion::class);
-    }
-
     public function attributes()
     {
         return $this->embedsMany(ProductAttribute::class);
+    }
+
+    public function questions()
+    {
+        return $this->belongsToMany(ProductQuestion::class);
     }
     
 }

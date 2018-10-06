@@ -44,7 +44,7 @@ class ProductController extends ApiController
         //     return $this->errorResponse('products_not_found', 422);
         // }
 
-        if (!$result = $this->repository->all()) {
+        if (!$result = $this->repository->all(['questions'])) {
             return $this->errorResponse('products_not_found', 422);
         }
 

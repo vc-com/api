@@ -46,17 +46,11 @@ class ProductSeeder extends Seeder
                 $related = new ProductRelated( $this->relateds( $faker ) );
                 $product->relateds()->save($related);
             }     
-
-            $total = rand(0,5);
-            for ($i=0; $i < $total ; $i++) {
-                $question = new ProductQuestion( $this->questions( $faker, $i ) );
-                $product->questions()->save($question);
-
-                /*
-                * Inserir codigos de respostas
-                */          
-        
-            } 
+  
+       
+            $questions = factory(ProductQuestion::class, rand(0,5))->create();
+            $product->questions()->attach($questions);        
+    
 
         });
 
@@ -79,32 +73,6 @@ class ProductSeeder extends Seeder
 
         return [
             'related_id' => $product->id,
-        ];
-
-    }
-
-    private function questions(Faker $faker, $i)
-    {
-
-        if($i % 2 == 0){
-
-            $customer = Customer::take(1)
-            ->skip(rand( 0, Customer::count() - 1) )
-            ->first();
-
-            return [
-                'customer_id' =>  $customer->_id,
-                'question' => $faker->text,
-            ];
-        }
-
-        $user = User::take(1)
-            ->skip(rand( 0, User::count() - 1) )
-            ->first();
-
-        return [
-            'user_id' => $user->id,
-            'question' => $faker->text,
         ];
 
     }
