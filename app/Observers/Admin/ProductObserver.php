@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Observers\Admin;
+use Illuminate\Http\Request;
 use App\Entities\Product;
+use App\Entities\ProductHistory;
 use App\Repositories\Product\ProductRepositoryInterface;
 
 class ProductObserver
@@ -25,6 +27,21 @@ class ProductObserver
     public function updating(Product $product)
     {
 
+
+
+        
+
+        // ProductHistory::create([
+        //     'data' => json_encode( Product::find( $product->id ) ) 
+        // ]);
+
+
+    }
+
+    public function updated(Product $product)
+    {
+       
+   
     }
 
 }

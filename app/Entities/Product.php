@@ -40,12 +40,23 @@ class Product extends Model
 		'meta_keywords',
 
         'url_video_youtube',
-        'brand', 
+        'brand',
 
         'weight', // peso
         'length', // comprimento
         'width', // largura
         'height', // altura
+
+        'price_on_request', // preco_sob_consulta
+        'price_cost', // preco_custo
+        'price_full', // preco_cheio
+        'price_promotional', // preco_promocional
+
+        'managed', // gerenciado
+        'stock_status', // situacao_em_estoque
+        'quantity', // Quantidade
+        'reserved', // Reservado
+        'situation_without_stock', // situacao_sem_estoque
 
         'total_sold', // total_vendido
         'visualized'
@@ -92,16 +103,6 @@ class Product extends Model
     public function attributes()
     {
         return $this->embedsMany(ProductAttribute::class);
-    }
-
-    public function stocks()
-    {
-        return $this->embedsMany(ProductStock::class);
-    }
-
-    public function prices()
-    {
-        return $this->embedsMany(ProductPrice::class);
     }
     
 }

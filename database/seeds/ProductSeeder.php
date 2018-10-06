@@ -24,34 +24,12 @@ class ProductSeeder extends Seeder
 
         $products->each(function ($product) use ($faker) {
 
-
-            if ($product->type === Product::TYPE_NORMAL) {
-                
-                $price = new ProductPrice( $this->prices( $faker ) );
-                $product->prices()->save($price); 
-
-
-                $price = new ProductStock( $this->stocks( $faker ) );
-                $product->stocks()->save($price);
-
-            } else {
-
-
+            if ($product->type === Product::TYPE_ATTRIBUTE) {                
+    
                 $products = factory(Product::class, rand(1,6))->create([
                     'parent_id' => $product->id,
                     'type' => Product::TYPE_ATTRIBUTE
-                ]);
-
-                $products->each(function ($product) use ($faker) {
-
-                    $price = new ProductPrice( $this->prices( $faker ) );
-                    $product->prices()->save($price); 
-
-                    $price = new ProductStock( $this->stocks( $faker ) );
-                    $product->stocks()->save($price);
-
-                
-                });
+                ]);            
 
             }
 
@@ -80,8 +58,6 @@ class ProductSeeder extends Seeder
         
             } 
 
-
-
         });
 
     }
@@ -92,42 +68,6 @@ class ProductSeeder extends Seeder
             'image' => $faker->slug,
             'sort_order' => rand(0,10),
         ];
-    }
-
-    private function stocks(Faker $faker)
-    {
-        return [
-
-            'managed' => array_random([true, false]),
-            'stock_status' => $faker->randomNumber(2),
-            'quantity' => $faker->randomNumber(2),
-            'reserved' => $faker->randomNumber(2),
-            'situation_without_stock' => $faker->randomNumber(2),
-
-        ];
-    }
-
-    private function prices(Faker $faker)
-    {
-
-        if(rand(0,1) === 1) {
-
-            return [
-                'price_on_request' => false, // preco_sob_consulta
-                'price_cost' => $faker->randomNumber(2), // preco_custo
-                'price_full' => $faker->randomNumber(2), // preco_cheio
-                'price_promotional' => $faker->randomNumber(2), // preco_promocional
-            ];
-
-        }
-
-        return [
-            'price_on_request' => false, // preco_sob_consulta
-            'price_cost' => $faker->randomNumber(2), // preco_custo
-            'price_full' => $faker->randomNumber(2), // preco_cheio
-            'price_promotional' => false, // preco_promocional
-        ];
-
     }
 
     private function relateds(Faker $faker)

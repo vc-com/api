@@ -6,7 +6,6 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Entities\Product::class, function (Faker $faker) {
 
-
 	$brand = Brand::take(1)
 		->skip(rand( 0, Brand::count() - 1) )
 		->first();
@@ -32,13 +31,23 @@ $factory->define(App\Entities\Product::class, function (Faker $faker) {
 		'meta_keywords' => $faker->paragraph,
 
         'url_video_youtube' => $faker->url,
-
         'brand' => $brand->name, 
 
         'weight' => rand(0.300,20) , // peso
         'length' => rand(1,99) , // comprimento
         'width' => rand(1,99) , // largura
         'height' => rand(1,99) , // altura
+
+        'price_on_request' => false, // preco_sob_consulta
+        'price_cost' => $faker->randomNumber(2), // preco_custo
+        'price_full' => $faker->randomNumber(2), // preco_cheio
+        'price_promotional' => $faker->randomNumber(2), // preco_promocional
+
+        'managed' => array_random([true, false]),
+        'stock_status' => $faker->randomNumber(2),
+        'quantity' => $faker->randomNumber(2),
+        'reserved' => $faker->randomNumber(2),
+        'situation_without_stock' => $faker->randomNumber(2),
 
         'total_sold' => rand(0,10), // total_vendido
         'visualized' => rand(0,99),
