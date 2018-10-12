@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace VoceCrianca\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -13,7 +13,7 @@ class RouteApiSiteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespace = 'VoceCrianca\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

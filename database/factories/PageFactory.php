@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Entities\Page::class, function (Faker $faker) {
+$factory->define(VoceCrianca\Models\Page::class, function (Faker $faker) {
     return [
         'name' => $faker->sentence,
         'active' => rand(0,5) > 0 ? true : false,

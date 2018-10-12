@@ -1,13 +1,13 @@
 <?php
 
-use App\Entities\Customer;
-use App\Entities\User;
-use App\Entities\Product;
-use App\Entities\ProductImage;
-use App\Entities\ProductRelated;
-use App\Entities\ProductQuestion;
-use App\Entities\ProductPrice;
-use App\Entities\ProductStock;
+use VoceCrianca\Models\Customer;
+use VoceCrianca\Models\User;
+use VoceCrianca\Models\Product;
+use VoceCrianca\Models\ProductImage;
+use VoceCrianca\Models\ProductRelated;
+use VoceCrianca\Models\ProductQuestion;
+use VoceCrianca\Models\ProductPrice;
+use VoceCrianca\Models\ProductStock;
 
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
@@ -49,7 +49,9 @@ class ProductSeeder extends Seeder
   
        
             $questions = factory(ProductQuestion::class, rand(0,5))->create();
-            $product->questions()->attach($questions);        
+            $product->questions()->attach($questions);
+            
+            $product->customers()->attach($questions);
     
 
         });

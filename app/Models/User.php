@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Jenssegers\Mongodb\Auth\User as Authenticatable;
@@ -10,10 +10,10 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Class Customer
- * @package App
+ * Class User
+ * @package VoceCrianca
  */
-class Customer extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
 
     use SoftDeletes, Notifiable;
@@ -32,8 +32,11 @@ class Customer extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'image',
         'active',
         'verified',
+        'roles',
+        'privileges',
     ];
 
     /**
@@ -42,7 +45,7 @@ class Customer extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password'
+        'password',
     ];
 
     /**
@@ -53,19 +56,6 @@ class Customer extends Authenticatable implements JWTSubject
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
-    }
-
-    /**
-     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
-     */
-    public function address()
-    {
-        return $this->embedsMany(CustomerAddress::class);
-    }
-
-    public function phones()
-    {
-        return $this->embedsMany(CustomerPhone::class);
     }
 
     /**
@@ -91,6 +81,14 @@ class Customer extends Authenticatable implements JWTSubject
     public function isVerified()
     {
         return $this->verified == User::VERIFIED_USER;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 
     /**

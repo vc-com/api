@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Interfaces;
+namespace VoceCrianca\Interfaces;
 
 /**
  * Interface IRepository
- * @package App\Interfaces
+ * @package VoceCrianca\Interfaces
  */
 interface IRepository
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Banner;
+namespace VoceCrianca\Repositories\Banner;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface BannerRepositoryInterface
- * @package App\Repositories\Banner
+ * @package VoceCrianca\Repositories\Banner
  */
 interface BannerRepositoryInterface extends IRepository
 {

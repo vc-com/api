@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class Banner
- * @package App\Entities
+ * @package VoceCrianca\Models
  */
 class Banner extends Model
 {

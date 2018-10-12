@@ -1,10 +1,10 @@
 <?php
 
-use App\Entities\Product;
-use App\Entities\Brand;
+use VoceCrianca\Models\Product;
+use VoceCrianca\Models\Brand;
 use Faker\Generator as Faker;
 
-$factory->define(App\Entities\Product::class, function (Faker $faker) {
+$factory->define(VoceCrianca\Models\Product::class, function (Faker $faker) {
 
 	$brand = Brand::take(1)
 		->skip(rand( 0, Brand::count() - 1) )

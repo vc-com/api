@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\Category;
+use VoceCrianca\Models\Category;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 

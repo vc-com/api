@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Banner;
+namespace VoceCrianca\Repositories\Banner;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class BannerMongodbRepository
- * @package App\Repositories\Banner
+ * @package VoceCrianca\Repositories\Banner
  */
 class BannerMongodbRepository
     extends BaseMongodbAbstractRepository

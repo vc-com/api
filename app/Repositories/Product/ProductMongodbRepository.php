@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Product;
+namespace VoceCrianca\Repositories\Product;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class ProductMongodbRepository
- * @package App\Repositories\Product
+ * @package VoceCrianca\Repositories\Product
  */
 class ProductMongodbRepository
     extends BaseMongodbAbstractRepository

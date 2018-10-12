@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Brand;
+namespace VoceCrianca\Repositories\Brand;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface BrandRepositoryInterface
- * @package App\Repositories\Brand
+ * @package VoceCrianca\Repositories\Brand
  */
 interface BrandRepositoryInterface extends IRepository
 {

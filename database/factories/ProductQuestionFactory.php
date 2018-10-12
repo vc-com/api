@@ -1,10 +1,10 @@
 <?php
 
-use App\Entities\User;
-use App\Entities\Customer;
+use VoceCrianca\Models\User;
+use VoceCrianca\Models\Customer;
 use Faker\Generator as Faker;
 
-$factory->define(App\Entities\ProductQuestion::class, function (Faker $faker) {
+$factory->define(VoceCrianca\Models\ProductQuestion::class, function (Faker $faker) {
 
 
 	if(rand(0,1) % 2 == 0){

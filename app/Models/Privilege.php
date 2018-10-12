@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
 /**
  * Class Privilege
- * @package App\Entities
+ * @package VoceCrianca\Models
  */
 class Privilege extends Model
 {

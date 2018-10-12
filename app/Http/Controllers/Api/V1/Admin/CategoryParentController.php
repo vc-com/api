@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Category\CategoryRepositoryInterface;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CategoryParentController extends ApiController

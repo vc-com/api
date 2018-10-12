@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Persistences\Mongodb;
+namespace VoceCrianca\Persistences\Mongodb;
 
 use Exception;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class BaseMongodbAbstractRepository
- * @package App\Persistences\Eloquent
+ * @package VoceCrianca\Persistences\Eloquent
  */
 abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
 {

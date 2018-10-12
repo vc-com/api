@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class ProductAttribute extends Model
+class AttributeGroup extends Model
 {
+    
+    const GENRE = 'Gênero';
+    const COLOR = 'Cor';
+    const SIZE = 'Tamanho';
 
     /**
      * The attributes that are mass assignable.
@@ -13,8 +17,7 @@ class ProductAttribute extends Model
      * @var array
      */
     protected $fillable = [
-		'attribute_id',
-		'text'
+
     ];
 
     protected $hidden = [

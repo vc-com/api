@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class ProductRelated extends Model
+class ProductSpecial extends Model
 {
 
     /**
@@ -13,7 +13,7 @@ class ProductRelated extends Model
      * @var array
      */
     protected $fillable = [
-    	'related_id',
+
     ];
 
     protected $hidden = [

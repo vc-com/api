@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
@@ -67,6 +67,10 @@ class Product extends Model
 
     ];
 
+    /**
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * @param $query
@@ -104,5 +108,16 @@ class Product extends Model
     {
         return $this->belongsToMany(ProductQuestion::class);
     }
+
+    public function customers()
+    {
+        return $this->belongsToMany(Customer::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Repositories\User\UserRepositoryInterface;
+use VoceCrianca\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
+use VoceCrianca\Http\Controllers\ApiController;
 
 /**
  * Class UserRoleController
- * @package App\Http\Controllers\Api\V1\Admin
+ * @package VoceCrianca\Http\Controllers\Api\V1\Admin
  */
 class UserRoleController extends ApiController
 {

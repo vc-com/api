@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\User;
+namespace VoceCrianca\Repositories\User;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class UserMongodbRepository
- * @package App\Repositories\User
+ * @package VoceCrianca\Repositories\User
  */
 class UserMongodbRepository
     extends BaseMongodbAbstractRepository

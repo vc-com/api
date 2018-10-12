@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Admin;
+namespace VoceCrianca\Services\Admin;
 
 use Illuminate\Support\Facades\Validator;
 
 /**
  * Class BannerService
- * @package App\Services\Admin
+ * @package VoceCrianca\Services\Admin
  */
 class BannerService
 {

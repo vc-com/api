@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Auth;
+namespace VoceCrianca\Services\Auth;
 
-use App\Events\Log\User\UserAuthenticateEvent;
-use App\Entities\User;
+use VoceCrianca\Events\Log\User\UserAuthenticateEvent;
+use VoceCrianca\Models\User;
 
 /**
  * Class AuthenticateUserService
- * @package App\Services\Auth
+ * @package VoceCrianca\Services\Auth
  */
 class AuthenticateUserService
 {

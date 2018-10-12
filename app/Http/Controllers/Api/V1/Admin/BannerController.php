@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Banner\BannerRepositoryInterface;
-use App\Services\Admin\BannerService;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Banner\BannerRepositoryInterface;
+use VoceCrianca\Services\Admin\BannerService;
 use Illuminate\Http\Request;
 
 class BannerController extends ApiController

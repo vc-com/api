@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace VoceCrianca\Http\Controllers;
 
-use App\Traits\ApiResponse;
-use App\Traits\JWTTokenBearerTrait;
+use VoceCrianca\Traits\ApiResponse;
+use VoceCrianca\Traits\JWTTokenBearerTrait;
 
 /**
  * Class ApiController
- * @package App\Http\Controllers
+ * @package VoceCrianca\Http\Controllers
  */
 class ApiController extends Controller
 {

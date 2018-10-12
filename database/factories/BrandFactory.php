@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Entities\Brand::class, function (Faker $faker) {
+$factory->define(VoceCrianca\Models\Brand::class, function (Faker $faker) {
 
 	// //download das imagens vindo do laravelpix.com
 	// $imagemDownload = $faker->image(storage_path('app/public/img/banner'), 168,50);

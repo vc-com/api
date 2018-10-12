@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class Attribute extends Model
+class CouponHistory extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,9 +12,9 @@ class Attribute extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'active',
-        'type',
+        'order_id',
+        'customer_id',
+        'amount',
     ];
 
     /**
@@ -25,13 +25,5 @@ class Attribute extends Model
     protected $hidden = [
 
     ];
-
-    /**
-     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
-     */
-    public function variations()
-    {
-        return $this->embedsMany(AttributeVariation::class);
-    }
-
+    
 }

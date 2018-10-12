@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Entities\Privilege;
+use VoceCrianca\Models\Privilege;
 
 class PrivilegeSeeder extends Seeder
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Product\ProductRepositoryInterface;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ProductRelatedController extends ApiController

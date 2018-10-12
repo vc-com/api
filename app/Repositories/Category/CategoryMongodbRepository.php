@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace VoceCrianca\Repositories\Category;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class CategoryMongodbRepository
- * @package App\Repositories\Category
+ * @package VoceCrianca\Repositories\Category
  */
 class CategoryMongodbRepository
     extends BaseMongodbAbstractRepository

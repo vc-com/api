@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Brand\BrandRepositoryInterface;
-use App\Services\Admin\BrandService;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Brand\BrandRepositoryInterface;
+use VoceCrianca\Services\Admin\BrandService;
 use Illuminate\Http\Request;
 
 class BrandController extends ApiController

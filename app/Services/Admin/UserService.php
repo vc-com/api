@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services\Admin;
+namespace VoceCrianca\Services\Admin;
 
-use App\Repositories\User\UserRepositoryInterface;
+use VoceCrianca\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 /**
  * Class UserService
- * @package App\Services\Admin
+ * @package VoceCrianca\Services\Admin
  */
 class UserService
 {

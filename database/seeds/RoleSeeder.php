@@ -1,8 +1,8 @@
 <?php
 
-use App\Entities\Privilege;
+use VoceCrianca\Models\Privilege;
 use Illuminate\Database\Seeder;
-use App\Entities\Role;
+use VoceCrianca\Models\Role;
 
 class RoleSeeder extends Seeder
 {

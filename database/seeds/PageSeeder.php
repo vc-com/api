@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Entities\Page;
+use VoceCrianca\Models\Page;
 
 class PageSeeder extends Seeder
 {

@@ -1,30 +1,24 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class ProductDiscount extends Model
+class ProductQuestion extends Model
 {
-
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-
-		'customer_group_id',
-		'quantity',
-		'priority',
-		'price',
-		'date_start',
-		'date_end',
-
+    	'customer_id',
+    	'user_id',
+        'question',
     ];
 
     protected $hidden = [
 
     ];
-    
 }

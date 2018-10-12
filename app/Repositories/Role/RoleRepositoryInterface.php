@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Role;
+namespace VoceCrianca\Repositories\Role;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface RoleRepositoryInterface
- * @package App\Repositories\Role
+ * @package VoceCrianca\Repositories\Role
  */
 interface RoleRepositoryInterface extends IRepository
 {

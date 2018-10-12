@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Listeners\Log\User;
+namespace VoceCrianca\Listeners\Log\User;
 
-use App\Events\Log\User\UserAuthenticateEvent;
-use App\Entities\Log;
-use App\Traits\RequestHeadersTrait;
+use VoceCrianca\Events\Log\User\UserAuthenticateEvent;
+use VoceCrianca\Models\Log;
+use VoceCrianca\Traits\RequestHeadersTrait;
 
 class UserAuthenticateListener
 {

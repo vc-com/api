@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Services\Admin;
+namespace VoceCrianca\Services\Admin;
 
-use App\Repositories\Customer\CustomerRepositoryInterface;
+use VoceCrianca\Repositories\Customer\CustomerRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 /**
  * Class CustomerService
- * @package App\Services\Admin
+ * @package VoceCrianca\Services\Admin
  */
 class CustomerService
 {

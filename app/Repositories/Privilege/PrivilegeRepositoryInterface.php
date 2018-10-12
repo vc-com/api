@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Privilege;
+namespace VoceCrianca\Repositories\Privilege;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface PrivilegeRepositoryInterface
- * @package App\Repositories\Privilege
+ * @package VoceCrianca\Repositories\Privilege
  */
 interface PrivilegeRepositoryInterface extends IRepository
 {

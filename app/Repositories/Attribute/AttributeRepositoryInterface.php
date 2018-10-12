@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Attribute;
+namespace VoceCrianca\Repositories\Attribute;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface AttributeRepositoryInterface
- * @package App\Repositories\Attribute
+ * @package VoceCrianca\Repositories\Attribute
  */
 interface AttributeRepositoryInterface extends IRepository
 {

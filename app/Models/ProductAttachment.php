@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class CustomerAddress extends Model
+class ProductAttachment extends Model
 {
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'address',
-        'postcode',
+    	'attachment',
+		'sort_order',
     ];
 
     protected $hidden = [
 
     ];
-
+    
 }

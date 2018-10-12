@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Traits;
+namespace VoceCrianca\Traits;
 
 /**
  * Trait ApiResponse
- * @package App\Traits
+ * @package VoceCrianca\Traits
  */
 trait ApiResponse
 {
@@ -16,7 +16,7 @@ trait ApiResponse
      */
     protected function successResponse($data, $code=200)
     {
-        return response()->json(['data' => $data], $code);
+        return response()->json($data, $code);
     }
 
     /**
@@ -28,7 +28,6 @@ trait ApiResponse
     {
         return response()->json(['error' => $message, 'code' => $code], $code);
     }
-
 
     /**
      * @param $data

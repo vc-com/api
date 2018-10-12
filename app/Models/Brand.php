@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class Page extends Model
+class Brand extends Model
 {
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -17,6 +17,7 @@ class Page extends Model
         'active',
         'description',
         'slug',
+        'image',
         'meta_title',
         'meta_description',
         'sort_order',

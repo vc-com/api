@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\Entities\User::class,
+        'model' => VoceCrianca\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

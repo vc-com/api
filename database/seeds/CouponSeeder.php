@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Entities\Coupon;
-use App\Entities\CouponHistory;
-use App\Entities\CouponCategory;
-use App\Entities\CouponProduct;
+use VoceCrianca\Models\Coupon;
+use VoceCrianca\Models\CouponHistory;
+use VoceCrianca\Models\CouponCategory;
+use VoceCrianca\Models\CouponProduct;
 use Faker\Generator as Faker;
 
 class CouponSeeder extends Seeder

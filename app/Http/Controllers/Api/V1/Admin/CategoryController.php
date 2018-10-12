@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Services\Admin\CategoryService;
-use App\Entities\Category;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Category\CategoryRepositoryInterface;
+use VoceCrianca\Services\Admin\CategoryService;
+use VoceCrianca\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends ApiController

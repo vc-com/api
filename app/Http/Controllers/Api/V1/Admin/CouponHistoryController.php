@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Coupon\CouponRepositoryInterface;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Coupon\CouponRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CouponHistoryController extends ApiController

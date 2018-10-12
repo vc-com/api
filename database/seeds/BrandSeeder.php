@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\Brand;
+use VoceCrianca\Models\Brand;
 use Illuminate\Database\Seeder;
 
 class BrandSeeder extends Seeder

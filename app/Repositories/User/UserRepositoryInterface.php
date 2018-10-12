@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\User;
+namespace VoceCrianca\Repositories\User;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface UserRepositoryInterface
- * @package App\Repositories\User
+ * @package VoceCrianca\Repositories\User
  */
 interface UserRepositoryInterface extends IRepository
 {

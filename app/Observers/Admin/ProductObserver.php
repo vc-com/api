@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Observers\Admin;
+namespace VoceCrianca\Observers\Admin;
 use Illuminate\Http\Request;
-use App\Entities\Product;
-use App\Entities\ProductHistory;
-use App\Repositories\Product\ProductRepositoryInterface;
+use VoceCrianca\Models\Product;
+use VoceCrianca\Models\ProductHistory;
+use VoceCrianca\Repositories\Product\ProductRepositoryInterface;
 
 class ProductObserver
 {  

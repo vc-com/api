@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Attribute;
+namespace VoceCrianca\Repositories\Attribute;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class AttributeMongodbRepository
- * @package App\Repositories\Attribute
+ * @package VoceCrianca\Repositories\Attribute
  */
 class AttributeMongodbRepository
     extends BaseMongodbAbstractRepository

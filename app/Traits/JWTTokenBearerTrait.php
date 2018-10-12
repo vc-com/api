@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Traits;
+namespace VoceCrianca\Traits;
 
-use App\Services\Auth\AuthenticateUserService;
+use VoceCrianca\Services\Auth\AuthenticateUserService;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
 /**
  * Trait JWTTokenBearerTrait
- * @package App\Traits
+ * @package VoceCrianca\Traits
  */
 trait JWTTokenBearerTrait {
 

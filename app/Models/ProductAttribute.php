@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities;
+namespace VoceCrianca\Models;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class ProductCategory extends Model
+class ProductAttribute extends Model
 {
 
     /**
@@ -13,12 +13,12 @@ class ProductCategory extends Model
      * @var array
      */
     protected $fillable = [
-
+		'attribute_id',
+		'text'
     ];
 
     protected $hidden = [
-    	'category_id',
-		'text'
+
     ];
     
 }

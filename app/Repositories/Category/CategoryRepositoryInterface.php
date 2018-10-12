@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace VoceCrianca\Repositories\Category;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface CategoryRepositoryInterface
- * @package App\Repositories\Category
+ * @package VoceCrianca\Repositories\Category
  */
 interface CategoryRepositoryInterface extends IRepository
 {

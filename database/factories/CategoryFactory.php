@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Entities\Category::class, function (Faker $faker) {
+$factory->define(VoceCrianca\Models\Category::class, function (Faker $faker) {
 
 //	  //download das imagens vindo do laravelpix.com
 //    $imagemDownload = $faker->image(storage_path('app/public/img/category'), 400,300);

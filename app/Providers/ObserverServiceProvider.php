@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace VoceCrianca\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Entities\Product;
-use App\Observers\Admin\ProductObserver;
+use VoceCrianca\Models\Product;
+use VoceCrianca\Observers\Admin\ProductObserver;
 
 
 class ObserverServiceProvider extends ServiceProvider
