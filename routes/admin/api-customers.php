@@ -5,14 +5,14 @@
 
 // });
 
-$this->resource('/customers', 'Api\V1\Admin\CustomerController')->except([
+$this->resource('customers', 'Api\V1\Admin\CustomerController')->except([
  	'create', 'edit'
 ]);
 
-$this->resource('/customers.address', 'Api\V1\Admin\CustomerAddressController')->except([
+$this->resource('customers.address', 'Api\V1\Admin\CustomerAddressController')->except([
  	'create', 'edit'
 ]);
 
-$this->resource('/customers.phones', 'Api\V1\Admin\CustomerPhoneController')->except([
+$this->resource('customers.phones', 'Api\V1\Admin\CustomerPhoneController')->except([
  	'create', 'edit'
 ]);

@@ -7,10 +7,10 @@
 
 // });
 
-$this->resource('/users', 'Api\V1\Admin\UserController')->except([
+$this->resource('users', 'Api\V1\Admin\UserController')->except([
  	'create', 'edit'
 ]);
 
-$this->resource('/users.roles', 'Api\V1\Admin\UserRoleController')->except([
+$this->resource('users.roles', 'Api\V1\Admin\UserRoleController')->except([
     'create', 'edit'
 ]);
