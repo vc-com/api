@@ -35,6 +35,7 @@ class RouteApiAdminServiceProvider extends ServiceProvider
     public function map()
     {
 
+        $this->mapApiAuthRoutes();
         $this->mapApiAdminAuthRoutes();
         $this->mapApiUsersRoutes();
         $this->mapApiRolesRoutes();
@@ -59,6 +60,14 @@ class RouteApiAdminServiceProvider extends ServiceProvider
              ->group(base_path('routes/admin/api-users.php'));
     }
 
+    protected function mapApiAuthRoutes()
+    {
+        $this->prefix('/v1/admin    ')
+             ->as('admin.')
+             ->middleware('api')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/admin/api-auth.php'));
+    }
 
     protected function mapApiRolesRoutes()
     {
