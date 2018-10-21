@@ -34,5 +34,27 @@ class UserMongodbRepository
             ->orderBy('score', [ '$meta' => 'textScore' ] )
             ->get();
     }
+    /**
+     * Get Data User Login
+     *
+     * @param $data
+     * @return mixed
+     */
+    public function getDataUserLogin(array $data)
+    {
+        
+        $res = $this->model->where($data)->first();
+
+        $query = $this->model->with(['roles']);
+        $query->select([
+            '_id',
+            'email',
+            'name',
+            'roles',
+        ]);
+
+        return $query->find($res->id);
+
+    }
 
 }

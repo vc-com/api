@@ -2,7 +2,6 @@
 
 namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
     
-use VoceCrianca\Factories\JWTTokenBearerFactory;
 use VoceCrianca\Http\Controllers\ApiController;
 use VoceCrianca\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
@@ -19,17 +18,11 @@ class AuthController extends ApiController
     private $repository;
 
     /**
-     * @var JWTTokenBearerFactory
-     */
-    private $bearerFactory;
-
-    /**
      * AuthController constructor.
-     * @param JWTTokenBearerFactory $bearerFactory
+     * @param UserRepositoryInterface $repository
      */
-    public function __construct(JWTTokenBearerFactory $bearerFactory, UserRepositoryInterface $repository)
+    public function __construct(UserRepositoryInterface $repository)
     {
-        $this->bearerFactory = $bearerFactory;
         $this->repository = $repository;
     }
 
@@ -48,14 +41,10 @@ class AuthController extends ApiController
             return $this->errorResponse('invalid_credentials', 401);
         }
 
-        $res = $this->repository->whereFirst(['email' => $request->email]);
-
-        $data = $this->repository->findById($res->id, ['roles']);
-
         //Authorization || HTTP_Authorization
         return $this->successResponse([
-            'HTTP_Authorization' => $this->bearerFactory->generate($request),
-            'HTTP_Data' => $data
+            'HTTP_Authorization' => $token,
+            'HTTP_Data' => $this->repository->getDataUserLogin(['email' => $request->email])
         ]);
 
     }

@@ -15,4 +15,10 @@ interface UserRepositoryInterface extends IRepository
      * @return mixed
      */
     public function search($data);
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function getDataUserLogin(array $data);
 }
