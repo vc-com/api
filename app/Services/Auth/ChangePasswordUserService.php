@@ -12,10 +12,10 @@ class ChangePasswordUserService
     /**
      * Change Password
      *
-     * @param string $request
+     * @param array $request
      * @return string
      */
-    public function make($request)
+    public function make(array $request)
     {
 
         $res = true;

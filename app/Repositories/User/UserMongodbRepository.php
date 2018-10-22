@@ -57,4 +57,13 @@ class UserMongodbRepository
 
     }
 
+    /**
+     * @param array $request
+     * @return bool|mixed
+     */
+    public function checkToken(array $request)
+    {
+        return true;
+    }
+
 }

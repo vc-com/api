@@ -12,10 +12,10 @@ class GenerateTokenUserService
     /**
      * Generate Token And Send Email
      *
-     * @param string $request
+     * @param array $request
      * @return string
      */
-    public function make($request)
+    public function make(array $request)
     {
 
         $res = true;

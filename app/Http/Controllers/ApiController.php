@@ -3,7 +3,6 @@
 namespace VoceCrianca\Http\Controllers;
 
 use VoceCrianca\Traits\ApiResponse;
-use VoceCrianca\Traits\JWTTokenBearerTrait;
 
 /**
  * Class ApiController
@@ -11,6 +10,5 @@ use VoceCrianca\Traits\JWTTokenBearerTrait;
  */
 class ApiController extends Controller
 {
-    use JWTTokenBearerTrait;
     use ApiResponse;
 }

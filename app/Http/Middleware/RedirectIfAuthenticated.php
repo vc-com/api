@@ -5,6 +5,10 @@ namespace VoceCrianca\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class RedirectIfAuthenticated
+ * @package VoceCrianca\Http\Middleware
+ */
 class RedirectIfAuthenticated
 {
     /**

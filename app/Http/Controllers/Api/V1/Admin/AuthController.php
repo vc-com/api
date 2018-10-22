@@ -1,7 +1,7 @@
 <?php
 
 namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
-    
+
 use VoceCrianca\Http\Controllers\ApiController;
 use VoceCrianca\Repositories\User\UserRepositoryInterface;
 use VoceCrianca\Services\Auth\ChangePasswordUserService;
@@ -55,7 +55,7 @@ class AuthController extends ApiController
     {
 
         $credentials = $request->only('email', 'password');
-  
+
         if (!$token = JWTAuth::attempt($credentials)) {
             return $this->errorResponse('invalid_credentials', 401);
         }
@@ -75,9 +75,7 @@ class AuthController extends ApiController
     public function reset(Request $request)
     {
 
-        $res = $this->generateTokenUserService->make( $request->only('email') );
-
-        if (!$res) {
+        if (!$this->generateTokenUserService->make($request->only('email'))) {
             return $this->errorResponse('email_not_found', 422);
         }
 
@@ -92,17 +90,13 @@ class AuthController extends ApiController
     public function checkToken(Request $request)
     {
 
-        $res = $this->changePasswordUserService->make( $request->only('email') );
-
-        if (!$res) {
+        if (!$this->repository->checkToken($request->only('token'))) {
             return $this->errorResponse('token_not_found', 422);
         }
 
         return $this->successResponse('token_found');
 
-
     }
-
 
     /**
      * Change New Password
@@ -113,16 +107,11 @@ class AuthController extends ApiController
     public function changePassword(Request $request)
     {
 
-        $data = $request->only('email');
-
-        $res = $this->changePasswordUserService->make( $data );
-
-        if (!$res) {
+        if (!$this->changePasswordUserService->make($request->only('email', 'password', 'token'))) {
             return $this->errorResponse('error_update_password', 422);
         }
 
         return $this->successResponse('update_password');
-
 
     }
 
