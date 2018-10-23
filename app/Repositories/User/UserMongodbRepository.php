@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\User;
+namespace VoceCrianca\Repositories\User;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class UserMongodbRepository
- * @package App\Repositories\User
+ * @package VoceCrianca\Repositories\User
  */
 class UserMongodbRepository
     extends BaseMongodbAbstractRepository
@@ -33,6 +33,37 @@ class UserMongodbRepository
         return $this->model->whereFullText($data)
             ->orderBy('score', [ '$meta' => 'textScore' ] )
             ->get();
+    }
+    /**
+     * Get Data User Login
+     *
+     * @param $data
+     * @return mixed
+     */
+    public function getDataUserLogin(array $data)
+    {
+        
+        $res = $this->model->where($data)->first();
+
+        $query = $this->model->with(['roles']);
+        $query->select([
+            '_id',
+            'email',
+            'name',
+            'roles',
+        ]);
+
+        return $query->find($res->id);
+
+    }
+
+    /**
+     * @param array $request
+     * @return bool|mixed
+     */
+    public function checkToken(array $request)
+    {
+        return true;
     }
 
 }

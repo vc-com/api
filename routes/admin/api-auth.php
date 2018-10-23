@@ -1,5 +1,7 @@
 <?php
 
-//$this->post('authenticate', 'Auth\AuthApiController@authenticate')->name('auth.login');
-//
-//$this->post('register', 'Auth\AuthApiController@register')->name('auth.register');
+$this->post('login', 'Api\V1\Admin\AuthController@login')->name('auth.login');
+$this->post('reset', 'Api\V1\Admin\AuthController@reset')->name('auth.reset');
+$this->post('forgot/check/token', 'Api\V1\Admin\AuthController@checkToken')->name('auth.check.token');
+
+// $this->post('register', 'Auth\AuthController@register')->name('auth.register');

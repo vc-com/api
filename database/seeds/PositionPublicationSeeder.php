@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Entities\PositionPublication;
+use VoceCrianca\Models\PositionPublication;
 
 class PositionPublicationSeeder extends Seeder
 {

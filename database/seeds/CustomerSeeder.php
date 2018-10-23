@@ -1,8 +1,8 @@
 <?php
 
-use App\Entities\Customer;
-use App\Entities\CustomerAddress;
-use App\Entities\CustomerPhone;
+use VoceCrianca\Models\Customer;
+use VoceCrianca\Models\CustomerAddress;
+use VoceCrianca\Models\CustomerPhone;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 

@@ -28,8 +28,11 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
-        }
+            "VoceCrianca\\": "app/"
+        },
+        "files": [
+            "app/Helpers/tools.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

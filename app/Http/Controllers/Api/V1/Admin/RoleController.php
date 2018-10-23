@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Role\RoleRepositoryInterface;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Role\RoleRepositoryInterface;
 
 /**
  * Class RoleController
- * @package App\Http\Controllers\Privilege
+ * @package VoceCrianca\Http\Controllers\Privilege
  */
 class RoleController extends ApiController
 {

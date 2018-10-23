@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Privilege;
+namespace VoceCrianca\Repositories\Privilege;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class PrivilegeMongodbRepository
- * @package App\Repositories\Privilege
+ * @package VoceCrianca\Repositories\Privilege
  */
 class PrivilegeMongodbRepository
     extends BaseMongodbAbstractRepository

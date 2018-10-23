@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Traits;
+namespace VoceCrianca\Traits;
 
 use Illuminate\Support\Facades\Request;
 
 /**
  * Trait RequestHeadersTrait
- * @package App\Traits
+ * @package VoceCrianca\Traits
  */
 trait RequestHeadersTrait
 {

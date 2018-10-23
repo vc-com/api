@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
+use VoceCrianca\Http\Controllers\ApiController;
 
-use App\Repositories\User\UserRepositoryInterface;
-use App\Services\Admin\UserService;
+use VoceCrianca\Repositories\User\UserRepositoryInterface;
+use VoceCrianca\Services\Admin\UserService;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 

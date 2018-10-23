@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Entities\Coupon;
+use VoceCrianca\Models\Coupon;
 
 $factory->define(Coupon::class, function (Faker $faker) {
 

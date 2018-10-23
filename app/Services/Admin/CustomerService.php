@@ -1,30 +1,17 @@
 <?php
 
-namespace App\Services\Admin;
+namespace VoceCrianca\Services\Admin;
 
-use App\Repositories\Customer\CustomerRepositoryInterface;
+use VoceCrianca\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 /**
  * Class CustomerService
- * @package App\Services\Admin
+ * @package VoceCrianca\Services\Admin
  */
 class CustomerService
 {
-    /**
-     * @var CustomerRepositoryInterface
-     */
-    private $repository;
-
-    /**
-     * CustomerService constructor.
-     * @param CustomerRepositoryInterface $repository
-     */
-    public function __construct(CustomerRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
 
     /**
      * @param array $data
@@ -63,7 +50,7 @@ class CustomerService
 
         $data = $this->filterRequest($request);
 
-        if (!$created = $this->repository->create($data)) {
+        if (!$created = Customer::create($data)) {
             return false;
         }
 
@@ -82,7 +69,7 @@ class CustomerService
     {
         
         $data = $this->filterRequest($request);
-        return $this->repository->update($id, $data);
+        return Customer::find($id)->update($data);
         
     }
 

@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Entities\Attribute;
-use App\Entities\AttributeVariation;
-use App\Entities\AttributeGroup;
+use VoceCrianca\Models\Attribute;
+use VoceCrianca\Models\AttributeVariation;
+use VoceCrianca\Models\AttributeGroup;
 
 class AttributeSeeder extends Seeder
 {

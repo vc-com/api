@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
+use VoceCrianca\Http\Controllers\ApiController;
 
-use App\Repositories\Customer\CustomerRepositoryInterface;
-use App\Services\Admin\CustomerService;
+use VoceCrianca\Repositories\Customer\CustomerRepositoryInterface;
+use VoceCrianca\Services\Admin\CustomerService;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -41,7 +41,7 @@ class CustomerController extends ApiController
      */
     public function index()
     {
-        if (!$result = $this->repository->all(['address', 'phones'])) {
+        if (!$result = $this->repository->all(['address', 'phones', 'questions'])) {
             return $this->errorResponse('customers_not_found', 422);
         }
 

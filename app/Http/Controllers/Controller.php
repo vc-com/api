@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace VoceCrianca\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
  * Class Controller
- * @package App\Http\Controllers
+ * @package VoceCrianca\Http\Controllers
  */
 class Controller extends BaseController
 {

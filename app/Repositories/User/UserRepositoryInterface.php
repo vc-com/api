@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\User;
+namespace VoceCrianca\Repositories\User;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface UserRepositoryInterface
- * @package App\Repositories\User
+ * @package VoceCrianca\Repositories\User
  */
 interface UserRepositoryInterface extends IRepository
 {
@@ -15,4 +15,17 @@ interface UserRepositoryInterface extends IRepository
      * @return mixed
      */
     public function search($data);
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function getDataUserLogin(array $data);
+
+    /**
+     * @param array $request
+     * @return bool|mixed
+     */
+    public function checkToken(array $request);
+
 }

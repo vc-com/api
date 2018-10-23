@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Coupon\CouponRepositoryInterface;
-use App\Services\Admin\CouponService;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Coupon\CouponRepositoryInterface;
+use VoceCrianca\Services\Admin\CouponService;
 use Illuminate\Http\Request;
 
 class CouponController extends ApiController
@@ -97,7 +97,7 @@ class CouponController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request->all(), $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();

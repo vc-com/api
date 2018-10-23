@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Product;
+namespace VoceCrianca\Repositories\Product;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface ProductRepositoryInterface
- * @package App\Repositories\Product
+ * @package VoceCrianca\Repositories\Product
  */
 interface ProductRepositoryInterface extends IRepository
 {

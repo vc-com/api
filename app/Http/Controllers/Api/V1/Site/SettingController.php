@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Site;
+namespace VoceCrianca\Http\Controllers\Api\V1\Site;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use VoceCrianca\Http\Controllers\Controller;
 
 class SettingController extends Controller
 {

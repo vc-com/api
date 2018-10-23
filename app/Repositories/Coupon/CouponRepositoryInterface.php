@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Coupon;
+namespace VoceCrianca\Repositories\Coupon;
 
-use App\Interfaces\IRepository;
+use VoceCrianca\Interfaces\IRepository;
 
 /**
  * Interface CouponRepositoryInterface
- * @package App\Repositories\Coupon
+ * @package VoceCrianca\Repositories\Coupon
  */
 interface CouponRepositoryInterface extends IRepository
 {

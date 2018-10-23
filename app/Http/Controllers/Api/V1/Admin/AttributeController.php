@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Attribute\AttributeRepositoryInterface;
-use App\Services\Admin\AttributeService;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Attribute\AttributeRepositoryInterface;
+use VoceCrianca\Services\Admin\AttributeService;
 use Illuminate\Http\Request;
 
 class AttributeController extends ApiController
@@ -97,7 +97,7 @@ class AttributeController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request->all(), $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();

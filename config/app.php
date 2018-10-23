@@ -171,14 +171,15 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\RouteApiAdminServiceProvider::class,
-        App\Providers\RouteApiSiteServiceProvider::class,
-        App\Providers\RepositoryServiceProvider::class,
+        VoceCrianca\Providers\AppServiceProvider::class,
+        VoceCrianca\Providers\AuthServiceProvider::class,
+        // VoceCrianca\Providers\BroadcastServiceProvider::class,
+        VoceCrianca\Providers\EventServiceProvider::class,
+        VoceCrianca\Providers\RouteServiceProvider::class,
+        VoceCrianca\Providers\RouteApiAdminServiceProvider::class,
+        VoceCrianca\Providers\RouteApiSiteServiceProvider::class,
+        VoceCrianca\Providers\RepositoryServiceProvider::class,
+        VoceCrianca\Providers\ObserverServiceProvider::class,
 
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,

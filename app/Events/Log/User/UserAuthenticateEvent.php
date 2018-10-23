@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Events\Log\User;
+namespace VoceCrianca\Events\Log\User;
 
-use App\Entities\User;
+use VoceCrianca\Models\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;

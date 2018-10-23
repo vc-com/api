@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Product;
+namespace VoceCrianca\Repositories\Product;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class ProductMongodbRepository
- * @package App\Repositories\Product
+ * @package VoceCrianca\Repositories\Product
  */
 class ProductMongodbRepository
     extends BaseMongodbAbstractRepository
@@ -18,9 +18,7 @@ class ProductMongodbRepository
      * @var array
      */
     protected $fields = [
-        'name',
-        'active',
-        'type',
+        '*',
     ];
 
     /**
@@ -39,7 +37,7 @@ class ProductMongodbRepository
      */
     public function getFieldsAll($limit=15)
     {
-        $result = $this->model->select($this->fields);
+        $result = $this->model->select($this->fields)->where('parent_id', 0);
         return $result->paginate($limit);
     }
 

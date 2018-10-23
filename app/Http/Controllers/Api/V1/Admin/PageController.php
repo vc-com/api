@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Page\PageRepositoryInterface;
-use App\Services\Admin\PageService;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Page\PageRepositoryInterface;
+use VoceCrianca\Services\Admin\PageService;
 use Illuminate\Http\Request;
 
 class PageController extends ApiController
@@ -100,7 +100,7 @@ class PageController extends ApiController
     {
 
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request->all(), $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();

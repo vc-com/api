@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\ApiController;
-use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Services\Admin\CategoryService;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\Category\CategoryRepositoryInterface;
+use VoceCrianca\Services\Admin\CategoryService;
+use VoceCrianca\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
@@ -38,11 +39,12 @@ class CategoryController extends ApiController
      */
     public function index()
     {
-        if (!$result = $this->repository->all(['parents'])) {
+
+        if (!$result = $this->repository->toArray()) {
             return $this->errorResponse('categories_not_found', 422);
         }
 
-        return $this->showAll($result);
+        return $this->showAll( tools_build_tree( $result ) );
     }
 
     /**
@@ -78,7 +80,7 @@ class CategoryController extends ApiController
     public function show($id)
     {
 
-        if (!$result = $this->repository->findById($id, ['parents'])) {
+        if (!$result = $this->repository->findById($id)) {
             return $this->errorResponse('category_not_found', 422);
         }
 
@@ -96,7 +98,7 @@ class CategoryController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request->all(), $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();

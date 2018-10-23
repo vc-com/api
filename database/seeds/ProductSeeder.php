@@ -1,11 +1,13 @@
 <?php
 
-use App\Entities\Customer;
-use App\Entities\User;
-use App\Entities\Product;
-use App\Entities\ProductImage;
-use App\Entities\ProductRelated;
-use App\Entities\ProductQuestion;
+use VoceCrianca\Models\Customer;
+use VoceCrianca\Models\User;
+use VoceCrianca\Models\Product;
+use VoceCrianca\Models\ProductImage;
+use VoceCrianca\Models\ProductRelated;
+use VoceCrianca\Models\ProductQuestion;
+use VoceCrianca\Models\ProductPrice;
+use VoceCrianca\Models\ProductStock;
 
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
@@ -18,9 +20,18 @@ class ProductSeeder extends Seeder
     public function run(Faker $faker)
     {
 
-        $products = factory(Product::class,20)->create();
+        $products = factory(Product::class,200)->create();
 
         $products->each(function ($product) use ($faker) {
+
+            if ($product->type === Product::TYPE_ATTRIBUTE) {                
+    
+                $products = factory(Product::class, rand(1,6))->create([
+                    'parent_id' => $product->id,
+                    'type' => Product::TYPE_ATTRIBUTE
+                ]);            
+
+            }
 
             $total = rand(1,2);
 
@@ -35,17 +46,13 @@ class ProductSeeder extends Seeder
                 $related = new ProductRelated( $this->relateds( $faker ) );
                 $product->relateds()->save($related);
             }     
-
-            $total = rand(0,5);
-            for ($i=0; $i < $total ; $i++) {
-                $question = new ProductQuestion( $this->questions( $faker, $i ) );
-                $product->questions()->save($question);
-
-                /*
-                * Inserir codigos de respostas
-                */          
-        
-            }         
+  
+       
+            $questions = factory(ProductQuestion::class, rand(0,5))->create();
+            $product->questions()->attach($questions);
+            
+            $product->customers()->attach($questions);
+    
 
         });
 
@@ -68,32 +75,6 @@ class ProductSeeder extends Seeder
 
         return [
             'related_id' => $product->id,
-        ];
-
-    }
-
-    private function questions(Faker $faker, $i)
-    {
-
-        if($i % 2 == 0){
-
-            $customer = Customer::take(1)
-            ->skip(rand( 0, Customer::count() - 1) )
-            ->first();
-
-            return [
-                'customer_id' =>  $customer->_id,
-                'question' => $faker->text,
-            ];
-        }
-
-        $user = User::take(1)
-            ->skip(rand( 0, User::count() - 1) )
-            ->first();
-
-        return [
-            'user_id' => $user->id,
-            'question' => $faker->text,
         ];
 
     }

@@ -1,8 +1,8 @@
 <?php
 
-use App\Entities\Banner;
-use App\Entities\PagePublication;
-use App\Entities\PositionPublication;
+use VoceCrianca\Models\Banner;
+use VoceCrianca\Models\PagePublication;
+use VoceCrianca\Models\PositionPublication;
 use Illuminate\Database\Seeder;
 
 class BannerSeeder extends Seeder

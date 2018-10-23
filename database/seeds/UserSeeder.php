@@ -1,7 +1,7 @@
 <?php
 
-use App\Entities\Role;
-use App\Entities\User;
+use VoceCrianca\Models\Role;
+use VoceCrianca\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Coupon;
+namespace VoceCrianca\Repositories\Coupon;
 
-use App\Persistences\Mongodb\BaseMongodbAbstractRepository;
+use VoceCrianca\Persistences\Mongodb\BaseMongodbAbstractRepository;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * Class CouponMongodbRepository
- * @package App\Repositories\Coupon
+ * @package VoceCrianca\Repositories\Coupon
  */
 class CouponMongodbRepository
     extends BaseMongodbAbstractRepository
