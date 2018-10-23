@@ -15,17 +15,17 @@
                   <tbody>
                     <tr>
                       <td style="word-wrap:break-word;font-size:0px;padding:30px 30px 18px;" align="left">
-                        <div style="cursor:auto;color:#000000;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:24px;line-height:22px;text-align:left;">Welcome to Urban Inc.</div>
+                        <div style="cursor:auto;color:#000000;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:24px;line-height:22px;text-align:left;">Redefinir Senha</div>
                       </td>
                     </tr>
                     <tr>
                       <td style="word-wrap:break-word;font-size:0px;padding:0px 30px 16px;" align="left">
-                        <div style="cursor:auto;color:#000000;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;line-height:22px;text-align:left;">Hey <b>{{ $user->name }}</b>, thanks for signing up</div>
+                        <div style="cursor:auto;color:#000000;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;line-height:22px;text-align:left;">Olá <b>{{ $user->name }}</b></div>
                       </td>
                     </tr>
                     <tr>
                       <td style="word-wrap:break-word;font-size:0px;padding:0px 30px 6px;" align="left">
-                        <div style="cursor:auto;color:#000000;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;line-height:22px;text-align:left;">You have 1 free report remaining. Add your credit card now to upgrade your account to a premium plan to ensure you don't miss out on any reports.</div>
+                        <div style="cursor:auto;color:#000000;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;line-height:22px;text-align:left;">Você está recebendo este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta.</div>
                       </td>
                     </tr>
                     <tr>
@@ -33,7 +33,7 @@
                         <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:separate;" align="left" border="0">
                           <tbody>
                             <tr>
-                              <td style="border:none;border-radius:25px;color:white;cursor:auto;padding:10px 25px;" align="center" valign="middle" bgcolor="#00a8ff"><a href="#" style="text-decoration:none;background:#00a8ff;color:white;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;font-weight:400;line-height:120%;text-transform:none;margin:0px;" target="_blank">Activate Your Account</a></td>
+                              <td style="border:none;border-radius:25px;color:white;cursor:auto;padding:10px 25px;" align="center" valign="middle" bgcolor="#00a8ff"><a href="#" style="text-decoration:none;background:#00a8ff;color:white;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;font-weight:400;line-height:120%;text-transform:none;margin:0px;" target="_blank">Redifinir Senha</a></td>
                             </tr>
                           </tbody>
                         </table>
@@ -41,7 +41,10 @@
                     </tr>
                     <tr>
                       <td style="word-wrap:break-word;font-size:0px;padding:0px 30px 30px 30px;" align="left">
-                        <div style="cursor:auto;color:#000000;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;line-height:22px;text-align:left;">Thanks you so mach.</div>
+                        <div style="cursor:auto;color:#000000;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;line-height:22px;text-align:left;">Se você não solicitou uma redefinição de senha, nenhuma outra ação será necessária.
+<br> <br> 
+Atenciosamente, <br> 
+{{ env('APP_NAME') }}</div>
                       </td>
                     </tr>
                   </tbody>

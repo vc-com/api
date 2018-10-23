@@ -18,11 +18,11 @@
                           <tbody>
                             <tr>
                               <td style="word-wrap:break-word;font-size:0px;padding:0px;" align="center">
-                                <div style="cursor:auto;color:#6b7a85;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;line-height:22px;text-align:center;">Follow
+                                <div style="cursor:auto;color:#6b7a85;font-family:Proxima Nova, Arial, Arial, Helvetica, sans-serif;font-size:15px;line-height:22px;text-align:center;">Seguir
                                   <a href="#" style="text-decoration: none; color: inherit;">
-                                  <span style="border-bottom: solid 1px #b3bac1">@vocecrianca</span>
+                                  <span style="border-bottom: solid 1px #b3bac1"><a href="https://twitter.com/{{ env('ACCOUNT_TWITTER') }}">{{ '@' . env('ACCOUNT_TWITTER') }}</a></span>
                                   </a>
-                                  on Twitter.
+                                  no Twitter.
                                 </div>
                               </td>
                             </tr>
