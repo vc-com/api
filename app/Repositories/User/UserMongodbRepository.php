@@ -63,7 +63,27 @@ class UserMongodbRepository
      */
     public function checkToken(array $request)
     {
-        return true;
+
+        $users = $this->model->select('tokenResetPassword')->where(
+            'tokenResetPassword.time', '<=', time()
+        )->get();
+
+        if($users) {
+            foreach ($users as $key => $user) {
+                $user->tokenResetPassword()->delete();
+            }
+        }
+
+        $res = $this->model->select('tokenResetPassword')->where(
+            'tokenResetPassword.token', $request['token']
+        )->get();
+
+        foreach ($res as $key => $value) {      
+            return $value->id;      
+        }
+      
+        return false;
+
     }
 
 }

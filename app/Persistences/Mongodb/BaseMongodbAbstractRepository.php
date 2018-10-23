@@ -96,7 +96,7 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
      */
     public function whereFirst(array $data)
     {
-        return $this->model->where($data)->get()->first();
+        return $this->model->where($data)->first();
     }
 
     /**

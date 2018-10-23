@@ -23,7 +23,7 @@ class GenerateTokenUserService
     public function make(array $request)
     {
 
-        $user = User::where($request)->get()->first();
+        $user = User::where($request)->first();
 
         if(!$user) {
             return false;
@@ -34,7 +34,7 @@ class GenerateTokenUserService
 
         $user->tokenResetPassword()->create([
             'token' => str_random(40),
-            'time' => time() + 14400
+            'time' => time() + 60*60*4
         ]);
 
         $createdToken = User::find($user->id);
