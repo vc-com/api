@@ -35,8 +35,7 @@ class User extends Authenticatable implements JWTSubject
         'image',
         'active',
         'verified',
-        'roles',
-        'privileges',
+        'roles'
     ];
 
     /**
@@ -90,6 +89,14 @@ class User extends Authenticatable implements JWTSubject
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * @return \Jenssegers\Mongodb\Relations\EmbedsMany
+     */
+    public function resetPassword()
+    {
+        return $this->embedsMany(ResetPassword::class);
     }
 
     /**

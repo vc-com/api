@@ -37,7 +37,6 @@ class Role extends Model
         'user_ids'        
     ];
 
-
     /**
      * @return \Jenssegers\Mongodb\Relations\EmbedsMany
      */

@@ -2,6 +2,11 @@
 
 namespace VoceCrianca\Services\Auth;
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Config;
+use VoceCrianca\Mail\Admin\ResetPasswordMail;
+use VoceCrianca\Models\User;
+
 /**
  * Class GenerateTokenUserService
  * @package VoceCrianca\Services\Auth
@@ -18,14 +23,12 @@ class GenerateTokenUserService
     public function make(array $request)
     {
 
-        $res = true;
+        $user = User::where($request)->get()->first();  
 
-        if ($res) {
-            return true;
-        }
+        Mail::to($user->email)
+            ->send( new ResetPasswordMail( $user ) );
 
-        return false;
-
+        return true;
     }
-    
+
 }
