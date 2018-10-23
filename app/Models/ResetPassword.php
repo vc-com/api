@@ -13,6 +13,11 @@ class ResetPassword extends Model
 
     protected $fillable = [
         'token',
-        'active',
+        'time',
+    ];
+
+    protected $hidden = [
+        'updated_at',
+        'created_at',
     ];
 }

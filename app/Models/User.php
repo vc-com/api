@@ -94,7 +94,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @return \Jenssegers\Mongodb\Relations\EmbedsMany
      */
-    public function resetPassword()
+    public function tokenResetPassword()
     {
         return $this->embedsMany(ResetPassword::class);
     }
