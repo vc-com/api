@@ -3,6 +3,7 @@
 namespace VoceCrianca\Services\Auth;
 
 use VoceCrianca\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class ChangePasswordUserService
@@ -23,7 +24,7 @@ class ChangePasswordUserService
         $update = User::where('_id', $request['user_id'])
                 ->where('tokenResetPassword.token', $request['token'])
                 ->update([
-                    'password' => $request['password']
+                    'password' => Hash::make( $request['password'] )
                 ]);
 
         if ($update) {

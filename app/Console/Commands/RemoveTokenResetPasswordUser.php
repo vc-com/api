@@ -12,7 +12,7 @@ class RemoveTokenResetPasswordUser extends Command
      *
      * @var string
      */
-    protected $signature = 'remove:token-user';
+    protected $signature = 'remove:token-pw-user';
 
     /**
      * The console command description.

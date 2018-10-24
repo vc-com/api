@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('remove:token-pw-user')->hourly();
+        $schedule->command('remove:token-pw-user')->twiceDaily(1, 13);
     }
 
     /**
