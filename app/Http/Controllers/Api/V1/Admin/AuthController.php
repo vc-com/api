@@ -90,11 +90,11 @@ class AuthController extends ApiController
     public function checkToken(Request $request)
     {
 
-        if (!$this->repository->checkToken($request->only('token'))) {
+        if (!$token = $this->repository->checkToken($request->only('token'))) {
             return $this->errorResponse('token_not_found', 422);
         }
 
-        return $this->successResponse('token_found');
+        return $this->showOne($token);
 
     }
 
@@ -104,10 +104,10 @@ class AuthController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function changePassword(Request $request)
+    public function forgot(Request $request)
     {
 
-        if (!$this->changePasswordUserService->make($request->only('email', 'password', 'token'))) {
+        if (!$this->changePasswordUserService->change($request->all())) {
             return $this->errorResponse('error_update_password', 422);
         }
 

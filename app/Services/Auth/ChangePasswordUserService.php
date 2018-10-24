@@ -2,6 +2,8 @@
 
 namespace VoceCrianca\Services\Auth;
 
+use VoceCrianca\Models\User;
+
 /**
  * Class ChangePasswordUserService
  * @package VoceCrianca\Services\Auth
@@ -15,17 +17,26 @@ class ChangePasswordUserService
      * @param array $request
      * @return string
      */
-    public function make(array $request)
+    public function change(array $request)
     {
 
-        $res = true;
+        $update = User::where('_id', $request['user_id'])
+                ->where('tokenResetPassword.token', $request['token'])
+                ->update([
+                    'password' => $request['password']
+                ]);
 
-        if ($res) {
+        if ($update) {
+
+            $user = User::find($request['user_id']);
+            $user->tokenResetPassword()->delete();
+
             return true;
+
         }
 
         return false;
-
+        
     }
     
 }
