@@ -20,7 +20,7 @@ class ChangePasswordUserService
      */
     public function change(array $request)
     {
-
+        
         $update = User::where('_id', $request['user_id'])
                 ->where('tokenResetPassword.token', $request['token'])
                 ->update([

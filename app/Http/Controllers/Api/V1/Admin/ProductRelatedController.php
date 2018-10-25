@@ -33,11 +33,11 @@ class ProductRelatedController extends ApiController
     {
 
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }       
 
         if (!$relateds = $result->relateds()->all()) {
-            return $this->errorResponse('product_relateds_not_found', 422);
+            return $this->errorResponse('product_relateds_not_found', 404);
         }
 
         return $this->showAll($relateds);
@@ -55,7 +55,7 @@ class ProductRelatedController extends ApiController
     {
 
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         } 
 
         $total = $result->relateds()
@@ -86,11 +86,11 @@ class ProductRelatedController extends ApiController
     {
 
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }       
 
         if (!$related = $result->relateds()->find($relatedId)) {
-            return $this->errorResponse('product_related_not_found', 422);
+            return $this->errorResponse('product_related_not_found', 404);
         }
 
         return $this->showOne($related);
@@ -110,7 +110,7 @@ class ProductRelatedController extends ApiController
     {
   
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }  
 
         $total = $result->relateds()
@@ -123,7 +123,7 @@ class ProductRelatedController extends ApiController
         }
 
         if (!$result = $result->relateds()->find($relatedId)->update($request->all())) {
-            return $this->errorResponse('product_related_not_updated', 422);
+            return $this->errorResponse('product_related_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -141,11 +141,11 @@ class ProductRelatedController extends ApiController
     {
 
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }       
 
         if (!$result->relateds()->destroy($relatedId)) {
-            return $this->errorResponse('product_related_not_removed', 422);
+            return $this->errorResponse('product_related_not_removed', 500);
         }
 
         return $this->successResponse('product_related_removed');

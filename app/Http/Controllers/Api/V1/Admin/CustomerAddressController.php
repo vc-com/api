@@ -33,11 +33,11 @@ class CustomerAddressController extends ApiController
     {
 
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }       
 
         if (!$address = $result->address()->all()) {
-            return $this->errorResponse('customer_address_not_found', 422);
+            return $this->errorResponse('customer_address_not_found', 404);
         }
 
         return $this->showAll($address);
@@ -55,7 +55,7 @@ class CustomerAddressController extends ApiController
     {
 
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         } 
 
         $total = $result->address()
@@ -87,11 +87,11 @@ class CustomerAddressController extends ApiController
     {
 
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }       
 
         if (!$phone = $result->address()->find($addressId)) {
-            return $this->errorResponse('customer_address_not_found', 422);
+            return $this->errorResponse('customer_address_not_found', 404);
         }
 
         return $this->showOne($phone);
@@ -111,7 +111,7 @@ class CustomerAddressController extends ApiController
     {
   
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }  
 
         $total = $result->address()
@@ -125,7 +125,7 @@ class CustomerAddressController extends ApiController
         }
 
         if (!$result = $result->address()->find($addressId)->update($request->all())) {
-            return $this->errorResponse('customer_address_not_updated', 422);
+            return $this->errorResponse('customer_address_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -143,11 +143,11 @@ class CustomerAddressController extends ApiController
     {
 
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }       
 
         if (!$result->address()->destroy($addressId)) {
-            return $this->errorResponse('customer_address_not_removed', 422);
+            return $this->errorResponse('customer_address_not_removed', 500);
         }
 
         return $this->successResponse('customer_address_removed');

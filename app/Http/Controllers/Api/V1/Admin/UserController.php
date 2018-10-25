@@ -42,7 +42,7 @@ class UserController extends ApiController
     public function index()
     {
         if (!$result = $this->repository->all(['roles'])) {
-            return $this->errorResponse('users_not_found', 422);
+            return $this->errorResponse('users_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -63,7 +63,7 @@ class UserController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->service->create($request)) {
@@ -82,7 +82,7 @@ class UserController extends ApiController
         //Authorization || HTTP_Authorization
         return $this->successResponse([
             'HTTP_Authorization' => $this->tokenBearerGenerate($request)
-        ]);
+        ], 201);
 
     }
 
@@ -97,7 +97,7 @@ class UserController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id, ['roles'])) {
-            return $this->errorResponse('user_not_found', 422);
+            return $this->errorResponse('user_not_found', 404);
         }
 
         return $this->showOne($result);
@@ -119,16 +119,15 @@ class UserController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
-
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('user_not_found', 422);
+            return $this->errorResponse('user_not_found', 404);
         }
 
         if (!$result = $this->service->update($request, $id)) {
-            return $this->errorResponse('user_not_updated', 422);
+            return $this->errorResponse('user_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -145,11 +144,11 @@ class UserController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('user_not_found', 422);
+            return $this->errorResponse('user_not_found', 404);
         }
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('user_not_removed', 422);
+            return $this->errorResponse('user_not_removed', 500);
         }
 
         return $this->successResponse('user_removed');

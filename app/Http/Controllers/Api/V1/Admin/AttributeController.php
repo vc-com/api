@@ -40,7 +40,7 @@ class AttributeController extends ApiController
     {
 
         if (!$result = $this->repository->all()) {
-            return $this->errorResponse('attributes_not_found', 422);
+            return $this->errorResponse('attributes_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -59,14 +59,14 @@ class AttributeController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->repository->create($request->all())) {
             return $this->errorResponse('attribute_not_created', 422);
         }
 
-        return $this->successResponse($result);
+        return $this->successResponse($result, 201);
 
     }
 
@@ -80,7 +80,7 @@ class AttributeController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('attribute_not_found', 422);
+            return $this->errorResponse('attribute_not_found', 404);
         }
 
         return $this->showOne($result);
@@ -101,15 +101,15 @@ class AttributeController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('attribute_not_found', 422);
+            return $this->errorResponse('attribute_not_found', 404);
         }
 
         if (!$result = $this->repository->update($id, $request->all())) {
-            return $this->errorResponse('attribute_not_updated', 422);
+            return $this->errorResponse('attribute_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -124,11 +124,11 @@ class AttributeController extends ApiController
     public function destroy($id)
     {
         if (!$this->repository->findById($id)) {
-            return $this->errorResponse('attribute_not_found', 422);
+            return $this->errorResponse('attribute_not_found', 404);
         }
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('attribute_not_removed', 422);
+            return $this->errorResponse('attribute_not_removed', 500);
         }
 
         return $this->successResponse('attribute_removed');

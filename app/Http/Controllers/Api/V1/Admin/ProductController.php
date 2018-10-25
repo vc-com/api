@@ -41,11 +41,11 @@ class ProductController extends ApiController
     {
 
         // if (!$result = $this->repository->getFieldsAll()) {
-        //     return $this->errorResponse('products_not_found', 422);
+        //     return $this->errorResponse('products_not_found', 404);
         // }
 
         if (!$result = $this->repository->all(['questions'])) {
-            return $this->errorResponse('products_not_found', 422);
+            return $this->errorResponse('products_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -64,7 +64,7 @@ class ProductController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->repository->create($request->all())) {
@@ -85,7 +85,7 @@ class ProductController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }
 
         return $this->showOne($result);
@@ -107,15 +107,15 @@ class ProductController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }
 
         if (!$result = $this->repository->update($id, $request->all())) {
-            return $this->errorResponse('product_not_updated', 422);
+            return $this->errorResponse('product_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -130,11 +130,11 @@ class ProductController extends ApiController
     public function destroy($id)
     {
         if (!$this->repository->findById($id)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('product_not_removed', 422);
+            return $this->errorResponse('product_not_removed', 500);
         }
 
         return $this->successResponse('product_removed');

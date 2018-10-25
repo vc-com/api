@@ -40,7 +40,7 @@ class PageController extends ApiController
     {
 
         if (!$result = $this->repository->all()) {
-            return $this->errorResponse('pages_not_found', 422);
+            return $this->errorResponse('pages_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -60,14 +60,14 @@ class PageController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->repository->create($request->all())) {
             return $this->errorResponse('page_not_created', 422);
         }
 
-        return $this->successResponse($result);
+        return $this->successResponse($result, 201);
 
     }
 
@@ -81,7 +81,7 @@ class PageController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('page_not_found', 422);
+            return $this->errorResponse('page_not_found', 404);
         }
 
         return $this->showOne($result);
@@ -104,16 +104,16 @@ class PageController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('page_not_found', 422);
+            return $this->errorResponse('page_not_found', 404);
         }
 
         if (!$result = $this->repository->update($id, $request->all())) {
-            return $this->errorResponse('page_not_updated', 422);
+            return $this->errorResponse('page_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -128,11 +128,11 @@ class PageController extends ApiController
     public function destroy($id)
     {
         if (!$this->repository->findById($id)) {
-            return $this->errorResponse('page_not_found', 422);
+            return $this->errorResponse('page_not_found', 404);
         }
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('page_not_removed', 422);
+            return $this->errorResponse('page_not_removed', 500);
         }
 
         return $this->successResponse('page_removed');

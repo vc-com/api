@@ -33,11 +33,11 @@ class AttributeVariationController extends ApiController
     {
 
         if (!$result = $this->repository->findById($attributeId)) {
-            return $this->errorResponse('attribute_not_found', 422);
+            return $this->errorResponse('attribute_not_found', 404);
         }       
 
         if (!$variations = $result->variations()->all()) {
-            return $this->errorResponse('attribute_variations_not_found', 422);
+            return $this->errorResponse('attribute_variations_not_found', 404);
         }
 
         return $this->showAll($variations);
@@ -55,7 +55,7 @@ class AttributeVariationController extends ApiController
     {
 
         if (!$result = $this->repository->findById($attributeId)) {
-            return $this->errorResponse('attribute_not_found', 422);
+            return $this->errorResponse('attribute_not_found', 404);
         } 
 
         $total = $result->variations()
@@ -86,11 +86,11 @@ class AttributeVariationController extends ApiController
     {
 
         if (!$result = $this->repository->findById($attributeId)) {
-            return $this->errorResponse('attribute_not_found', 422);
+            return $this->errorResponse('attribute_not_found', 404);
         }       
 
         if (!$phone = $result->variations()->find($variationId)) {
-            return $this->errorResponse('attribute_variation_not_found', 422);
+            return $this->errorResponse('attribute_variation_not_found', 404);
         }
 
         return $this->showOne($phone);
@@ -110,7 +110,7 @@ class AttributeVariationController extends ApiController
     {
   
         if (!$result = $this->repository->findById($attributeId)) {
-            return $this->errorResponse('attribute_not_found', 422);
+            return $this->errorResponse('attribute_not_found', 404);
         }
 
         $total = $result->variations()
@@ -124,7 +124,7 @@ class AttributeVariationController extends ApiController
         } 
 
         if (!$result = $result->variations()->find($variationId)->update($request->all())) {
-            return $this->errorResponse('attribute_variation_not_updated', 422);
+            return $this->errorResponse('attribute_variation_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -142,11 +142,11 @@ class AttributeVariationController extends ApiController
     {
 
         if (!$result = $this->repository->findById($attributeId)) {
-            return $this->errorResponse('attribute_not_found', 422);
+            return $this->errorResponse('attribute_not_found', 404);
         }       
 
         if (!$result->variations()->destroy($variationId)) {
-            return $this->errorResponse('attribute_variation_not_removed', 422);
+            return $this->errorResponse('attribute_variation_not_removed', 500);
         }
 
         return $this->successResponse('attribute_variation_removed');

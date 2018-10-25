@@ -35,7 +35,7 @@ class PrivilegeController extends ApiController
     {
 
         if (!$result = $this->repository->all()) {
-            return $this->errorResponse('privileges_not_found', 422);
+            return $this->errorResponse('privileges_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -52,7 +52,7 @@ class PrivilegeController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('privilege_not_found', 422);
+            return $this->errorResponse('privilege_not_found', 404);
         }
 
         return $this->showOne($result);

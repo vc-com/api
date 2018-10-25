@@ -33,11 +33,11 @@ class CouponHistoryController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$histories = $result->histories()->all()) {
-            return $this->errorResponse('coupon_histories_not_found', 422);
+            return $this->errorResponse('coupon_histories_not_found', 404);
         }
 
         return $this->showAll($histories);
@@ -55,7 +55,7 @@ class CouponHistoryController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         } 
 
         $total = $result->histories()
@@ -87,11 +87,11 @@ class CouponHistoryController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$phone = $result->histories()->find($historyId)) {
-            return $this->errorResponse('coupon_history_not_found', 422);
+            return $this->errorResponse('coupon_history_not_found', 404);
         }
 
         return $this->showOne($phone);
@@ -111,7 +111,7 @@ class CouponHistoryController extends ApiController
     {
   
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }  
 
         $total = $result->histories()
@@ -125,7 +125,7 @@ class CouponHistoryController extends ApiController
         }
 
         if (!$result = $result->histories()->find($historyId)->update($request->all())) {
-            return $this->errorResponse('coupon_history_not_updated', 422);
+            return $this->errorResponse('coupon_history_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -143,11 +143,11 @@ class CouponHistoryController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$result->histories()->destroy($historyId)) {
-            return $this->errorResponse('coupon_history_not_removed', 422);
+            return $this->errorResponse('coupon_history_not_removed', 500);
         }
 
         return $this->successResponse('coupon_history_removed');

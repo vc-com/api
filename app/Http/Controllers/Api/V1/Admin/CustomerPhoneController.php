@@ -33,11 +33,11 @@ class CustomerPhoneController extends ApiController
     {
 
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }       
 
         if (!$phones = $result->phones()->all()) {
-            return $this->errorResponse('customer_phones_not_found', 422);
+            return $this->errorResponse('customer_phones_not_found', 404);
         }
 
         return $this->showAll($phones);
@@ -55,7 +55,7 @@ class CustomerPhoneController extends ApiController
     {
 
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         } 
 
         $total = $result->phones()
@@ -86,11 +86,11 @@ class CustomerPhoneController extends ApiController
     {
 
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }       
 
         if (!$phone = $result->phones()->find($phoneId)) {
-            return $this->errorResponse('customer_phone_not_found', 422);
+            return $this->errorResponse('customer_phone_not_found', 404);
         }
 
         return $this->showOne($phone);
@@ -110,7 +110,7 @@ class CustomerPhoneController extends ApiController
     {
   
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }  
 
         $total = $result->phones()
@@ -123,7 +123,7 @@ class CustomerPhoneController extends ApiController
         }
 
         if (!$result = $result->phones()->find($phoneId)->update($request->all())) {
-            return $this->errorResponse('customer_phone_not_updated', 422);
+            return $this->errorResponse('customer_phone_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -141,11 +141,11 @@ class CustomerPhoneController extends ApiController
     {
 
         if (!$result = $this->repository->findById($customerId)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }       
 
         if (!$result->phones()->destroy($phoneId)) {
-            return $this->errorResponse('customer_phone_not_removed', 422);
+            return $this->errorResponse('customer_phone_not_removed', 500);
         }
 
         return $this->successResponse('customer_phone_removed');

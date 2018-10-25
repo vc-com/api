@@ -36,7 +36,7 @@ class UserRoleController extends ApiController
     public function index(Request $request)
     {
         if (!$result = $this->repository->findById($request->route('user'))) {
-            return $this->errorResponse('users_not_found', 422);
+            return $this->errorResponse('users_not_found', 404);
         }
 
         return $this->showOne($result);

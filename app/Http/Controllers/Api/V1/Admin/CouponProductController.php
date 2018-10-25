@@ -33,11 +33,11 @@ class CouponProductController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$products = $result->products()->all()) {
-            return $this->errorResponse('coupon_products_not_found', 422);
+            return $this->errorResponse('coupon_products_not_found', 404);
         }
 
         return $this->showAll($products);
@@ -55,7 +55,7 @@ class CouponProductController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         } 
 
         $total = $result->products()
@@ -86,11 +86,11 @@ class CouponProductController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$phone = $result->products()->find($productId)) {
-            return $this->errorResponse('coupon_product_not_found', 422);
+            return $this->errorResponse('coupon_product_not_found', 404);
         }
 
         return $this->showOne($phone);
@@ -110,7 +110,7 @@ class CouponProductController extends ApiController
     {
   
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }  
 
         $total = $result->products()
@@ -123,7 +123,7 @@ class CouponProductController extends ApiController
         }
 
         if (!$result = $result->products()->find($productId)->update($request->all())) {
-            return $this->errorResponse('coupon_product_not_updated', 422);
+            return $this->errorResponse('coupon_product_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -141,11 +141,11 @@ class CouponProductController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$result->products()->destroy($productId)) {
-            return $this->errorResponse('coupon_product_not_removed', 422);
+            return $this->errorResponse('coupon_product_not_removed', 500);
         }
 
         return $this->successResponse('coupon_product_removed');

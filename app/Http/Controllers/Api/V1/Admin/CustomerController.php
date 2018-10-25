@@ -42,7 +42,7 @@ class CustomerController extends ApiController
     public function index()
     {
         if (!$result = $this->repository->all(['address', 'phones', 'questions'])) {
-            return $this->errorResponse('customers_not_found', 422);
+            return $this->errorResponse('customers_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -63,7 +63,7 @@ class CustomerController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->service->create($request)) {
@@ -71,7 +71,7 @@ class CustomerController extends ApiController
             return $this->errorResponse('customer_not_created', 500);
         }
 
-        return $this->successResponse($result);
+        return $this->successResponse($result, 201);
 
     }
 
@@ -85,7 +85,7 @@ class CustomerController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id, ['address', 'phones'])) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }
 
         return $this->showOne($result);
@@ -106,15 +106,15 @@ class CustomerController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }
 
         if (!$result = $this->service->update($request, $id)) {
-            return $this->errorResponse('customer_not_updated', 422);
+            return $this->errorResponse('customer_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -131,11 +131,11 @@ class CustomerController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('customer_not_found', 422);
+            return $this->errorResponse('customer_not_found', 404);
         }
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('customer_not_removed', 422);
+            return $this->errorResponse('customer_not_removed', 500);
         }
 
         return $this->successResponse('customer_removed');

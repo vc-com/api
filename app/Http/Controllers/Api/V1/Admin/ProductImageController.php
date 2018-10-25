@@ -33,11 +33,11 @@ class ProductImageController extends ApiController
     {
 
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }       
 
         if (!$images = $result->images()->all()) {
-            return $this->errorResponse('product_images_not_found', 422);
+            return $this->errorResponse('product_images_not_found', 404);
         }
 
         return $this->showAll($images);
@@ -55,7 +55,7 @@ class ProductImageController extends ApiController
     {
 
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         } 
 
         $total = $result->images()
@@ -86,11 +86,11 @@ class ProductImageController extends ApiController
     {
 
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }       
 
         if (!$image = $result->images()->find($imageId)) {
-            return $this->errorResponse('product_image_not_found', 422);
+            return $this->errorResponse('product_image_not_found', 404);
         }
 
         return $this->showOne($image);
@@ -110,7 +110,7 @@ class ProductImageController extends ApiController
     {
   
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }  
 
         $total = $result->images()
@@ -123,7 +123,7 @@ class ProductImageController extends ApiController
         }
 
         if (!$result = $result->images()->find($imageId)->update($request->all())) {
-            return $this->errorResponse('product_image_not_updated', 422);
+            return $this->errorResponse('product_image_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -141,11 +141,11 @@ class ProductImageController extends ApiController
     {
 
         if (!$result = $this->repository->findById($productId)) {
-            return $this->errorResponse('product_not_found', 422);
+            return $this->errorResponse('product_not_found', 404);
         }       
 
         if (!$result->images()->destroy($imageId)) {
-            return $this->errorResponse('product_image_not_removed', 422);
+            return $this->errorResponse('product_image_not_removed', 500);
         }
 
         return $this->successResponse('product_image_removed');

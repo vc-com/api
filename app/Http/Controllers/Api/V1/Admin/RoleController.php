@@ -35,7 +35,7 @@ class RoleController extends ApiController
     {
 
         if (!$result = $this->repository->all(['privileges'])) {
-            return $this->errorResponse('roles_not_found', 422);
+            return $this->errorResponse('roles_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -52,7 +52,7 @@ class RoleController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('role_not_found', 422);
+            return $this->errorResponse('role_not_found', 404);
         }
 
         return $this->showOne($result);

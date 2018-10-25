@@ -34,7 +34,7 @@ class CategoryParentController extends ApiController
     {
 
         if (!$this->repository->whereFirst(['parent_id' => $parentId])) {
-            return $this->errorResponse('category_parent_not_found', 422);
+            return $this->errorResponse('category_parent_not_found', 404);
         }
 
         $data = [
@@ -74,7 +74,7 @@ class CategoryParentController extends ApiController
         ];
 
         if (!$result = $this->repository->whereFirst($data)) {
-            return $this->errorResponse('category_parent_not_found', 422);
+            return $this->errorResponse('category_parent_not_found', 404);
         }
 
         return $this->showOne($result);
@@ -116,7 +116,7 @@ class CategoryParentController extends ApiController
         $request['parent_id'] = $parentId;
 
         if (!$result = $this->repository->update($id, $request) ) {
-            return $this->errorResponse('category_parent_not_updated', 422);
+            return $this->errorResponse('category_parent_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -138,7 +138,7 @@ class CategoryParentController extends ApiController
         }       
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('category_parent_not_removed', 422);
+            return $this->errorResponse('category_parent_not_removed', 500);
         }
 
         return $this->successResponse('category_parent_removed');

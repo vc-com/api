@@ -5,7 +5,7 @@ namespace VoceCrianca\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use VoceCrianca\Console\Commands\RemoveTokenResetPasswordUser;
-
+    
 
 class Kernel extends ConsoleKernel
 {

@@ -41,7 +41,7 @@ class BannerController extends ApiController
     {
 
         if (!$result = $this->repository->all(['positions', 'pages'])) {
-            return $this->errorResponse('banners_not_found', 422);
+            return $this->errorResponse('banners_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -61,14 +61,14 @@ class BannerController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
         if (!$result = $this->repository->create($request->all())) {
             return $this->errorResponse('banner_not_created', 422);
         }
 
-        return $this->successResponse($result);
+        return $this->successResponse($result, 201);
         
     }
 
@@ -82,7 +82,7 @@ class BannerController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id, ['positions', 'pages'])) {
-            return $this->errorResponse('banner_not_found', 422);
+            return $this->errorResponse('banner_not_found', 404);
         }
 
         return $this->showOne($result);
@@ -104,16 +104,16 @@ class BannerController extends ApiController
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return $errors->toJson();
+            return $this->errorResponse($errors->toJson(), 422);
         }
 
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('banner_not_found', 422);
+            return $this->errorResponse('banner_not_found', 404);
         }
 
         if (!$result = $this->repository->update($id, $request->all())) {
-            return $this->errorResponse('banner_not_updated', 422);
+            return $this->errorResponse('banner_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -128,11 +128,11 @@ class BannerController extends ApiController
     public function destroy($id)
     {
         if (!$this->repository->findById($id)) {
-            return $this->errorResponse('banner_not_found', 422);
+            return $this->errorResponse('banner_not_found', 404);
         }
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('banner_not_removed', 422);
+            return $this->errorResponse('banner_not_removed', 500);
         }
 
         return $this->successResponse('banner_removed');

@@ -62,7 +62,7 @@ class RouteApiAdminServiceProvider extends ServiceProvider
 
     protected function mapApiAuthRoutes()
     {
-        $this->prefix('/v1/admin    ')
+        $this->prefix('/v1/admin')
              ->as('admin.')
              ->middleware('api')
              ->namespace($this->namespace)

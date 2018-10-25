@@ -33,11 +33,11 @@ class CouponCategoryController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$categories = $result->categories()->all()) {
-            return $this->errorResponse('coupon_categories_not_found', 422);
+            return $this->errorResponse('coupon_categories_not_found', 404);
         }
 
         return $this->showAll($categories);
@@ -55,7 +55,7 @@ class CouponCategoryController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         } 
 
         $total = $result->categories()
@@ -86,11 +86,11 @@ class CouponCategoryController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$phone = $result->categories()->find($categoryId)) {
-            return $this->errorResponse('coupon_category_not_found', 422);
+            return $this->errorResponse('coupon_category_not_found', 404);
         }
 
         return $this->showOne($phone);
@@ -110,7 +110,7 @@ class CouponCategoryController extends ApiController
     {
   
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }  
 
         $total = $result->categories()
@@ -123,7 +123,7 @@ class CouponCategoryController extends ApiController
         }
 
         if (!$result = $result->categories()->find($categoryId)->update($request->all())) {
-            return $this->errorResponse('coupon_category_not_updated', 422);
+            return $this->errorResponse('coupon_category_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -141,11 +141,11 @@ class CouponCategoryController extends ApiController
     {
 
         if (!$result = $this->repository->findById($couponId)) {
-            return $this->errorResponse('coupon_not_found', 422);
+            return $this->errorResponse('coupon_not_found', 404);
         }       
 
         if (!$result->categories()->destroy($categoryId)) {
-            return $this->errorResponse('coupon_category_not_removed', 422);
+            return $this->errorResponse('coupon_category_not_removed', 500);
         }
 
         return $this->successResponse('coupon_category_removed');
