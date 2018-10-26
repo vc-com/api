@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
     private function generateUser($typeRole)
     {
 
-        $users = factory(User::class,2)->create();
+        $users = factory(User::class,100)->create();
         
         $users->each(function ($user) use($typeRole) {
 

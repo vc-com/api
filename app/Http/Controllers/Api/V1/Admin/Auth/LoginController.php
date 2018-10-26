@@ -2,12 +2,12 @@
 
 namespace VoceCrianca\Http\Controllers\Api\V1\Admin\Auth;
 
-use VoceCrianca\Http\Controllers\ApiController;
-use VoceCrianca\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use JWTAuth;
-use JWTFactory;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use VoceCrianca\Http\Controllers\ApiController;
+use VoceCrianca\Repositories\User\UserRepositoryInterface;
 
 /**
  * Class LoginController
@@ -49,8 +49,14 @@ class LoginController extends ApiController
 
         $credentials = $request->only('email', 'password');
 
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return $this->errorResponse('invalid_credentials', 401);
+        try {
+
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return $this->errorResponse('invalid_credentials', 401);
+            }
+
+        } catch (JWTException $e) {
+            return $this->errorResponse('could_not_create_token', 500);
         }
 
         //Authorization || HTTP_Authorization

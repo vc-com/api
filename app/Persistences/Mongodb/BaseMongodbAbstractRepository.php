@@ -12,10 +12,26 @@ use Jenssegers\Mongodb\Eloquent\Model;
 abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
 {
 
+    private $orderColumn;
+
+    private $orderPosition = 'ASC'; 
+
     /**
      * @var
      */
     protected $model;
+
+    public function setOrderColumn($value='')
+    {
+        $this->orderColumn = $value;
+        return $this;
+    }
+
+    public function setOrderPosition($value='')
+    {
+        $this->orderPosition = $value;
+        return $this;
+    }
 
     /**
      * BaseMongodbAbstractRepository constructor.
@@ -36,7 +52,13 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
      */
     public function all(array $with = [], $limit = 15)
     {
-        return $this->model->with($with)->paginate($limit);
+        $query = $this->model->with($with);
+
+        if( isset($this->orderColumn)) {  
+            $query->orderBy($this->orderColumn, $this->orderPosition);    
+        }
+            
+        return $query->paginate($limit);
     }
 
     /**
