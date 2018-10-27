@@ -12,24 +12,38 @@ use Jenssegers\Mongodb\Eloquent\Model;
 abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
 {
 
+    /**
+     * @var string
+     */
     private $orderColumn;
 
-    private $orderPosition = 'ASC'; 
+    /**
+     * @var string
+     */
+    private $orderPosition = 'ASC';
 
     /**
      * @var
      */
     protected $model;
 
-    public function setOrderColumn($value='')
+    /**
+     * @param string  $orderColumn
+     * @return BaseMongodbAbstractRepository
+     */
+    public function setOrderColumn(string $orderColumn): BaseMongodbAbstractRepository
     {
-        $this->orderColumn = $value;
+        $this->orderColumn = $orderColumn;
         return $this;
     }
 
-    public function setOrderPosition($value='')
+    /**
+     * @param string $orderPosition
+     * @return BaseMongodbAbstractRepository
+     */
+    public function setOrderPosition(string $orderPosition): BaseMongodbAbstractRepository
     {
-        $this->orderPosition = $value;
+        $this->orderPosition = $orderPosition;
         return $this;
     }
 
@@ -52,13 +66,15 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
      */
     public function all(array $with = [], $limit = 15)
     {
-        $query = $this->model->with($with);
 
-        if( isset($this->orderColumn)) {  
+        $query = $this->model->with($with);       
+
+        if(! empty($this->orderColumn)) {  
             $query->orderBy($this->orderColumn, $this->orderPosition);    
         }
             
         return $query->paginate($limit);
+
     }
 
     /**
@@ -106,9 +122,11 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
     public function count($active=true)
     {
         $query = $this->model;
+
         if ($active === true || $active === false) {
             return $query->where('active', $active)->count();
         }
+
         return $query->count();
     }
 
@@ -118,7 +136,9 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
      */
     public function whereFirst(array $data)
     {
+
         return $this->model->where($data)->first();
+        
     }
 
     /**

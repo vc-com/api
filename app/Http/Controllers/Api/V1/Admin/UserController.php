@@ -38,12 +38,10 @@ class UserController extends ApiController
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
-     */
+     */ 
     public function index()
     {
-        if (!$result = $this->repository
-            ->setOrderColumn('name')
-            ->all(['roles'])) {
+        if (!$result = $this->repository->setOrderColumn('name')->all(['roles'])) {
             return $this->errorResponse('users_not_found', 404);
         }
 
