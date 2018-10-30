@@ -6,6 +6,7 @@ use VoceCrianca\Http\Controllers\ApiController;
 
 use VoceCrianca\Repositories\User\UserRepositoryInterface;
 use VoceCrianca\Services\Admin\UserService;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -115,7 +116,11 @@ class UserController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = $this->service->validator($request->all(), $id);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+            'password' => 'sometimes|required|min:6|max:255'
+        ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors();

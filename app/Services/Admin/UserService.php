@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
  * Class UserService
  * @package VoceCrianca\Services\Admin
  */
-class UserService
+class UserService   
 {
     /**
      * @var UserRepositoryInterface
@@ -64,13 +64,18 @@ class UserService
     public function create(Request $request)
     {
 
-        $data = $this->filterRequest($request);
+        $data = $this->processRequest($request);
 
-        if (!$created = $this->repository->create($data)) {
+        if (!$user = $this->repository->create($data)) {
             return false;
         }
 
-        return $created;
+        foreach ($request->roles as $key => $v) {
+            $role = Role::where('name', $v['name'])->first();
+            $user->roles()->attach($role);
+        }  
+
+        return $user;
 
     }
 
@@ -84,7 +89,7 @@ class UserService
     public function update(Request $request, $id)
     {
 
-        $data = $this->filterRequest($request);
+        $data = $this->processRequest($request);
 
         if( $this->repository->update($id, $data) ) {
 
@@ -103,26 +108,18 @@ class UserService
             return true;
         }
 
-        return false;
-        
+        return false;        
         
     }
-
-    protected function addRole($typeRole='')
-    {
-        
-      
-
-    }
-
+  
     /**
      * @param Request $request
      * @return array
      */
-    private function filterRequest(Request $request)
+    private function processRequest(Request $request)
     {
 
-        $data = $request->all();
+        $data = $request->all();       
 
         if (!$request->has('active')) {
             $data['active'] = false;
