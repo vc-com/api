@@ -13,6 +13,11 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
 {
 
     /**
+     * @var array
+     */
+    private $select;
+
+    /**
      * @var string
      */
     private $orderColumn;
@@ -26,6 +31,16 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
      * @var
      */
     protected $model;
+
+    /**
+     * @param array $select
+     * @return BaseMongodbAbstractRepository
+     */
+    public function setSelect(array $select): BaseMongodbAbstractRepository
+    {
+        $this->select = $select;
+        return $this;
+    }
 
     /**
      * @param string  $orderColumn
@@ -67,7 +82,11 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
     public function all(array $with = [], $limit = 15)
     {
 
-        $query = $this->model->with($with);       
+        $query = $this->model->with($with);
+
+        if(!empty($this->select) && is_array($this->select)) {  
+            $query->select($this->select);    
+        }    
 
         if(! empty($this->orderColumn)) {  
             $query->orderBy($this->orderColumn, $this->orderPosition);    

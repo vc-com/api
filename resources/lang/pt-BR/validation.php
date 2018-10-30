@@ -116,6 +116,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => array(
+        'name' => 'nome',
+        'password' => 'senha',
+    ),
+
 
 ];

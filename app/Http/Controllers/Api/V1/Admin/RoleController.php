@@ -34,7 +34,17 @@ class RoleController extends ApiController
     public function index()
     {
 
-        if (!$result = $this->repository->all(['privileges'])) {
+        $result = $this->repository
+            ->setSelect([
+                '_id',
+                'description', 
+                'name', 
+                'default',  
+                'privileges'
+            ])
+            ->all(['privileges']);
+
+        if (! $result) {
             return $this->errorResponse('roles_not_found', 404);
         }
 

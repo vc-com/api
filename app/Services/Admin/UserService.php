@@ -2,6 +2,8 @@
 
 namespace VoceCrianca\Services\Admin;
 
+use VoceCrianca\Models\Role;
+use VoceCrianca\Models\User;
 use VoceCrianca\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -84,8 +86,33 @@ class UserService
 
         $data = $this->filterRequest($request);
 
-        return $this->repository->update($id, $data);
+        if( $this->repository->update($id, $data) ) {
+
+            $user = User::find($id);
+
+            foreach ($user->roles()->get() as $key => $v) {
+                $role = Role::where('name', $v['name'])->first();
+                $user->roles()->detach($role);
+            } 
+
+            foreach ($request->roles as $key => $v) {
+                $role = Role::where('name', $v['name'])->first();
+                $user->roles()->attach($role);
+            }    
+
+            return true;
+        }
+
+        return false;
         
+        
+    }
+
+    protected function addRole($typeRole='')
+    {
+        
+      
+
     }
 
     /**
