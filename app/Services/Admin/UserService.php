@@ -36,23 +36,34 @@ class UserService
      */
     public function validator(Request $request, $id='')
     {
-        if ( isset($id) ) {               
+        if ( isset($id) ) {
 
-            if($request->all()['local'] === 'admin') {
 
-                if ( $request->all()['password'] ) {
+            if($request->has('local')) {
 
+                if($request->local == 'user-edit') {
+
+
+                    if ( $request->password ) {
+
+                        return Validator::make($request->all(), [
+                            'name' => 'required|string|max:255',
+                            'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                            'password' => 'sometimes|required|min:6|max:255'
+                        ]);
+
+                    } else {
+
+                        return Validator::make($request->all(), [
+                            'name' => 'required|string|max:255',
+                            'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                        ]);
+
+                    }
+
+                } elseif($request->local == 'user-edit-status') {
                     return Validator::make($request->all(), [
-                        'name' => 'required|string|max:255',
-                        'email' => 'required|string|email|unique:users,email,'.$id.',_id',
-                        'password' => 'sometimes|required|min:6|max:255'
-                    ]);
-
-                } else {
-
-                    return Validator::make($request->all(), [
-                        'name' => 'required|string|max:255',
-                        'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                        'active' => 'required|boolean',
                     ]);
 
                 }
@@ -116,15 +127,23 @@ class UserService
 
             $user = User::find($id);
 
-            foreach ($user->roles()->get() as $key => $v) {
-                $role = Role::where('name', $v['name'])->first();
-                $user->roles()->detach($role);
-            } 
+            if($request->has('local')) {
 
-            foreach ($request->roles as $key => $v) {
-                $role = Role::where('name', $v['name'])->first();
-                $user->roles()->attach($role);
-            }    
+                if($request->local == 'user-edit') {
+
+                    foreach ($user->roles()->get() as $key => $v) {
+                        $role = Role::where('name', $v['name'])->first();
+                        $user->roles()->detach($role);
+                    } 
+
+                    foreach ($request->roles as $key => $v) {
+                        $role = Role::where('name', $v['name'])->first();
+                        $user->roles()->attach($role);
+                    }    
+
+                }
+
+            }     
 
             return true;
         }

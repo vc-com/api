@@ -30,7 +30,11 @@ class Banner extends Model
 
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = str_slug($value);
+
+        if(!empty($value)) {
+            $this->attributes['slug'] = str_slug($value);
+        }
+        
     }
 
     /**

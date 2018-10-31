@@ -51,9 +51,12 @@ class Customer extends Authenticatable implements JWTSubject
     protected $dates = ['deleted_at'];
 
     public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
+    {   
+        if(!empty($value)) {
+            $this->attributes['password'] = Hash::make($value);
+        }
+        
+    }}
 
     /**
      * @return \Jenssegers\Mongodb\Relations\EmbedsMany
