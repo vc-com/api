@@ -30,15 +30,36 @@ class UserService
     }
 
     /**
-     * @param array $data
+     * @param array $request
      * @param string $id
      * @return mixed
      */
-    public function validator(array $data, $id='')
+    public function validator(Request $request, $id='')
     {
-        if ( isset($id) ) {
+        if ( isset($id) ) {               
 
-            return Validator::make($data, [
+            if($request->all()['local'] === 'admin') {
+
+                if ( $request->all()['password'] ) {
+
+                    return Validator::make($request->all(), [
+                        'name' => 'required|string|max:255',
+                        'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                        'password' => 'sometimes|required|min:6|max:255'
+                    ]);
+
+                } else {
+
+                    return Validator::make($request->all(), [
+                        'name' => 'required|string|max:255',
+                        'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                    ]);
+
+                }
+
+            }
+
+            return Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|unique:users,email,'.$id.',_id',
                 'password' => 'sometimes|required|confirmed|min:6|max:255'
@@ -46,7 +67,7 @@ class UserService
 
         }
 
-        return Validator::make($data, [
+        return Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users|max:255',
             'password' => 'required|string|confirmed|min:6|max:255'

@@ -42,7 +42,12 @@ class UserController extends ApiController
      */ 
     public function index()
     {
-        if (!$result = $this->repository->setOrderColumn('name')->all(['roles'])) {
+
+        $result = $this->repository
+                   ->setOrderColumn('name')
+                   ->all(['roles']);
+
+        if (!$result) {
             return $this->errorResponse('users_not_found', 404);
         }
 
@@ -68,16 +73,13 @@ class UserController extends ApiController
         }
 
         if (!$result = $this->service->create($request)) {
-
             return $this->errorResponse('user_not_created', 500);
         }
 
         $credentials = $request->only('email', 'password');
 
         if (!$token = JWTAuth::attempt($credentials)) {
-
             return $this->errorResponse('invalid_credentials', 401);
-
         }
 
         //Authorization || HTTP_Authorization
@@ -105,7 +107,6 @@ class UserController extends ApiController
 
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -116,11 +117,7 @@ class UserController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email,'.$id.',_id',
-            'password' => 'sometimes|required|min:6|max:255'
-        ]);
+        $validator = $this->service->validator($request, $id);     
 
         if ($validator->fails()) {
             $errors = $validator->errors();

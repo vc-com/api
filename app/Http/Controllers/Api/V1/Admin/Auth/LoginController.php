@@ -47,6 +47,14 @@ class LoginController extends ApiController
             return $this->errorResponse($errors->toJson(), 422);
         }
 
+        if (!$account = $this->repository->whereFirst(['email' => $request->email])) {
+            return $this->errorResponse('invalid_credentials', 401);
+        }
+
+        if ($account->active != true) {           
+            return $this->errorResponse('account_inactive', 401);
+        } 
+
         $credentials = $request->only('email', 'password');
 
         try {
