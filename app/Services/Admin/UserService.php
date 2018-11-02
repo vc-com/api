@@ -29,6 +29,37 @@ class UserService
         $this->repository = $repository;
     }
 
+    private function isLocal(Request $request, $id='')
+    {
+
+        if($request->local === 'user-edit') {
+
+            if ( $request->password ) {
+
+                return Validator::make($request->all(), [
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                    'password' => 'sometimes|required|min:6|max:255'
+                ]);
+
+            } else {
+
+                return Validator::make($request->all(), [
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+                ]);
+
+            }
+
+        } elseif($request->local === 'user-edit-status') {
+
+            return Validator::make($request->all(), [
+                'active' => 'required|boolean',
+            ]);
+
+        }
+    }
+
     /**
      * @param array $request
      * @param string $id
@@ -36,53 +67,19 @@ class UserService
      */
     public function validator(Request $request, $id='')
     {
-        if ( isset($id) ) {
 
-
+        if ( !empty($id) && is_string($id) ) {   
             if($request->has('local')) {
-
-                if($request->local == 'user-edit') {
-
-
-                    if ( $request->password ) {
-
-                        return Validator::make($request->all(), [
-                            'name' => 'required|string|max:255',
-                            'email' => 'required|string|email|unique:users,email,'.$id.',_id',
-                            'password' => 'sometimes|required|min:6|max:255'
-                        ]);
-
-                    } else {
-
-                        return Validator::make($request->all(), [
-                            'name' => 'required|string|max:255',
-                            'email' => 'required|string|email|unique:users,email,'.$id.',_id',
-                        ]);
-
-                    }
-
-                } elseif($request->local == 'user-edit-status') {
-                    return Validator::make($request->all(), [
-                        'active' => 'required|boolean',
-                    ]);
-
-                }
-
+                return $this->isLocal($request, $id);
             }
-
-            return Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|unique:users,email,'.$id.',_id',
-                'password' => 'sometimes|required|confirmed|min:6|max:255'
-            ]);
-
-        }
+        }  
 
         return Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users|max:255',
-            'password' => 'required|string|confirmed|min:6|max:255'
+            'email' => 'required|string|email|unique:users,email,'.$id.',_id',
+            'password' => 'sometimes|required|min:6|max:255'
         ]);
+        
 
     }
 

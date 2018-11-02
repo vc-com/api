@@ -21,10 +21,6 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 class RefreshTokenController extends ApiController
 {
 
-
-
-
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

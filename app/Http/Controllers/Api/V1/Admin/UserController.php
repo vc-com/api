@@ -65,7 +65,7 @@ class UserController extends ApiController
     public function store(Request $request)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -75,17 +75,8 @@ class UserController extends ApiController
         if (!$result = $this->service->create($request)) {
             return $this->errorResponse('user_not_created', 500);
         }
-
-        $credentials = $request->only('email', 'password');
-
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return $this->errorResponse('invalid_credentials', 401);
-        }
-
-        //Authorization || HTTP_Authorization
-        return $this->successResponse([
-            'HTTP_Authorization' => $this->tokenBearerGenerate($request)
-        ], 201);
+        
+        return $this->successResponse($result);
 
     }
 
@@ -156,5 +147,30 @@ class UserController extends ApiController
         return $this->successResponse('user_removed');
 
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    // public function destroy($id, Request $request)
+    // {
+
+    //     $header = $request->header('User-ID');
+
+    //     return $header;
+
+    //     if (!$result = $this->repository->findById($id)) {
+    //         return $this->errorResponse('user_not_found', 404);
+    //     }
+
+    //     if (!$this->repository->delete($id)) {
+    //         return $this->errorResponse('user_not_removed', 500);
+    //     }
+
+    //     return $this->successResponse('user_removed');
+
+    // }
     
 }
