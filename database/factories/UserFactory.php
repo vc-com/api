@@ -18,7 +18,7 @@ $factory->define(VoceCrianca\Models\User::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => 'secret', // secret
-        'active' => array_random([true, false]),
+        'active' => true,
         'remember_token' => str_random(10),
     ];
 });

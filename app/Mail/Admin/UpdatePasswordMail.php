@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use VoceCrianca\Models\User;
 
-class ResetPasswordMail extends Mailable
+class UpdatePasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -36,11 +36,10 @@ class ResetPasswordMail extends Mailable
      */
     public function build()
     {
+        $this->subject('Alteração de senha');
+        $this->to($this->user->email);
 
-        $this->subject('Redefinição de senha')
-             ->to($this->user->email);
-
-        return $this->view('emails.admin.reset-password')
+        return $this->view('emails.admin.update-password')
                     ->with(['user' => $this->user]);
     }
 }

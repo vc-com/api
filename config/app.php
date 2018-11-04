@@ -179,7 +179,7 @@ return [
         VoceCrianca\Providers\RouteApiAdminServiceProvider::class,
         VoceCrianca\Providers\RouteApiSiteServiceProvider::class,
         VoceCrianca\Providers\RepositoryServiceProvider::class,
-        VoceCrianca\Providers\ObserverServiceProvider::class,
+        VoceCrianca\Providers\AdminObserverServiceProvider::class,
 
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,

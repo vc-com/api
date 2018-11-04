@@ -4,7 +4,10 @@
 
 @php
 
-$urlToken = env('APP_URL_ADMIN') .'/password/forgot/'. $user->tokenResetPassword()->get()->first()->token; 
+$urlToken = sprintf('%s/password/forgot/%s',
+    env('APP_URL_ADMIN'),
+    $user->tokenResetPassword()->get()->first()->token
+); 
 
 @endphp
 
@@ -64,6 +67,8 @@ $urlToken = env('APP_URL_ADMIN') .'/password/forgot/'. $user->tokenResetPassword
                           <br> <br> 
                           Atenciosamente, <br> 
                           {{ env('APP_NAME') }}
+                          <br/> 
+                          <br/> 
                           </div>
                       </td>
                     </tr>

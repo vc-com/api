@@ -4,6 +4,8 @@ namespace VoceCrianca\Services\Auth;
 
 use VoceCrianca\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use VoceCrianca\Mail\Admin\UpdatePasswordMail;
 
 /**
  * Class ChangePasswordUserService
@@ -31,6 +33,8 @@ class ChangePasswordUserService
 
             $user = User::find($request['user_id']);
             $user->tokenResetPassword()->delete();
+
+            Mail::send( new UpdatePasswordMail( $user ) );
 
             return true;
 

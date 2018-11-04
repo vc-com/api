@@ -37,10 +37,7 @@ class GenerateTokenUserService
             'time' => time() + 60*60*4
         ]);
 
-        $createdToken = User::find($user->id);
-
-        Mail::to($user->email)
-            ->send( new ResetPasswordMail( $createdToken ) );
+        Mail::send( new ResetPasswordMail( User::find( $user->id ) ) );
 
         return true;
     }
