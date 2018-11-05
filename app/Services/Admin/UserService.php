@@ -69,9 +69,7 @@ class UserService
     public function create(Request $request)
     {
 
-        $data = $this->processRequest($request);
-
-        if (!$user = $this->repository->create($data)) {
+        if (!$user = $this->repository->create($request->all())) {
             return false;
         }
 
@@ -94,9 +92,7 @@ class UserService
     public function update(Request $request, $id)
     {
 
-        $data = $this->processRequest($request);
-
-        if( $this->repository->update($id, $data) ) {     
+        if( $this->repository->update($id, $request->all()) ) {     
 
             if($request->has('admin')) {
 
@@ -124,29 +120,6 @@ class UserService
         return false;        
         
     }
-  
-    /**
-     * @param Request $request
-     * @return array
-     */
-    private function processRequest(Request $request)
-    {
 
-        $data = $request->all();       
-
-        if (!$request->has('active')) {
-            $data['active'] = false;
-        }
-
-        if ($request->has('roles')) {
-            unset($data['roles']);
-        }
-
-        if ($request->has('privileges')) {
-            unset($data['privileges']);
-        }
-
-        return $data;
-    }
 
 }

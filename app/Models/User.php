@@ -61,6 +61,14 @@ class User extends Authenticatable implements JWTSubject
         
     }
 
+    public function setActiveAttribute($value)
+    {   
+        if(!empty($value)) {
+            $this->attributes['active'] = (bool)$value;
+        }
+        
+    }
+
     /**
      * @param $query
      * @param $search
