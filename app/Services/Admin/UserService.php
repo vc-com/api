@@ -27,38 +27,7 @@ class UserService
     public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
-    }
-
-    private function isLocal(Request $request, $id='')
-    {
-
-        if($request->local === 'user-edit') {
-
-            if ( $request->password ) {
-
-                return Validator::make($request->all(), [
-                    'name' => 'required|string|max:255',
-                    'email' => 'required|string|email|unique:users,email,'.$id.',_id',
-                    'password' => 'sometimes|required|min:6|max:255'
-                ]);
-
-            } else {
-
-                return Validator::make($request->all(), [
-                    'name' => 'required|string|max:255',
-                    'email' => 'required|string|email|unique:users,email,'.$id.',_id',
-                ]);
-
-            }
-
-        } elseif($request->local === 'user-edit-status') {
-
-            return Validator::make($request->all(), [
-                'active' => 'required|boolean',
-            ]);
-
-        }
-    }
+    }  
 
     /**
      * @param array $request
@@ -68,17 +37,24 @@ class UserService
     public function validator(Request $request, $id='')
     {
 
-        if ( !empty($id) && is_string($id) ) {   
-            if($request->has('local')) {
-                return $this->isLocal($request, $id);
-            }
-        }  
+
+        if ( isset($id) && is_string($id) ) {  
+
+            return Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'string|email|unique:users,email,'.$id.',_id',
+                'password' => 'sometimes|confirmed',
+                'active' => 'boolean'
+            ]); 
+
+        }
 
         return Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email,'.$id.',_id',
-            'password' => 'sometimes|required|min:6|max:255'
-        ]);
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'sometimes|required|string|min:6|confirmed',
+            'active' => 'required|boolean'
+        ]);   
         
 
     }
@@ -120,13 +96,13 @@ class UserService
 
         $data = $this->processRequest($request);
 
-        if( $this->repository->update($id, $data) ) {
+        if( $this->repository->update($id, $data) ) {     
 
-            $user = User::find($id);
+            if($request->has('admin')) {
 
-            if($request->has('local')) {
+                $user = User::find($id);
 
-                if($request->local == 'user-edit') {
+                if($request->admin == 'edit-user') {
 
                     foreach ($user->roles()->get() as $key => $v) {
                         $role = Role::where('name', $v['name'])->first();

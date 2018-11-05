@@ -14,18 +14,20 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-        $this->generateUser(Role::ADMIN);
-        $this->generateUser(Role::STAFF_FINANCE);
+        foreach (Role::DATA_ROLES as $data) {
+            $this->generateUser($data['name']);
+        }
+        
     }
 
-    private function generateUser($typeRole)
+    private function generateUser($type)
     {
 
-        $users = factory(User::class,100)->create();
+        $users = factory(User::class,rand(1,3))->create();
         
-        $users->each(function ($user) use($typeRole) {
+        $users->each(function ($user) use($type) {
 
-            $role = Role::where('name', $typeRole)->first();
+            $role = Role::where('name', $type)->first();
             $user->roles()->attach($role);
 
         });

@@ -15,8 +15,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
 
-        foreach ($this->dataRoles() as $data) {
-
+        foreach (Role::DATA_ROLES as $data) {
             if (Role::where('name', $data['name'])->count() <= 0) {
                 $this->createRoles($data);
             }
@@ -37,7 +36,7 @@ class RoleSeeder extends Seeder
             'default' => true
         ]);
 
-        if( $data['name'] === Role::ADMIN ) {
+        if( $data['name'] === 'ADMIN' ) {
 
             $all = Privilege::where('name', Privilege::ALL)->first();
             $role->privileges()->create([
@@ -59,9 +58,13 @@ class RoleSeeder extends Seeder
 
             switch ($data['name']) {
 
+                case Role::STAFF_AUDITOR:
                 case Role::STAFF_FINANCE:
+                case Role::STAFF_COMMERCIAL:
+                case Role::STAFF_SUPPORT:
+                case Role::STAFF_SALE:
                 case Role::STAFF_EDITOR:
-                case Role::STAFF_EXPEDITION:
+                case Role::STAFF_EXPEDITION:   
 
                     $role->privileges()->create([
                         'name' => $add->name,
@@ -83,13 +86,15 @@ class RoleSeeder extends Seeder
             switch ($data['name']) {
 
                 case Role::STAFF_FINANCE:
+                case Role::STAFF_COMMERCIAL:
+                case Role::STAFF_SUPPORT:
+                case Role::STAFF_SALE:
                 case Role::STAFF_EDITOR:
 
                     $role->privileges()->create([
                         'name' => $delete->name,
                         'description' => $delete->description,
                     ]);
-
 
                     break;
                 
@@ -101,29 +106,6 @@ class RoleSeeder extends Seeder
         }
 
     }
-
-    private function dataRoles()
-    {
-        return [
-            [
-                'name' => Role::ADMIN,
-                'description' => 'Administrador Geral',
-            ],
-            [
-                'name' => Role::STAFF_FINANCE,
-                'description' => 'Departamento Financeiro',
-            ],
-            [
-                'name' => Role::STAFF_EDITOR,
-                'description' => 'Editor',
-            ],
-            [
-                'name' => Role::STAFF_EXPEDITION,
-                'description' => 'Expedição',
-            ]
-
-        ];
-
-    }
+ 
 
 }
