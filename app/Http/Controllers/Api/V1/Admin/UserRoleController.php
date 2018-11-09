@@ -1,6 +1,6 @@
 <?php
 
-namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin\Setting;
 
 use VoceCrianca\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;

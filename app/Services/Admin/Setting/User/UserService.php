@@ -1,6 +1,6 @@
 <?php
 
-namespace VoceCrianca\Services\Admin;
+namespace VoceCrianca\Services\Admin\Setting\User;
 
 use VoceCrianca\Models\Role;
 use VoceCrianca\Models\User;
@@ -38,11 +38,17 @@ class UserService
     {
 
 
-        if ( isset($id) && is_string($id) ) {  
+        if ( isset( $id ) && is_string( $id ) ) {  
+
+            if ($request->admin ==="edit-status") {
+                return Validator::make($request->all(), [
+                    'active' => 'required|boolean'
+                ]);
+            }
 
             return Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'string|email|unique:users,email,'.$id.',_id',
+                'email' => 'string|email|unique:users,email,'. $id .',_id',
                 'password' => 'sometimes|confirmed',
                 'active' => 'boolean'
             ]); 
@@ -54,8 +60,7 @@ class UserService
             'email' => 'required|string|email|unique:users,email',
             'password' => 'sometimes|required|string|min:6|confirmed',
             'active' => 'required|boolean'
-        ]);   
-        
+        ]);        
 
     }
 
@@ -92,34 +97,27 @@ class UserService
     public function update(Request $request, $id)
     {
 
-        if( $this->repository->update($id, $request->all()) ) {     
-
-            if($request->has('admin')) {
-
-                $user = User::find($id);
-
-                if($request->admin == 'edit-user') {
-
-                    foreach ($user->roles()->get() as $key => $v) {
-                        $role = Role::where('name', $v['name'])->first();
-                        $user->roles()->detach($role);
-                    } 
-
-                    foreach ($request->roles as $key => $v) {
-                        $role = Role::where('name', $v['name'])->first();
-                        $user->roles()->attach($role);
-                    }    
-
-                }
-
-            }     
-
-            return true;
+        if(!$this->repository->update($id, $request->all()) ) {     
+            return false;
         }
 
-        return false;        
+        if($request->has('admin') && $request->admin !== 'edit-user') {
+            return false;           
+        }
+
+        $user = User::find($id);
+        foreach ($user->roles()->get() as $key => $v) {
+            $role = Role::where('name', $v['name'])->first();
+            $user->roles()->detach($role);
+        }
+
+        foreach ($request->roles as $key => $v) {
+            $role = Role::where('name', $v['name'])->first();
+            $user->roles()->attach($role);
+        }
+
+        return true;        
         
     }
-
 
 }
