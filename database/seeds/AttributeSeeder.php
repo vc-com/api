@@ -10,13 +10,13 @@ class AttributeSeeder extends Seeder
 
     private $attributes = [
 
-        ['name' => 'Gênero', 'type' => AttributeGroup::GENRE],
-        ['name' => 'Produto com uma cor', 'type' => AttributeGroup::COLOR],
-        ['name' => 'Produto com duas cores', 'type' => AttributeGroup::COLOR],
-        ['name' => 'Tamanho de anel/aliança', 'type' => AttributeGroup::SIZE],
-        ['name' => 'Tamanho de calça', 'type' => AttributeGroup::SIZE],
-        ['name' => 'Tamanho de camisa/camiseta', 'type' => AttributeGroup::SIZE],
-        ['name' => 'Tamanho de tênis', 'type' => AttributeGroup::SIZE],
+        ['name' => 'Gênero', 'default' => true],
+        ['name' => 'Produto com uma cor', 'default' => true],
+        ['name' => 'Produto com duas cores', 'default' => true],
+        ['name' => 'Tamanho de anel/aliança', 'default' => true],
+        ['name' => 'Tamanho de calça', 'default' => true],
+        ['name' => 'Tamanho de camisa/camiseta', 'default' => true],
+        ['name' => 'Tamanho de tênis', 'default' => true],
 
     ];
 
@@ -203,6 +203,7 @@ class AttributeSeeder extends Seeder
     {
         $attribute = Attribute::create($this->attributes[0]);
         foreach ($this->genre as $key => $value) {
+            $value['default']= true;
             $variation = new AttributeVariation( $value );
             $attribute->variations()->save($variation);
         }          
@@ -212,6 +213,7 @@ class AttributeSeeder extends Seeder
     {
         $attribute = Attribute::create($this->attributes[1]);
         foreach ($this->color as $key => $value) {
+            $value['default']= true;
             $variation = new AttributeVariation( $value );
             $attribute->variations()->save($variation);
         }
@@ -221,6 +223,7 @@ class AttributeSeeder extends Seeder
     {
         $attribute = Attribute::create($this->attributes[2]);
         foreach ($this->color as $key => $value) {
+            $value['default']= true;
             $variation = new AttributeVariation( $value );
             $attribute->variations()->save($variation);
         } 
@@ -230,6 +233,7 @@ class AttributeSeeder extends Seeder
     {
         $attribute = Attribute::create($this->attributes[3]);
         foreach ($this->alliance as $key => $value) {
+            $value['default']= true;
             $variation = new AttributeVariation( $value );
             $attribute->variations()->save($variation);
         } 
@@ -239,6 +243,7 @@ class AttributeSeeder extends Seeder
     {
         $attribute = Attribute::create($this->attributes[4]);
         foreach ($this->pants as $key => $value) {
+            $value['default']= true;
             $variation = new AttributeVariation( $value );
             $attribute->variations()->save($variation);
         } 
@@ -248,6 +253,7 @@ class AttributeSeeder extends Seeder
     {
         $attribute = Attribute::create($this->attributes[5]);
         foreach ($this->shirts as $key => $value) {
+            $value['default']= true;
             $variation = new AttributeVariation( $value );
             $attribute->variations()->save($variation);
         } 
@@ -257,6 +263,7 @@ class AttributeSeeder extends Seeder
     {
         $attribute = Attribute::create($this->attributes[6]);
         foreach ($this->sneakers as $key => $value) {
+            $value['default']= true;
             $variation = new AttributeVariation( $value );
             $attribute->variations()->save($variation);
         } 

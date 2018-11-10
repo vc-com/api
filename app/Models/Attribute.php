@@ -13,8 +13,8 @@ class Attribute extends Model
      */
     protected $fillable = [
         'name',
-        'active',
         'type',
+        'default'
     ];
 
     /**

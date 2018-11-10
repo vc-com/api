@@ -13,7 +13,8 @@ class AttributeVariation extends Model
      */
     protected $fillable = [
         'name',
-        'color'
+        'color',
+        'default'
     ];
 
     /**

@@ -37,7 +37,7 @@ class RoleService
     public function validator(Request $request, $id='')
     {
 
-        if (isset($id)) {  
+        if (isset($id)) {
         
             return Validator::make($request->all(), [
                 'name' => 'required|string|max:30|unique:roles,name,'. $id .',_id',
