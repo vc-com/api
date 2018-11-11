@@ -14,7 +14,9 @@ class AttributeVariation extends Model
     protected $fillable = [
         'name',
         'color',
-        'default'
+        'default',
+        'slug',
+        'position',
     ];
 
     /**
@@ -25,5 +27,14 @@ class AttributeVariation extends Model
     protected $hidden = [
 
     ];
+
+    public function setNameAttribute($value)
+    {   
+        if(!empty($value)) {
+            $this->attributes['name'] = $value;
+            $this->attributes['slug'] = str_slug( $value );
+        }
+        
+    }
     
 }

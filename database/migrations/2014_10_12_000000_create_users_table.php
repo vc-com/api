@@ -62,6 +62,13 @@ class CreateUsersTable extends Migration
 
         });
 
+        
+        // Schema::connection(env('DB_CONNECTION'))
+        // ->table('migrations', function (Blueprint $table)
+        // {
+        //     $table->drop();
+        // });
+
     }
 
 }

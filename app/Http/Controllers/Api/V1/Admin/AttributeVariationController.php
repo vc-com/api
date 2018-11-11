@@ -63,7 +63,7 @@ class AttributeVariationController extends ApiController
                     ->count();
 
         if (isset($total) && $total > 0) {
-            return $this->successResponse('attribute_variation_is_exists');
+            return $this->successResponse('attribute_variation_is_exists', 422);
         } 
 
         if (!$result = $result->variations()->create($request->all())) {
@@ -120,7 +120,7 @@ class AttributeVariationController extends ApiController
      
 
         if (isset($total) && $total > 0) {
-            return $this->successResponse('attribute_variation_is_exists');
+            return $this->successResponse('attribute_variation_is_exists', 422);
         } 
 
         if (!$result = $result->variations()->find($variationId)->update($request->all())) {
