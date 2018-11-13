@@ -1,12 +1,12 @@
 <?php
 
-namespace VoceCrianca\Services\Admin;
+namespace VoceCrianca\Services\Admin\Catalog;
 
 use Illuminate\Support\Facades\Validator;
 
 /**
  * Class AttributeService
- * @package VoceCrianca\Services\Admin
+ * @package VoceCrianca\Services\Admin\Catalog
  */
 class AttributeService
 {

@@ -1,31 +1,31 @@
 <?php
 
-namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin\Catalog;
 
 use VoceCrianca\Http\Controllers\ApiController;
-use VoceCrianca\Repositories\Attribute\AttributeRepositoryInterface;
-use VoceCrianca\Services\Admin\AttributeService;
+use VoceCrianca\Repositories\Page\PageRepositoryInterface;
+use VoceCrianca\Services\Admin\Catalog\PageService;
 use Illuminate\Http\Request;
 
-class AttributeController extends ApiController
+class PageController extends ApiController
 {
     /**
-     * @var AttributeRepositoryInterface
+     * @var PageRepositoryInterface
      */
     private $repository;
 
     /**
-     * @var AttributeService
+     * @var PageService
      */
     private $service;
 
     /**
-     * AttributeController constructor.
-     * @param AttributeRepositoryInterface $repository
-     * @param AttributeService $service
+     * PageController constructor.
+     * @param PageRepositoryInterface $repository
+     * @param PageService $service
      */
-    public function __construct(AttributeRepositoryInterface $repository,
-                                AttributeService $service)
+    public function __construct(PageRepositoryInterface $repository,
+                                PageService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -40,7 +40,7 @@ class AttributeController extends ApiController
     {
 
         if (!$result = $this->repository->all()) {
-            return $this->errorResponse('attributes_not_found', 404);
+            return $this->errorResponse('pages_not_found', 404);
         }
 
         return $this->showAll($result);
@@ -55,7 +55,7 @@ class AttributeController extends ApiController
     public function store(Request $request)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -63,7 +63,7 @@ class AttributeController extends ApiController
         }
 
         if (!$result = $this->repository->create($request->all())) {
-            return $this->errorResponse('attribute_not_created', 422);
+            return $this->errorResponse('page_not_created', 422);
         }
 
         return $this->successResponse($result, 201);
@@ -80,7 +80,7 @@ class AttributeController extends ApiController
     {
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('attribute_not_found', 404);
+            return $this->errorResponse('page_not_found', 404);
         }
 
         return $this->showOne($result);
@@ -97,7 +97,7 @@ class AttributeController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = $this->service->validator($request->all(), $id);
+        $validator = $this->service->validator($request, $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -105,11 +105,11 @@ class AttributeController extends ApiController
         }
 
         if (!$result = $this->repository->findById($id)) {
-            return $this->errorResponse('attribute_not_found', 404);
+            return $this->errorResponse('page_not_found', 404);
         }
 
         if (!$result = $this->repository->update($id, $request->all())) {
-            return $this->errorResponse('attribute_not_updated', 500);
+            return $this->errorResponse('page_not_updated', 500);
         }
 
         return $this->successResponse($result);
@@ -124,15 +124,14 @@ class AttributeController extends ApiController
     public function destroy($id)
     {
         if (!$this->repository->findById($id)) {
-            return $this->errorResponse('attribute_not_found', 404);
+            return $this->errorResponse('page_not_found', 404);
         }
 
         if (!$this->repository->delete($id)) {
-            return $this->errorResponse('attribute_not_removed', 500);
+            return $this->errorResponse('page_not_removed', 500);
         }
 
-        return $this->successResponse('attribute_removed');
-
+        return $this->successResponse('page_removed');
     }
 
 }

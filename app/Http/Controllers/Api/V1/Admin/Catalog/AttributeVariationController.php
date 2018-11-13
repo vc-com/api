@@ -1,6 +1,6 @@
 <?php
 
-namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin\Catalog;
 
 use VoceCrianca\Http\Controllers\ApiController;
 use VoceCrianca\Repositories\Attribute\AttributeRepositoryInterface;
@@ -74,7 +74,6 @@ class AttributeVariationController extends ApiController
 
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -96,7 +95,6 @@ class AttributeVariationController extends ApiController
         return $this->showOne($phone);
 
     }
-
 
     /**
      * Update the specified resource in storage.
