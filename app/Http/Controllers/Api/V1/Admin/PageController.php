@@ -56,7 +56,7 @@ class PageController extends ApiController
     public function store(Request $request)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -100,13 +100,12 @@ class PageController extends ApiController
     {
 
 
-        $validator = $this->service->validator($request->all(), $id);
+        $validator = $this->service->validator($request, $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
             return $this->errorResponse($errors->toJson(), 422);
         }
-
 
         if (!$result = $this->repository->findById($id)) {
             return $this->errorResponse('page_not_found', 404);

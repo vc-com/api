@@ -117,20 +117,20 @@ class RoleService
             return false;
         }
 
-        if($request->has('admin') && $request->admin !== 'edit-role') {
-            return false;           
-        }
+        if($request->input('action') === 'edit-role') {   
 
-        $role = Role::find($id);
+            $role = Role::find($id);
 
-        foreach ($role->privileges()->get() as $key => $v) {
-            $privilege = Privilege::where('name', $v['name'])->first();
-            $role->privileges()->detach($privilege);
-        } 
+            foreach ($role->privileges()->get() as $key => $v) {
+                $privilege = Privilege::where('name', $v['name'])->first();
+                $role->privileges()->detach($privilege);
+            } 
 
-        foreach ($request->privileges as $key => $v) {
-            $privilege = Privilege::where('name', $v['name'])->first();
-            $role->privileges()->attach($privilege);
+            foreach ($request->privileges as $key => $v) {
+                $privilege = Privilege::where('name', $v['name'])->first();
+                $role->privileges()->attach($privilege);
+            }
+
         }
 
         return true;

@@ -38,11 +38,11 @@ class UserService
     {
 
 
-        if ( isset( $id ) && is_string( $id ) ) {  
+        if (isset($id)) {  
 
-            if ($request->admin ==="edit-status") {
+            if ($request->input('action') ==="edit-status") {
                 return Validator::make($request->all(), [
-                    'active' => 'required|boolean'
+                    'active' => 'boolean'
                 ]);
             }
 
@@ -101,19 +101,18 @@ class UserService
             return false;
         }
 
-        if($request->has('admin') && $request->admin !== 'edit-user') {
-            return false;           
-        }
+        if($request->input('action') === 'edit-user') {
 
-        $user = User::find($id);
-        foreach ($user->roles()->get() as $key => $v) {
-            $role = Role::where('name', $v['name'])->first();
-            $user->roles()->detach($role);
-        }
+            $user = User::find($id);
+            foreach ($user->roles()->get() as $key => $v) {
+                $role = Role::where('name', $v['name'])->first();
+                $user->roles()->detach($role);
+            }
 
-        foreach ($request->roles as $key => $v) {
-            $role = Role::where('name', $v['name'])->first();
-            $user->roles()->attach($role);
+            foreach ($request->roles as $key => $v) {
+                $role = Role::where('name', $v['name'])->first();
+                $user->roles()->attach($role);
+            }
         }
 
         return true;        
