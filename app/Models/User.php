@@ -57,15 +57,17 @@ class User extends Authenticatable implements JWTSubject
     {   
         if(!empty($value)) {
             $this->attributes['password'] = Hash::make($value);
-        }
-        
+        }        
     }
 
     public function setActiveAttribute($value)
-    {   
-        if(!empty($value)) {
-            $this->attributes['active'] = (bool)$value;
+    {
+
+        if(empty($value)) {
+            $this->attributes['active'] = false;
         }
+
+        $this->attributes['active'] = (bool)$value;
         
     }
 
