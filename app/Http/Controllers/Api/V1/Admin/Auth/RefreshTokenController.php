@@ -92,7 +92,7 @@ class RefreshTokenController extends ApiController
             $new_token = JWTAuth::refresh($token);
 
         } catch (TokenInvalidException $e) {
-            return $this->errorResponse('token_invalid', 500);
+            return $this->errorResponse(['data' => 'token_invalid'], 500);
         }
 
         //Authorization || HTTP_Authorization

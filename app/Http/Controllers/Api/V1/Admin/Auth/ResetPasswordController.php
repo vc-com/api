@@ -41,10 +41,10 @@ class ResetPasswordController extends ApiController
         }
 
         if (!$this->service->make($request->only('email'))) {
-            return $this->errorResponse('email_not_found', 404);
+            return $this->errorResponse(['data' => 'email_not_found'], 404);
         }
 
-        return $this->successResponse('token_created');
+        return $this->successResponse(['data' => 'token_created']);
 
     }
 

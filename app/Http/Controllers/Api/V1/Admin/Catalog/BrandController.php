@@ -1,10 +1,10 @@
 <?php
 
-namespace VoceCrianca\Http\Controllers\Api\V1\Admin;
+namespace VoceCrianca\Http\Controllers\Api\V1\Admin\Catalog;
 
 use VoceCrianca\Http\Controllers\ApiController;
 use VoceCrianca\Repositories\Brand\BrandRepositoryInterface;
-use VoceCrianca\Services\Admin\BrandService;
+use VoceCrianca\Services\Admin\Catalog\BrandService;
 use Illuminate\Http\Request;
 
 class BrandController extends ApiController
@@ -55,7 +55,7 @@ class BrandController extends ApiController
     public function store(Request $request)
     {
 
-        $validator = $this->service->validator($request->all());
+        $validator = $this->service->validator($request);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -97,7 +97,7 @@ class BrandController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $validator = $this->service->validator($request->all(), $id);
+        $validator = $this->service->validator($request, $id);
 
         if ($validator->fails()) {
             $errors = $validator->errors();

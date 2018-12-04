@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
     private function generateUser($type)
     {
 
-        $users = factory(User::class,rand(1,3))->create();
+        $users = factory(User::class,rand(1,100))->create();
         
         $users->each(function ($user) use($type) {
 

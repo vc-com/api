@@ -147,7 +147,7 @@ class RoleService
             return false;
         }
 
-        if(!$this->repository->delete($id)) {
+        if(!$this->repository->forceDelete($id)) {
             return false;
         }
 

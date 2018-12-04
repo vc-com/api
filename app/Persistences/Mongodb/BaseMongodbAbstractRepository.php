@@ -135,6 +135,15 @@ abstract class BaseMongodbAbstractRepository implements BaseAbstractRepository
     }
 
     /**
+     * @param $id
+     * @return mixed
+     */
+    public function forceDelete($id)
+    {
+        return $this->model->find($id)->forceDelete();
+    }
+
+    /**
      * @param bool $active
      * @return mixed
      */

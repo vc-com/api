@@ -45,7 +45,7 @@ class CkeckTokenController extends ApiController
         }
 
         if (!$token = $this->repository->checkToken($request->only('token'))) {
-            return $this->errorResponse('token_not_found', 404);
+            return $this->errorResponse(['data' => 'token_not_found'], 404);
         }
 
         return $this->showOne($token);

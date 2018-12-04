@@ -42,6 +42,12 @@ interface IRepository
      */
     public function delete($id);
 
+     /**
+     * @param $id
+     * @return mixed
+     */
+    public function forceDelete($id);    
+
     /**
      * @param bool $active
      * @return mixed

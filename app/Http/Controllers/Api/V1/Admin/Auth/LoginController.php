@@ -48,11 +48,11 @@ class LoginController extends ApiController
         }
 
         if (!$account = $this->repository->whereFirst(['email' => $request->email])) {
-            return $this->errorResponse('invalid_credentials', 401);
+            return $this->errorResponse(['data' => 'invalid_credentials'], 412);
         }
 
         if ($account->active != true) {           
-            return $this->errorResponse('account_inactive', 401);
+            return $this->errorResponse(['data' => 'account_inactive'], 403);
         } 
 
         $credentials = $request->only('email', 'password');
@@ -60,11 +60,11 @@ class LoginController extends ApiController
         try {
 
             if (!$token = JWTAuth::attempt($credentials)) {
-                return $this->errorResponse('invalid_credentials', 401);
+                return $this->errorResponse(['data' => 'invalid_credentials'], 412);
             }
 
         } catch (JWTException $e) {
-            return $this->errorResponse('could_not_create_token', 500);
+            return $this->errorResponse(['data' => 'could_not_create_token'], 500);
         }
 
         //Authorization || HTTP_Authorization

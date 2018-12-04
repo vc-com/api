@@ -49,10 +49,10 @@ class ForgotPasswordController extends ApiController
         }
 
         if (!$this->service->change($request->all())) {
-            return $this->errorResponse('error_update_password', 500);
+            return $this->errorResponse(['data' => 'error_update_password'], 500);
         }
 
-        return $this->successResponse('update_password');
+        return $this->successResponse(['data' => 'update_password']);
 
     }
 }

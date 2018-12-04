@@ -12,6 +12,6 @@ class PageSeeder extends Seeder
      */
     public function run()
     {
-        factory(Page::class, 8)->create();
+        factory(Page::class, 100)->create();
     }
 }
