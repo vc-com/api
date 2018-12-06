@@ -4,6 +4,7 @@ namespace VoceCrianca\Services\Admin\Catalog;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use VoceCrianca\Rules\ImageBase64ValidationRule;
 
 /**
  * Class BrandService
@@ -14,9 +15,19 @@ class BrandService
 
     public function validator(Request $request, $id='')
     {
+
+        if($request->input('image')) {
+
+            return Validator::make($request->all(), [
+                    'image' => [new ImageBase64ValidationRule]
+                ]
+            );
+
+        }
+
         if ( isset($id) ) {
 
-             if ($request->input('action') ==="edit-status") {
+            if ($request->input('action') ==="edit-status") {
                 return Validator::make($request->all(), [
                     'active' => 'required|boolean'
                 ]);

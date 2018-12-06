@@ -2,17 +2,21 @@
 
 use Faker\Generator as Faker;
 
+define('DIRECTORY', storage_path("app". DS ."public". DS ."img".  DS ."banner"));
+
+if(!file_exists(DIRECTORY)) {
+    mkdir(DIRECTORY, 700);
+}
+
 $factory->define(VoceCrianca\Models\Banner::class, function (Faker $faker) {
 
     //download das imagens vindo do laravelpix.com
-    // $imagemDownload = $faker->image(storage_path('app/public/img/banner'), 468,60);
+    $imagemDownload = $faker->image(DIRECTORY, 144,63);
 
-    // //criando array do caminho das imagens
-    // $imagePath = explode('/', $imagemDownload);
+    //criando array do caminho das imagens
+    $imagePath = explode(DS, $imagemDownload);
 
-    // //setando um nome para a imagem
-    // $imageName = end($imagePath);
-
+    //setando um nome para a imagem
     $imageName = false;
 
     return [

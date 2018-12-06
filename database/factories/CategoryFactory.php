@@ -2,16 +2,23 @@
 
 use Faker\Generator as Faker;
 
+define('DIRECTORY', storage_path("app". DS ."public". DS ."img".  DS ."category-logo"));
+
+if(!file_exists(DIRECTORY)) {
+    mkdir(DIRECTORY, 700);
+}
+
+
 $factory->define(VoceCrianca\Models\Category::class, function (Faker $faker) {
 
-//	  //download das imagens vindo do laravelpix.com
-//    $imagemDownload = $faker->image(storage_path('app/public/img/category-logo'), 400,300);
-//
-//    //criando array do caminho das imagens
-//    $imagePath = explode('/', $imagemDownload);
-//
-//    //setando um nome para a imagem
-//    $imageName = end($imagePath);
+        //download das imagens vindo do laravelpix.com
+        $imagemDownload = $faker->image(DIRECTORY, 144,63);
+
+        //criando array do caminho das imagens
+        $imagePath = explode(DS, $imagemDownload);
+
+        //setando um nome para a imagem
+        $imageName = end($imagePath);
 
     return [
         'parent_id' => 0,

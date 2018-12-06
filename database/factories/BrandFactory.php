@@ -1,5 +1,13 @@
 <?php
 
+define('DS', DIRECTORY_SEPARATOR);
+define('DIRECTORY', storage_path("app". DS ."public". DS ."img".  DS ."brand-logo"));
+
+if(!file_exists(DIRECTORY)) {
+    mkdir(DIRECTORY, 700);
+}
+
+
 use Faker\Generator as Faker;
 
 $factory->define(VoceCrianca\Models\Brand::class, function (Faker $faker) {
@@ -7,10 +15,10 @@ $factory->define(VoceCrianca\Models\Brand::class, function (Faker $faker) {
     if( rand(0,3) > 0 ) {
 
     	//download das imagens vindo do laravelpix.com
-    	$imagemDownload = $faker->image(storage_path('app/public/img/brand-logo'), 144,63);
+    	$imagemDownload = $faker->image(DIRECTORY, 144,63);
 
     	//criando array do caminho das imagens
-    	$imagePath = explode('/', $imagemDownload);
+    	$imagePath = explode(DS, $imagemDownload);
 
     	//setando um nome para a imagem
     	$imageName = end($imagePath);

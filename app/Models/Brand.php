@@ -6,7 +6,7 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Brand extends Model
 {
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,14 +23,25 @@ class Brand extends Model
         'meta_description',
         'sort_order',
     ];
-
+    
     public function setSlugAttribute($value)
     {
 
-        if(!empty($value)) {
+        if (!empty($value)) {
             $this->attributes['slug'] = str_slug($value);
         }
-        
+
+    }
+
+    public function getImageAttribute($value)
+    {
+
+        if (!empty($value)) {
+            return asset('storage/img/brand-logo/' . $value);
+        }
+
+        return "";
+
     }
 
 }
