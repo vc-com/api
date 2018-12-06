@@ -1,13 +1,94 @@
 <?php
+if (!file_exists('checkIsImageBase64')) {
+    function checkIsImageBase64($value="")
+    {
 
-if (! function_exists('tools_set_locale_portuguese')) {
+        if (!$value) {
+            trigger_error('Informe a imagem no formato base64: ', E_USER_NOTICE);
+        }
+
+        $explode = explode(',', $value);
+        $allow = ['png', 'jpg', 'svg', 'jpeg'];
+        $format = str_replace(
+            [
+                'data:image/',
+                ';',
+                'base64',
+            ],
+            [
+                '', '', '',
+            ],
+            $explode[0]
+        );
+
+        // check file format
+        if (!in_array($format, $allow)) {
+            return false;
+        }
+
+        // check base64 format
+        if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+
+if (!function_exists('createImageBase64')) {
+    function createImageBase64($folder, $image, $name = "")
+    {
+
+        $folder = rtrim($folder, '/');
+
+        if (!$folder) {
+            trigger_error('Informe o nome da pasta de destino do arquivo: ', E_USER_NOTICE);
+        }
+
+        if (!$image) {
+            trigger_error('Informe a imagem', E_USER_NOTICE);
+        }
+
+        if (!checkIsImageBase64($image)) {
+            trigger_error('Informe a imagem no formato base64: ', E_USER_NOTICE);
+        }
+
+        $ext = substr($image, 11, strpos($image, ';') - 11);
+        $nameImage = sprintf('%s.%s', time(), $ext);
+
+        if (!empty($name)) {
+            $nameImage = sprintf('%s-%s.%s', time(), str_slug($name), $ext);
+        }
+
+        $urlImage = $folder . DIRECTORY_SEPARATOR . $nameImage;
+
+        $file = str_replace('data:image/' . $ext . ';base64,', '', $image);
+        $file = base64_decode($file);
+
+        if (!file_exists($folder)) {
+            mkdir($folder, 0755, true);
+        }
+
+        if (file_put_contents($urlImage, $file)) {
+            return $nameImage;
+        }
+
+        return false;
+
+    }
+}
+
+
+
+if (!function_exists('tools_set_locale_portuguese')) {
     function tools_set_locale_portuguese()
     {
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     }
 }
 
-if (! function_exists('tools_issued_date')) {
+if (!function_exists('tools_issued_date')) {
     /**
      * Data de Emissão em Português
      * @return string
@@ -19,7 +100,7 @@ if (! function_exists('tools_issued_date')) {
     }
 }
 
-if (! function_exists('tools_strlen')) {
+if (!function_exists('tools_strlen')) {
 
     function tools_strlen($str, $encoding = 'UTF-8')
     {
@@ -33,19 +114,19 @@ if (! function_exists('tools_strlen')) {
 
 }
 
-if (! function_exists('tools_format_do_date')) {
+if (!function_exists('tools_format_do_date')) {
 
     /**
      * Formata a datetime para Padrão BR
      * @return string
-    */
+     */
     function tools_format_do_date($data)
     {
         return strftime('%d/%m/%Y', strtotime($data));
     }
 }
 
-if (! function_exists('tools_convert_to_decimal_br')) {
+if (!function_exists('tools_convert_to_decimal_br')) {
 
     /**
      * Converte valores float, double e decimal para padrão brasileiro
@@ -53,21 +134,21 @@ if (! function_exists('tools_convert_to_decimal_br')) {
      * @param int $casa total de casas apos a virgula
      * @return string
      */
-    function tools_convert_to_decimal_br($value, $float=2)
+    function tools_convert_to_decimal_br($value, $float = 2)
     {
         return number_format($value, $float, ',', '.');
     }
 }
 
-if (! function_exists('tools_special_ucwords')) {
+if (!function_exists('tools_special_ucwords')) {
     /**
      * Deixa o primeiro carácter de cada palavra em letra maiúscula
      * @param $string
      * @return string
-    */
+     */
     function tools_special_ucwords($string)
     {
-        $words    = explode(' ', strtolower(trim(preg_replace("/\s+/", ' ', $string))));
+        $words = explode(' ', strtolower(trim(preg_replace("/\s+/", ' ', $string))));
         $return[] = ucfirst($words[0]);
 
         unset($words[0]);
@@ -83,9 +164,9 @@ if (! function_exists('tools_special_ucwords')) {
     }
 }
 
-if (! function_exists('tools_sanitize_search')) {
+if (!function_exists('tools_sanitize_search')) {
 
-   /**
+    /**
      * Clean String Search
      * @param null $string
      * @return string
@@ -106,33 +187,35 @@ if (! function_exists('tools_sanitize_search')) {
     }
 }
 
-if (! function_exists('tools_only_numbers')) {
+if (!function_exists('tools_only_numbers')) {
 
     /**
      * Clean string per only numbers
      * @param $str
      * @return mixed
      */
-    function tools_only_numbers($str) {
+    function tools_only_numbers($str)
+    {
         return preg_replace("/[^0-9]/", "", $str);
     }
 
 }
 
-if (! function_exists('toots_calculate_start')) {
+if (!function_exists('tools_calculate_start')) {
 
-    function toots_calculate_start($start){
+    function tools_calculate_start($start)
+    {
         if (is_numeric($start)) {
-           return preg_replace("/[^0-9.]/", "", round(microtime() - $start,3));
+            return preg_replace("/[^0-9.]/", "", round(microtime() - $start, 3));
 
         } else {
-            return round(microtime(),3);
+            return round(microtime(), 3);
         }
     }
 
 }
 
-if (! function_exists('tools_mask')) {
+if (!function_exists('tools_mask')) {
 
     /**
      * @param $val
@@ -143,16 +226,12 @@ if (! function_exists('tools_mask')) {
     {
         $maskared = '';
         $k = 0;
-        for($i = 0; $i<=strlen($mask)-1; $i++)
-        {
-            if($mask[$i] == '#')
-            {
-                if(isset($val[$k]))
+        for ($i = 0; $i <= strlen($mask) - 1; $i++) {
+            if ($mask[$i] == '#') {
+                if (isset($val[$k]))
                     $maskared .= $val[$k++];
-            }
-            else
-            {
-                if(isset($mask[$i]))
+            } else {
+                if (isset($mask[$i]))
                     $maskared .= $mask[$i];
             }
         }
@@ -161,39 +240,43 @@ if (! function_exists('tools_mask')) {
 
 }
 
-if (! function_exists('tools_replace_like')) {
+if (!function_exists('tools_replace_like')) {
 
     /**
      * @param $data
      * @return mixed
      */
-    function tools_replace_like($data) {
+    function tools_replace_like($data)
+    {
         return str_replace(' ', '%', $data);
     }
 }
 
-if (! function_exists('tools_replace_like')) {
+if (!function_exists('tools_replace_like')) {
 
     /**
      * @param $data
      * @return mixed
      */
-    function tools_replace_like($data) {
+    function tools_replace_like($data)
+    {
         return str_replace(' ', '%', $data);
     }
 }
 
-if (! function_exists('tools_selected')) {
-    function tools_selected( $value, $selected ){
-        return $value==$selected ? ' selected="selected"' : null;
+if (!function_exists('tools_selected')) {
+    function tools_selected($value, $selected)
+    {
+        return $value == $selected ? ' selected="selected"' : null;
     }
 }
 
-if (! function_exists('tools_breadcrumbs')) {
+if (!function_exists('tools_breadcrumbs')) {
 
-    function tools_breadcrumbs( $url='', $data='', $extension = true ) {
+    function tools_breadcrumbs($url = '', $data = '', $extension = true)
+    {
 
-        if( is_null( $url ) ) {
+        if (is_null($url)) {
             return sprintf('<span class="type--fade">%s</span>', $data);
         }
 
@@ -209,11 +292,12 @@ if (! function_exists('tools_breadcrumbs')) {
 
 }
 
-if (! function_exists('tools_selected')) {
+if (!function_exists('tools_selected')) {
 
-    function tools_selected($valueHtml, $valueDb) {
+    function tools_selected($valueHtml, $valueDb)
+    {
 
-        if(!strcmp($valueHtml, $valueDb) ) {
+        if (!strcmp($valueHtml, $valueDb)) {
             return 'selected="selected"';
         }
 
@@ -223,12 +307,11 @@ if (! function_exists('tools_selected')) {
 
 }
 
-if (! function_exists('tools_htmlentities_decode_UTF8')) {
+if (!function_exists('tools_htmlentities_decode_UTF8')) {
 
     function tools_htmlentities_decode_UTF8($string)
     {
-        if (is_array($string))
-        {
+        if (is_array($string)) {
             $string = array_map(array('tools', 'tools_htmlentities_decode_UTF8'), $string);
             return (string)array_shift($string);
         }
@@ -237,7 +320,7 @@ if (! function_exists('tools_htmlentities_decode_UTF8')) {
 
 }
 
-if (! function_exists('tools_htmlentities_UTF8')) {
+if (!function_exists('tools_htmlentities_UTF8')) {
 
     function tools_htmlentities_UTF8($string, $type = ENT_QUOTES)
     {
@@ -249,7 +332,7 @@ if (! function_exists('tools_htmlentities_UTF8')) {
 
 }
 
-if (! function_exists('tools_sanitize_editor')) {
+if (!function_exists('tools_sanitize_editor')) {
     /**
      * Higieniza editores swing
      * @access public
@@ -274,55 +357,59 @@ if (! function_exists('tools_sanitize_editor')) {
 
 }
 
-if (! function_exists('_make_url_clickable_cb')) {
+if (!function_exists('_make_url_clickable_cb')) {
 
-    function _make_url_clickable_cb($matches) {
+    function _make_url_clickable_cb($matches)
+    {
         $ret = '';
         $url = $matches[2];
 
-        if ( empty($url) )
+        if (empty($url))
             return $matches[0];
         // removed trailing [.,;:] from URL
-        if ( in_array(substr($url, -1), array('.', ',', ';', ':')) === true ) {
+        if (in_array(substr($url, -1), array('.', ',', ';', ':')) === true) {
             $ret = substr($url, -1);
-            $url = substr($url, 0, strlen($url)-1);
+            $url = substr($url, 0, strlen($url) - 1);
         }
         return $matches[1] . "<a href=\"$url\" rel=\"nofollow\">$url</a>" . $ret;
     }
 
 }
 
-if (! function_exists('_make_web_ftp_clickable_cb')) {
+if (!function_exists('_make_web_ftp_clickable_cb')) {
 
-    function _make_web_ftp_clickable_cb($matches) {
+    function _make_web_ftp_clickable_cb($matches)
+    {
         $ret = '';
         $dest = $matches[2];
         $dest = 'http://' . $dest;
 
-        if ( empty($dest) )
+        if (empty($dest))
             return $matches[0];
         // removed trailing [,;:] from URL
-        if ( in_array(substr($dest, -1), array('.', ',', ';', ':')) === true ) {
+        if (in_array(substr($dest, -1), array('.', ',', ';', ':')) === true) {
             $ret = substr($dest, -1);
-            $dest = substr($dest, 0, strlen($dest)-1);
+            $dest = substr($dest, 0, strlen($dest) - 1);
         }
         return $matches[1] . "<a href=\"$dest\" rel=\"nofollow\">$dest</a>" . $ret;
     }
 
 }
 
-if (! function_exists('_make_email_clickable_cb')) {
+if (!function_exists('_make_email_clickable_cb')) {
 
-    function _make_email_clickable_cb($matches) {
+    function _make_email_clickable_cb($matches)
+    {
         $email = $matches[2] . '@' . $matches[3];
         return $matches[1] . "<a href=\"mailto:$email\">$email</a>";
     }
 
 }
 
-if (! function_exists('tools_make_clickable')) {
+if (!function_exists('tools_make_clickable')) {
 
-    function tools_make_clickable($ret) {
+    function tools_make_clickable($ret)
+    {
         $ret = ' ' . $ret;
         // in testing, using arrays here was found to be faster
         $ret = preg_replace_callback('#([\s>])([\w]+?://[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]*)#is', '_make_url_clickable_cb', $ret);
@@ -337,32 +424,30 @@ if (! function_exists('tools_make_clickable')) {
 
 }
 
-if (! function_exists('tools_build_tree')) {
+if (!function_exists('tools_build_tree')) {
 
 
     // $array = Category::get()->toArray();
     // dd( tools_build_tree($array) );
 
-    function tools_build_tree(array $elements, $parentId = 0) {
-    
+    function tools_build_tree(array $elements, $parentId = 0)
+    {
+
         $branch = array();
 
-        foreach ($elements as $element) 
-        {
+        foreach ($elements as $element) {
 
             if (!isset($element['parent_id'])) {
                 return $branch;
             }
 
-            if ($element['parent_id'] == $parentId) 
-            {
+            if ($element['parent_id'] == $parentId) {
                 $children = tools_build_tree($elements, $element['_id']);
-                
-                if ($children) 
-                {
+
+                if ($children) {
                     $element['children'] = $children;
                 }
-                
+
                 $branch[] = $element;
             }
         }
@@ -371,3 +456,4 @@ if (! function_exists('tools_build_tree')) {
     }
 
 }
+

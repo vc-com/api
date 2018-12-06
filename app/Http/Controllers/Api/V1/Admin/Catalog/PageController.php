@@ -25,7 +25,7 @@ class PageController extends ApiController
      * @param PageService $service
      */
     public function __construct(PageRepositoryInterface $repository,
-                                PageService $service)
+                                PageService $service) 
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -39,7 +39,11 @@ class PageController extends ApiController
     public function index()
     {
 
-        if (!$result = $this->repository->all()) {
+        $result = $this->repository
+            ->setOrderColumn('name')
+            ->all();
+
+        if (!$result) {
             return $this->errorResponse('pages_not_found', 404);
         }
 

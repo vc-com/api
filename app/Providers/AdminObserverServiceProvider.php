@@ -4,9 +4,11 @@ namespace VoceCrianca\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use VoceCrianca\Models\User;
-use VoceCrianca\Observers\Admin\UserObserver;
+use VoceCrianca\Observers\Admin\Settings\UserObserver;
 use VoceCrianca\Models\Product;
-use VoceCrianca\Observers\Admin\ProductObserver;
+use VoceCrianca\Observers\Admin\Catalogs\ProductObserver;
+use VoceCrianca\Models\Brand;
+use VoceCrianca\Observers\Admin\Catalogs\BrandObserver;
 
 class AdminObserverServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class AdminObserverServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         Product::observe(ProductObserver::class);
+        //Brand::observe(BrandObserver::class);
     }
 
     /**

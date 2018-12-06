@@ -1,6 +1,6 @@
 <?php
 
-namespace VoceCrianca\Observers\Admin;
+namespace VoceCrianca\Observers\Admin\Settings;
 
 use Illuminate\Http\Request;
 use VoceCrianca\Models\User;
@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Mail;
 use VoceCrianca\Mail\Admin\AccountCreateMail;
 
 class UserObserver
-{  
+{
 
     public function created(User $user)
-    {        
-        Mail::send( new AccountCreateMail( User::find( $user->id ) ) );
+    {
+        Mail::send(new AccountCreateMail(User::find($user->id)));
     }
 
 }

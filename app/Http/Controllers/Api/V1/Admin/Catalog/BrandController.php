@@ -25,7 +25,7 @@ class BrandController extends ApiController
      * @param BrandService $service
      */
     public function __construct(BrandRepositoryInterface $repository,
-                                BrandService $service)
+                                BrandService $service) 
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -39,7 +39,11 @@ class BrandController extends ApiController
     public function index()
     {
 
-        if (!$result = $this->repository->all()) {
+        $result = $this->repository
+            ->setOrderColumn('name')
+            ->all();
+
+        if (!$result) {
             return $this->errorResponse('brands_not_found', 404);
         }
 
@@ -62,7 +66,7 @@ class BrandController extends ApiController
             return $this->errorResponse($errors->toJson(), 422);
         }
 
-        if (!$result = $this->repository->create($request->all())) {
+        if (!$result = $this->service->create($request)) {
             return $this->errorResponse('brand_not_created', 422);
         }
 
@@ -103,7 +107,6 @@ class BrandController extends ApiController
             $errors = $validator->errors();
             return $this->errorResponse($errors->toJson(), 422);
         }
-
 
         if (!$result = $this->repository->findById($id)) {
             return $this->errorResponse('brand_not_found', 404);
